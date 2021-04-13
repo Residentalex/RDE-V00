@@ -1,0 +1,74 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/* google*/
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;500;700;800&display=swap');
+
+.RDE-titulo {
+    font-family: 'Dosis', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: darkcyan;
+}
+
+.RDE-subtitulo {
+    font-family: 'Dosis', sans-serif !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.RDE-normal {
+    font-family: 'Dosis', sans-serif !important;
+    font-size: 18px !important;
+    color: black;
+}
+
+.RDE-label {
+    font-family: 'Dosis', sans-serif !important;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+
+.RDE-encabezado {
+    font-family: 'Dosis', sans-serif !important;
+    font-size: 18px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 30px;
+    margin: 20px;
+    background-color: #dbdcdd;
+}
+
+.RDE-profile-image {
+    border: 0;
+    margin: 15px;
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+}
+

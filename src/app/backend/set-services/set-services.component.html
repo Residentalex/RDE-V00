@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="RDE-subtitulo">Configuración de Servicios</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <h3 class="RDE-encabezado">Ingrese datos del servicio</h3>
+
+  <form>
+  <ion-item>
+    <!-- <ion-label class="RDE-label" position='floating'>Nombre:</ion-label> -->
+    <ion-label class="RDE-label" position="floating">Nombre:</ion-label>
+    <ion-input
+      type="text"
+      inputmode="text"
+      class="RDE-normal"
+      placeholder="Nombre del Servicio"
+      [(ngModel)]="newService.serviceName"
+      [ngModelOptions]="{standalone: true}"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="RDE-label" position="floating">Descripción:</ion-label>
+    <ion-input
+      type="text"
+      inputmode="text"
+      class="RDE-normal"
+      placeholder="Breve descripcion del servicio"
+      [(ngModel)]="newService.description"
+      [ngModelOptions]="{standalone: true}"
+    ></ion-input>
+  </ion-item>
+  
+  
+
+  <ion-button (click)="onSave()" expand="full" color="dark">
+    GUARDAR
+  </ion-button>
+</form>
+</ion-content>

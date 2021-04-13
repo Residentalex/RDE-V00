@@ -1,0 +1,7 @@
+{
+  "name": "RDE-V00",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

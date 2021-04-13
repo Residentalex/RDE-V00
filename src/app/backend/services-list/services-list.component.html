@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="RDE-subtitulo">Servicios</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goPageSetServices()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let service of services">
+    <ion-list>
+
+      <ion-item-sliding #item_sliding>
+        <ion-item>
+
+          <ion-label class="RDE-normal">
+            <h2>{{ service.serviceName }}</h2>
+            <p>{{ service.description }}</p>
+          </ion-label>
+
+          <ion-buttons slot="end">
+            <ion-button (click)="onDeleteService(service)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option (click)="onUpdateService(service.idService, item_sliding)" color="medium">Editar</ion-item-option>
+        </ion-item-options>
+
+      </ion-item-sliding>
+    </ion-list>
+  </ion-list>
+</ion-content>

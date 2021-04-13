@@ -9,7 +9,7 @@ import { FirestorageService } from 'src/app/services/firestorage.service';
 })
 export class ProfileComponent implements OnInit {
 
-  path: string = "productos";
+  path: string = "Usuarios";
   profileImage: string = '';
   newFile: string = '';
   loading: any;
@@ -42,7 +42,9 @@ export class ProfileComponent implements OnInit {
 
   async onSave(){
     this.presentLoading();
-    const photo = await this.fireST.uploadImage(this.newFile, this.path, 'prueba');
+    const photo = await this.fireST.uploadImage(this.newFile, this.path, 'prueba').then( res=>{
+      this.loading.dismiss();
+    });
   }
 
   async presentLoading() {

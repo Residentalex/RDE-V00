@@ -10,33 +10,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-item>
-    <div style="text-align: center;">
-      <img [src]="profileImage" class="RDE-profile-image"/>
-    </div>
-  </ion-item>
+  <div style="text-align: center">
+    <img [src]="profileImage" *ngIf="profileImage" class="RDE-profile-image" />
+    <img
+      src="assets/images/profile.png"
+      *ngIf="!profileImage"
+      class="RDE-profile-image"
+    />
+  </div>
 
-  <ion-item>
-    <ion-label class="RDE-normal">Eligir foto:</ion-label>
+    <ion-button expand="block" fill="clear">
+      <label for="file-upload">
+        <ion-label class="RDE-normal">Cambiar foto de perfil</ion-label>
+      </label>
 
-    <ion-buttons slot="end">
-      <ion-button>
-        <label for="file-upload">
-          <ion-icon name="image-outline" slot="end"></ion-icon>
-        </label>
+      <input
+        type="file"
+        accept="image/*"
+        style="display: none"
+        id="file-upload"
+        (change)="uploadImage($event)"
+      />
+    </ion-button>
 
-        <input
-          type="file"
-          accept="image/*"
-          style="display: none"
-          id="file-upload"
-          (change)="uploadImage($event)"
-        />
-      </ion-button>
-    </ion-buttons>
-  </ion-item>
-
-<ion-button (click)="onSave()" expand="block">
-  Guardar
-</ion-button>
 </ion-content>

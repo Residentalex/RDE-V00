@@ -33,4 +33,23 @@
       />
     </ion-button>
 
+    <ion-list>
+      <ion-item>
+      <ion-input type="text" placeholder="Nombre" [(ngModel)]="newPerson.name"></ion-input>        
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Apellido" [(ngModel)]="newPerson.lastName"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-input type="tel" placeholder="Número de telefono"></ion-input>
+    </ion-item>
+    
+
+    <ion-button (click)="onSave()" shape="round" expand="full" mode="md">
+      Guardar
+    </ion-button>
+
 </ion-content>

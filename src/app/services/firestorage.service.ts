@@ -13,7 +13,7 @@ export class FirestorageService {
 
   uploadImage(file: any, path: string, fileName: string): Promise<string> {
     return new Promise(resolve => {
-      const filePath = path + '/' + fileName;
+      const filePath = path + fileName;
       const fileRef = this.fileStorgae.ref(filePath);
       const task = fileRef.put(file);
      

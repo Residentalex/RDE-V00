@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -27,10 +28,13 @@ export class ProfileComponent implements OnInit {
     private menuCtrl: MenuController,
     private loadingCtlr: LoadingController,
     private fireST: FirestorageService,
-    private db: FirestoreService
-  ) {}
+    private db: FirestoreService,
+    private auth: FirebaseAuthService
+  ) { }
 
-  ngOnInit() {}
+  async ngOnInit() {
+
+  }
 
   toogleMenu() {
     this.menuCtrl.toggle();
@@ -51,15 +55,15 @@ export class ProfileComponent implements OnInit {
   async onSave() {
     this.presentLoading();
 
-    await this.fireST
-      .uploadImage(this.newFile, this.path, this.newPerson.idPerson)
-      .then((res) => {
+    if (this.newFile !== undefined) {
+      await this.fireST.uploadImage(this.newFile, this.path, this.newPerson.idPerson).then((res) => {
         this.newPerson.photo = res;
+      })
+    };
 
-        this.loading.dismiss();
-      });
-
-    this.db.createDoc(this.newPerson, this.path, this.newPerson.idPerson);
+    this.db.createDoc(this.newPerson, this.path, this.newPerson.idPerson).then(() => {
+      this.loading.dismiss();
+    }).catch((err) => { });
   }
 
   async presentLoading() {
@@ -71,5 +75,5 @@ export class ProfileComponent implements OnInit {
     });
     await this.loading.present();
   }
-  
+
 }

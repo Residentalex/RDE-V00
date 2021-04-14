@@ -1,5 +1,6 @@
 export interface Person {
     idPerson?: string,
+    uid?: string,
     name?: string,
     lastName?: string,
     DNI?: string,

@@ -12,16 +12,24 @@ export class FirebaseAuthService {
 
 
   createUserWithEmailandPassword(email: string, password: string){
-    this.auth.createUserWithEmailAndPassword(email, password);
+    return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
 
   loginWithEmailandPassword(email: string, password:string){
-    this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
-
 
   logout(){
     this.auth.signOut;
+  }
+
+  async getUid(){
+    const user = await this.auth.currentUser;
+    if(user === undefined){
+      return null
+    }else {
+      return user.uid;
+    }
   }
 }

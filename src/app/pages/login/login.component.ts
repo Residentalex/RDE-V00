@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,13 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
+  user: User = {
+    email: "",
+    password: "",
+    idPerson: "",
+    uid: ""
+  }
 
   constructor(
     private menuCtrl: MenuController,

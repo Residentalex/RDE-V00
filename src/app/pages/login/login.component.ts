@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(
     private menuCtrl: MenuController,
@@ -20,7 +20,10 @@ export class HomeComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  goPageProfile(){
-    this.router.navigate(['/login']); 
+  onLogin(){}
+
+  goPageRegister(){
+    this.router.navigate(['/register']);
   }
+
 }

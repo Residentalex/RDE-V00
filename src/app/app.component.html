@@ -11,15 +11,17 @@
         <ion-menu-toggle autoHide='false'>
 
           <ion-list>
+
+            <ion-item detail button='true' [routerLink]="['/home']">
+              <ion-icon name="home-outline" slot="start"></ion-icon>
+              <ion-label class="RDE-normal">Inicio</ion-label>
+            </ion-item>
+
             <ion-item detail button='true' [routerLink]="['/services-list']">
               <ion-icon name="apps-outline" slot="start"></ion-icon>
               <ion-label class="RDE-normal">Configuración de servicios</ion-label>
             </ion-item>
-
-            <ion-item detail button='true' [routerLink]="['/profile']">
-              <ion-icon name="body-outline" slot="start"></ion-icon>
-              <ion-label class="RDE-normal">Perfil</ion-label>
-            </ion-item>
+              
           </ion-list>
           
         </ion-menu-toggle>

@@ -40,4 +40,5 @@ export class FirestoreService {
     const collection = this.db.collection(path);
     return collection.doc(id).update(data);
   }
+  
 }

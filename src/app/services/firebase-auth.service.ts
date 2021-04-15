@@ -8,7 +8,9 @@ export class FirebaseAuthService {
 
   constructor(
     private auth: AngularFireAuth
-  ) { }
+  ) { 
+    this.getUid();
+  }
 
 
   createUserWithEmailandPassword(email: string, password: string){
@@ -21,15 +23,20 @@ export class FirebaseAuthService {
   }
 
   logout(){
-    this.auth.signOut;
+    return this.auth.signOut();
   }
 
   async getUid(){
     const user = await this.auth.currentUser;
-    if(user === undefined){
+    
+    if(user === null){
       return null
     }else {
       return user.uid;
     }
+  }
+
+  stateAuth(){
+    return this.auth.authState;
   }
 }

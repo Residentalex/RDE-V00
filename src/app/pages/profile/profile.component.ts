@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -20,20 +21,30 @@ export class ProfileComponent implements OnInit {
     status: true,
   };
 
-  profileImage: string = '';
   newFile: string = '';
   loading: any;
 
   constructor(
+    private router: Router,
     private menuCtrl: MenuController,
     private loadingCtlr: LoadingController,
     private fireST: FirestorageService,
     private db: FirestoreService,
-    private auth: FirebaseAuthService
-  ) { }
+    private fAuth: FirebaseAuthService
+  ) {
+    this.fAuth.stateAuth().subscribe(res =>{
+      this.newPerson.idPerson = res.uid;
+      this.getPersonInfo(this.newPerson.idPerson);
+    });
+   }
 
-  async ngOnInit() {
+  ngOnInit() {
+  }
 
+  getPersonInfo(idPerson: string){
+    this.db.getDoc<Person>(this.path, idPerson).subscribe( res =>{
+      this.newPerson = res;
+    });
   }
 
   toogleMenu() {
@@ -45,7 +56,7 @@ export class ProfileComponent implements OnInit {
       this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (image) => {
-        this.profileImage = image.target.result as string;
+        this.newPerson.photo = image.target.result as string;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -74,6 +85,12 @@ export class ProfileComponent implements OnInit {
       showBackdrop: true,
     });
     await this.loading.present();
+  }
+
+  signOut(){
+    this.fAuth.logout().then(() =>{
+      this.router.navigate(['/home']);
+    })
   }
 
 }

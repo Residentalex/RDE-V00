@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   loading: any;
 
   NewPerson: Person = {
-    idPerson: this.db.getNewID(),
     createAt: new Date(),
     status: true
   }
@@ -47,7 +46,7 @@ export class RegisterComponent implements OnInit {
     this.presentLoading();
     const res = await this.auth.createUserWithEmailandPassword(this.newUser.email, this.newUser.password).then((data) => {
       this.loading.dismiss();
-      this.NewPerson.uid = data.user.uid;
+      this.NewPerson.idPerson = data.user.uid;
       this.createPerson();
       this.router.navigate(['/home']);
     }).catch((err) => {

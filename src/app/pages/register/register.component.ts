@@ -43,25 +43,27 @@ export class RegisterComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  async onRegister() { 
-    const res = await this.auth.createUserWithEmailandPassword(this.newUser.email, this.newUser.password).catch((err)=>{
+  async onRegister() {
+    this.presentLoading();
+    const res = await this.auth.createUserWithEmailandPassword(this.newUser.email, this.newUser.password).then((data) => {
+      this.loading.dismiss();
+      this.NewPerson.uid = data.user.uid;
+      this.createPerson();
+      this.router.navigate(['/home']);
+    }).catch((err) => {
+      this.loading.dismiss();
       console.log(err);
     });
-
-   this.NewPerson.uid = await this.auth.getUid();
-
   }
 
-  createPerson(){
-    const path = "personas/";
+  createPerson() {
+    const path = "Personas/";
     this.NewPerson.modifyAt = new Date();
     this.presentLoading();
 
     this.db.createDoc(this.NewPerson, path, this.NewPerson.idPerson).then((res) => {
       this.loading.dismiss();
-      this.router.navigate(['/home']);
-      
-    }).catch(err =>{
+    }).catch(err => {
       this.loading.dismiss();
       this.presentToast(err.message);
     })
@@ -78,7 +80,7 @@ export class RegisterComponent implements OnInit {
     await this.loading.present();
   }
 
-  async presentToast(message: string){
+  async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 2000,

@@ -12,7 +12,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class SetServicesComponent implements OnInit {
 
 
-  path = 'servicios/';
+  path = 'Servicios/';
   service: Service;
   newService: Service = {
     idService: this.db.getNewID(),
@@ -56,8 +56,8 @@ export class SetServicesComponent implements OnInit {
     this.db.createDoc(this.newService, this.path, this.newService.idService).then((res) => {
       this.loading.dismiss();
       this.router.navigate(['/services-list']);
-      
-    }).catch(err =>{
+
+    }).catch(err => {
       this.loading.dismiss();
       this.presentToast(err.message);
     })
@@ -74,7 +74,7 @@ export class SetServicesComponent implements OnInit {
     await this.loading.present();
   }
 
-  async presentToast(message: string){
+  async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 2000,
@@ -82,5 +82,5 @@ export class SetServicesComponent implements OnInit {
     });
     toast.present();
   }
-  
+
 }

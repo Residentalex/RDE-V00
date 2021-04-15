@@ -12,13 +12,11 @@ export class FirebaseAuthService {
     this.getUid();
   }
 
-
   createUserWithEmailandPassword(email: string, password: string){
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
-
-  loginWithEmailandPassword(email: string, password:string){
+  loginWithEmailandPassword(email: string, password:string){  
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -39,4 +37,5 @@ export class FirebaseAuthService {
   stateAuth(){
     return this.auth.authState;
   }
+
 }

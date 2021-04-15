@@ -19,8 +19,7 @@ export class HomeComponent implements OnInit {
     private fAuth: FirebaseAuthService
   ) { 
     this.fAuth.stateAuth().subscribe(res =>{
-      this.userUid = res.uid
-      
+      res ? this.userUid = res.uid : this.userUid = "";
     })
   }
 
@@ -30,9 +29,7 @@ export class HomeComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  goPageProfile(){
-    console.log(this.userUid);
-    
+  goPageProfile(){    
     if(this.userUid){
       this.router.navigate(['/profile']);
     }else {

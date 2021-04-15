@@ -19,7 +19,7 @@
 
     <ion-item>
       <ion-label position="floating" class="RDE-label">Contraseña</ion-label>
-      <ion-input type="password" inputmode="password" class="RDE-normal" [ngClass]="user.password"></ion-input>
+      <ion-input type="password" inputmode="password" class="RDE-normal" [(ngModel)]="user.password"></ion-input>
     </ion-item>
 
     <ion-button (click)="onLogin()" expand="block" >
@@ -27,9 +27,9 @@
     </ion-button>
 
     <ion-item class="ion-text-center">
-      <ion-label>o </ion-label>
+      <ion-label>ó</ion-label>
     </ion-item>
-    <ion-button (click)="goPageRegister()" expand="block" fill="clear">
+    <ion-button (click)="goPageRegister()" expand="block">
       Registrarse
     </ion-button>
   </ion-list>

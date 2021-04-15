@@ -11,7 +11,11 @@
 </ion-header>
 <ion-content>
   <div style="text-align: center">
-    <img [src]="newPerson.photo" *ngIf="newPerson.photo" class="RDE-profile-image" />
+    <img
+      [src]="newPerson.photo"
+      *ngIf="newPerson.photo"
+      class="RDE-profile-image"
+    />
     <img
       src="assets/images/profile.png"
       *ngIf="!newPerson.photo"
@@ -52,10 +56,13 @@
   </ion-list>
 
   <ion-item>
-    <ion-input type="tel" placeholder="Número de telefono"></ion-input>
+    <ion-input
+      type="tel"
+      placeholder="Número de telefono"
+      [(ngModel)]="newPhone.phoneNumber"
+    ></ion-input>
   </ion-item>
 
-  <ion-button (click)="onSave()" shape="round" expand="full" mode="md">
-    Guardar
-  </ion-button>
+  <ion-button (click)="onSave()" expand="block"> Guardar </ion-button>
+  <ion-button (click)="signOut()" expand="block"> Cerrar sesión </ion-button>
 </ion-content>

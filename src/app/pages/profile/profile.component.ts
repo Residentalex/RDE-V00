@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
+import { Phone } from 'src/app/models/phone';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -12,14 +13,23 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  path: string = 'Personas/';
+  personPath: string = 'Personas/';
+  phonePath: string = 'Telefonos/';
   person: Person;
+
   newPerson: Person = {
     idPerson: this.db.getNewID(),
     name: '',
     createAt: new Date(),
     status: true,
   };
+
+  newPhone: Phone = {
+    idPhone: '',
+    phoneNumber: '',
+    createAt: new Date(),
+    status: true,
+  }
 
   newFile: string = '';
   loading: any;
@@ -32,19 +42,24 @@ export class ProfileComponent implements OnInit {
     private db: FirestoreService,
     private fAuth: FirebaseAuthService
   ) {
-    this.fAuth.stateAuth().subscribe(res =>{
-      this.newPerson.idPerson = res.uid;
-      this.getPersonInfo(this.newPerson.idPerson);
+    this.fAuth.stateAuth().subscribe(res => {
+      if (res) {
+        this.newPerson.idPerson = res.uid;
+        this.getPersonInfo(this.newPerson.idPerson);
+      }
     });
-   }
+  }
 
   ngOnInit() {
   }
 
-  getPersonInfo(idPerson: string){
-    this.db.getDoc<Person>(this.path, idPerson).subscribe( res =>{
+  getPersonInfo(idPerson: string) {
+    this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
       this.newPerson = res;
     });
+    this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res =>{
+      this.newPhone = res;
+    })
   }
 
   toogleMenu() {
@@ -67,14 +82,18 @@ export class ProfileComponent implements OnInit {
     this.presentLoading();
 
     if (this.newFile !== undefined) {
-      await this.fireST.uploadImage(this.newFile, this.path, this.newPerson.idPerson).then((res) => {
+      await this.fireST.uploadImage(this.newFile, this.personPath, this.newPerson.idPerson).then((res) => {
         this.newPerson.photo = res;
       })
     };
 
-    this.db.createDoc(this.newPerson, this.path, this.newPerson.idPerson).then(() => {
+    this.db.createDoc(this.newPerson, this.personPath, this.newPerson.idPerson).then(() => {
+      this.db.updateDoc(this.newPhone, this.phonePath, this.newPhone.idPhone);
       this.loading.dismiss();
-    }).catch((err) => { });
+    }).catch((err) => { 
+      console.log(err);
+      
+    });
   }
 
   async presentLoading() {
@@ -87,8 +106,8 @@ export class ProfileComponent implements OnInit {
     await this.loading.present();
   }
 
-  signOut(){
-    this.fAuth.logout().then(() =>{
+  signOut() {
+    this.fAuth.logout().then(() => {
       this.router.navigate(['/home']);
     })
   }

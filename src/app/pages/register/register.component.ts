@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
+import { Phone } from 'src/app/models/phone';
 import { User } from 'src/app/models/user';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -14,6 +15,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class RegisterComponent implements OnInit {
 
   loading: any;
+  personPath = "Personas/";
+  phonePath = "Telefonos/";
 
   NewPerson: Person = {
     createAt: new Date(),
@@ -26,6 +29,13 @@ export class RegisterComponent implements OnInit {
     password: "",
     uid: ""
   };
+
+  newPhone: Phone ={
+    idPhone: '',
+    phoneNumber: '',
+    createAt: new Date(),
+    status: true
+  }
 
   constructor(
     private menuCtrl: MenuController,
@@ -47,6 +57,7 @@ export class RegisterComponent implements OnInit {
     const res = await this.auth.createUserWithEmailandPassword(this.newUser.email, this.newUser.password).then((data) => {
       this.loading.dismiss();
       this.NewPerson.idPerson = data.user.uid;
+      this.newPhone.idPhone = data.user.uid;
       this.createPerson();
       this.router.navigate(['/home']);
     }).catch((err) => {
@@ -56,11 +67,13 @@ export class RegisterComponent implements OnInit {
   }
 
   createPerson() {
-    const path = "Personas/";
+
     this.NewPerson.modifyAt = new Date();
     this.presentLoading();
 
-    this.db.createDoc(this.NewPerson, path, this.NewPerson.idPerson).then((res) => {
+    this.db.createDoc(this.NewPerson, this.personPath, this.NewPerson.idPerson).then((res) => {
+
+      this.db.createDoc(this.newPhone, this.phonePath, this.newPhone.idPhone);
       this.loading.dismiss();
     }).catch(err => {
       this.loading.dismiss();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private menuCtrl: MenuController,
-    private router: Router
+    private router: Router,
+    private fAuth: FirebaseAuthService,
   ) { }
 
   ngOnInit() {}
@@ -28,7 +30,11 @@ export class LoginComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  onLogin(){}
+  onLogin(){
+    this.fAuth.loginWithEmailandPassword(this.user.email, this.user.password).then(()=>{
+      this.router.navigate(['/home']);
+    });
+  }
 
   goPageRegister(){
     this.router.navigate(['/register']);

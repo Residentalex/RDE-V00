@@ -11,26 +11,46 @@
 </ion-header>
 
 <ion-content>
+  <div class="RDE-logo">
+    <img [src]="appLogo" alt="">
+  </div>
   <ion-list>
     <ion-item>
-      <ion-label position="floating" class="RDE-label">Correo Electronico</ion-label>
-      <ion-input type="text" inputmode="text" class="RDE-normal" [(ngModel)]="user.email"></ion-input>
+      <ion-label position="floating" class="RDE-label"
+        >Correo Electronico</ion-label
+      >
+      <ion-input
+        type="text"
+        inputmode="text"
+        class="RDE-normal"
+        [(ngModel)]="user.email"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating" class="RDE-label">Contraseña</ion-label>
-      <ion-input type="password" inputmode="password" class="RDE-normal" [(ngModel)]="user.password"></ion-input>
+      <ion-input
+        type="password"
+        inputmode="password"
+        class="RDE-normal"
+        [(ngModel)]="user.password"
+      ></ion-input>
     </ion-item>
 
-    <ion-button (click)="onLogin()" expand="block" >
-      Acceder
-    </ion-button>
-
-    <ion-item class="ion-text-center">
-      <ion-label>ó</ion-label>
+    <ion-item lines="none">
+      <ion-label class="ion-text-right RDE-normal">Olvidaste la contraseña?</ion-label>
     </ion-item>
-    <ion-button (click)="goPageRegister()" expand="block">
-      Registrarse
-    </ion-button>
+
+      <ion-button (click)="onLogin()" expand="block" fill="clear" class="RDE-login-button">
+        Acceder
+      </ion-button>
+      
+      <div class="ion-text-center">
+        <h2 class="RDE-line RDE-mini-normal"><span>ó</span></h2>
+      </div>
+
+      <ion-button (click)="goPageRegister()" expand="block" fill="clear"class="RDE-register-button">
+        Registrarse
+      </ion-button>
   </ion-list>
 </ion-content>

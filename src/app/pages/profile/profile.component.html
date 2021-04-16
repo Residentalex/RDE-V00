@@ -9,60 +9,88 @@
     <ion-title class="RDE-subtitulo">Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div style="text-align: center">
-    <img
-      [src]="newPerson.photo"
-      *ngIf="newPerson.photo"
-      class="RDE-profile-image"
-    />
-    <img
-      src="assets/images/profile.png"
-      *ngIf="!newPerson.photo"
-      class="RDE-profile-image"
-    />
-  </div>
 
-  <ion-button expand="block" fill="clear">
-    <label for="file-upload">
-      <ion-label class="RDE-normal">Cambiar foto de perfil</ion-label>
+<ion-content>
+  <div class="RDE-profile-photo">
+    <img [src]="newPerson.photo" *ngIf="newPerson.photo" class="RDE-profile-image" />
+
+    <label *ngIf="editMode">
+      <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
+      <ion-icon name="camera-outline"></ion-icon>
     </label>
 
-    <input
-      type="file"
-      accept="image/*"
-      style="display: none"
-      id="file-upload"
-      (change)="uploadImage($event)"
-    />
-  </ion-button>
+    <img src="assets/images/profile.png" *ngIf="!newPerson.photo" class="RDE-profile-image" />
+  </div>
 
-  <ion-list>
-    <ion-item>
-      <ion-input
-        type="text"
-        placeholder="Nombre"
-        [(ngModel)]="newPerson.name"
-      ></ion-input>
+  <ion-item lines="none" *ngIf="!editMode" class="ion-text-center">
+    <ion-label class="RDE-subtitulo">
+      {{ newPerson.name }} {{ newPerson.lastName }}</ion-label>
+  </ion-item>
+
+  <div class="RDE-edit" (click)="onEditMode()">
+    <ion-icon name="create-outline" *ngIf="!editMode"></ion-icon>
+    <ion-icon name="close-outline" *ngIf="editMode"></ion-icon>
+  </div>
+
+  <ion-list class="RDE-list">
+    <ion-item *ngIf="editMode">
+      <ion-label class="RDE-label-sub">Nombres:</ion-label>
+      <ion-input type="text" placeholder="Nombre" [(ngModel)]="newPerson.name" class="ion-text-right RDE-normal">
+      </ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-input
-        type="text"
-        placeholder="Apellido"
-        [(ngModel)]="newPerson.lastName"
-      ></ion-input>
+    <ion-item *ngIf="editMode">
+      <ion-label class="RDE-label-sub">Apellidos:</ion-label>
+      <ion-input type="text" placeholder="Apellido" [(ngModel)]="newPerson.lastName" class="ion-text-right RDE-normal">
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="editMode">
+      <ion-label class="RDE-label-sub">Telefono:</ion-label>
+      <ion-input type="tel" placeholder="Número de telefono" [(ngModel)]="newPhone.phoneNumber"
+        class="ion-text-right RDE-normal">
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="editMode">
+      <ion-label class="RDE-label-sub">Fecha de Nacimiento:</ion-label>
+      <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="newPerson.dateBirth">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item *ngIf="!editMode">
+      <ion-label class="RDE-normal">Cuenta:</ion-label>
+      <ion-label class="RDE-mini-normal">{{ user.email }}</ion-label>
+    </ion-item>
+
+    <ion-item detail *ngIf="!editMode">
+      <ion-label class="RDE-normal">Cambiar contraseña</ion-label>
+    </ion-item>
+
+    <ion-item detail *ngIf="!editMode">
+      <ion-label class="RDE-normal">Pagos</ion-label>
+    </ion-item>
+
+    <ion-item detail *ngIf="!editMode">
+      <ion-label class="RDE-normal">Notificaciones</ion-label>
+    </ion-item>
+
+    <ion-item detail *ngIf="!editMode">
+      <ion-label class="RDE-normal">Soporte</ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-input
-      type="tel"
-      placeholder="Número de telefono"
-      [(ngModel)]="newPhone.phoneNumber"
-    ></ion-input>
-  </ion-item>
+  <div class="RDE-buttons">
+    
+    <ion-button (click)="onSave()" expand="block" *ngIf="editMode">
+      GUARDAR
+    </ion-button>
+    <ion-button (click)="becomeTasker()" fill="clear" expand="full" *ngIf="!editMode">
+      Convertirse en Colaborador
+    </ion-button>
+    <ion-button (click)="signOut()" fill="clear" expand="full" *ngIf="!editMode">
+      Cerrar sesión
+    </ion-button>
 
-  <ion-button (click)="onSave()" expand="block"> Guardar </ion-button>
-  <ion-button (click)="signOut()" expand="block"> Cerrar sesión </ion-button>
+  </div>
 </ion-content>

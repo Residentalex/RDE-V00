@@ -1,0 +1,59 @@
+.RDE-edit {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 25px;
+  margin: 10px;
+  color: darkcyan;
+}
+
+.RDE-buttons {
+  margin-top: 25px;
+}
+
+.RDE-list {
+  margin-top: 50px;
+}
+
+.RDE-profile-image {
+  border: 0;
+  margin: 15px;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  width: 200px;
+  height: 200px;
+  border-radius: 150px;
+}
+
+.RDE-profile-photo {
+  margin: auto;
+  width: max-content;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.RDE-profile-photo label {
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  background-color: rgb(238, 238, 238);
+  padding: 5px;
+  border-radius: 150px;
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+  font-size: 32px;
+}
+
+ion-content{
+  --background: #f6f6f6;
+}
+
+
+.RDE-label-sub {
+  font-family: "Dosis", sans-serif !important;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(126, 126, 126);
+}
+

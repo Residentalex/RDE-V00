@@ -1,0 +1,56 @@
+
+ion-item {
+  margin-right: 10px;
+}
+
+.item-label-floating {
+  color: rgb(184, 184, 184);
+}
+
+ion-button {
+  color: white !important;
+}
+
+.RDE-login-button {
+  background-color: rgb(84, 186, 204);
+  margin: 30px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.RDE-register-button {
+  background-color: steelblue;
+  margin: 30px;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+.RDE-logo{
+    margin: auto;
+    margin-top: 30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 30px;
+}
+
+  .RDE-line {
+    position: relative;
+    z-index: 1;
+  }
+  .RDE-line:before {
+    border-top: 1px solid #d3d3d3;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    z-index: -1;
+  }
+  .RDE-line span {
+  
+    background: #fff;
+    padding: 0 15px;
+  }

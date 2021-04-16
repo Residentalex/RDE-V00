@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
 import { Phone } from 'src/app/models/phone';
+import { User } from 'src/app/models/user';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -13,13 +14,20 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+
+  editMode: boolean = false;
   personPath: string = 'Personas/';
   phonePath: string = 'Telefonos/';
   person: Person;
 
+  user: User = {
+    email: ""
+  };
+
   newPerson: Person = {
     idPerson: this.db.getNewID(),
     name: '',
+    dateBirth: new Date(),
     createAt: new Date(),
     status: true,
   };
@@ -44,6 +52,8 @@ export class ProfileComponent implements OnInit {
   ) {
     this.fAuth.stateAuth().subscribe(res => {
       if (res) {
+        this.user.email = res.email;
+
         this.newPerson.idPerson = res.uid;
         this.getPersonInfo(this.newPerson.idPerson);
       }
@@ -51,13 +61,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.newPerson.dateBirth);
+    
   }
 
   getPersonInfo(idPerson: string) {
     this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
       this.newPerson = res;
     });
-    this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res =>{
+    this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res => {
       this.newPhone = res;
     })
   }
@@ -67,11 +79,15 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage(event: any) {
+    
+    
     if (event.target.files && event.target.files[0]) {
       this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (image) => {
+        
         this.newPerson.photo = image.target.result as string;
+        
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -90,9 +106,10 @@ export class ProfileComponent implements OnInit {
     this.db.createDoc(this.newPerson, this.personPath, this.newPerson.idPerson).then(() => {
       this.db.updateDoc(this.newPhone, this.phonePath, this.newPhone.idPhone);
       this.loading.dismiss();
-    }).catch((err) => { 
+      this.editMode = false;
+    }).catch((err) => {
       console.log(err);
-      
+
     });
   }
 
@@ -112,4 +129,13 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  onEditMode() {
+    this.editMode ? this.editMode = false : this.editMode = true;
+  }
+
+  becomeTasker(){
+    this.router.navigate(['/tasker-skill'])
+  }
+
+  
 }

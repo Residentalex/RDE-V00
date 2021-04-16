@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
     uid: ""
   }
 
+  appLogo = "./assets/images/logo.jpg";
+
   constructor(
     private menuCtrl: MenuController,
     private router: Router,

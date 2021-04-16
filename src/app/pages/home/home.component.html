@@ -17,4 +17,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <div *ngFor="let service of services">
+    <app-services [servicios] = "service"></app-services>
+  </div>
 </ion-content>

@@ -12,7 +12,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class ServicesListComponent implements OnInit {
 
 
-  path: string = 'servicios';
+  path: string = 'Servicios';
   services: Service[] = [];
 
   constructor(

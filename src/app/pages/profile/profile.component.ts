@@ -60,9 +60,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log(this.newPerson.dateBirth);
-    
+  ngOnInit() {    
   }
 
   getPersonInfo(idPerson: string) {

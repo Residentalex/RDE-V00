@@ -28,14 +28,14 @@ export class ProfileComponent implements OnInit {
     idPerson: this.db.getNewID(),
     name: '',
     dateBirth: new Date(),
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true,
   };
 
   newPhone: Phone = {
     idPhone: '',
     phoneNumber: '',
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true,
   }
 

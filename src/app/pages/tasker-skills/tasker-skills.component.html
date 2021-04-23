@@ -1,9 +1,33 @@
 <ion-header>
   <ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/profile" text=""></ion-back-button>
-  </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile" text=""></ion-back-button>
+    </ion-buttons>
 
     <ion-title class="RDE-subtitulo">Selecciona tus habilidades</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-item lines="none">
+
+    <ion-label class="ion-text-wrap rde-titulo">Bienvenido Colaborador, Selecione su profesión o habilidades.
+    </ion-label>
+  </ion-item>
+
+  <ion-list *ngFor="let service of service$">
+    <ion-item>
+      <ion-label>{{service.serviceName}}</ion-label>
+      <ng-container *ngIf="VerifyArraycontain(service.idService); then thenTemplate; else elseTemplate"></ng-container>
+      <ng-template #thenTemplate>
+        <ion-checkbox [name]= service.idService (ionChange)="verify($event)" checked></ion-checkbox>
+      </ng-template>
+      <ng-template #elseTemplate>
+        <ion-checkbox [name]= service.idService (ionChange)="verify($event)"></ion-checkbox>
+      </ng-template>
+      
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

@@ -18,7 +18,7 @@ export class SetServicesComponent implements OnInit {
     idService: this.db.getNewID(),
     serviceName: '',
     description: '',
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true
   }
   loading: any;

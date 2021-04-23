@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   phonePath = "Telefonos/";
 
   NewPerson: Person = {
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true
   }
 
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   newPhone: Phone ={
     idPhone: '',
     phoneNumber: '',
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true
   }
 

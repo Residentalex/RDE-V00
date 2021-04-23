@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from "@angular/fire/firestore";
-
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import { uniq } from 'lodash';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +31,12 @@ export class FirestoreService {
   getCollection<tipo>(path: string) {
     const collection = this.db.collection<tipo>(path);
     return collection.valueChanges();
+  }
+
+  getCollectionbyParameter<tipo>(path: string, parameter: any, valueParameter: any){
+    const dataCollection: AngularFirestoreCollection<tipo> = this.db.collection<tipo>(path 
+      , ref => ref.where(parameter, '==', valueParameter));
+    return dataCollection.valueChanges();
   }
 
   deleteDoc(path: string, id: string) {

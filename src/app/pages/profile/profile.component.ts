@@ -50,6 +50,10 @@ export class ProfileComponent implements OnInit {
     private db: FirestoreService,
     private fAuth: FirebaseAuthService
   ) {
+
+  }
+
+  ngOnInit() {   
     this.fAuth.stateAuth().subscribe(res => {
       if (res) {
         this.user.email = res.email;
@@ -57,14 +61,14 @@ export class ProfileComponent implements OnInit {
         this.newPerson.idPerson = res.uid;
         this.getPersonInfo(this.newPerson.idPerson);
       }
-    });
-  }
-
-  ngOnInit() {    
+    }); 
   }
 
   getPersonInfo(idPerson: string) {
     this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
+      console.log('nombre: ', res.name, ' ', res.lastName);
+      
+      
       this.newPerson = res;
     });
     this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res => {
@@ -122,6 +126,8 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
+    this.newPerson = {};
+    this.newPhone = {}
     this.fAuth.logout().then(() => {
       this.router.navigate(['/home']);
     })
@@ -135,5 +141,4 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/tasker-skill'])
   }
 
-  
 }

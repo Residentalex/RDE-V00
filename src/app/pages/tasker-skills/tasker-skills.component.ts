@@ -7,6 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { Person } from 'src/app/models/person';
 import { Service } from 'src/app/models/service';
 import { ServicesPerson } from 'src/app/models/services-person';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 
@@ -24,33 +25,26 @@ export class TaskerSkillsComponent implements OnInit {
 
   service$: Service[] = [];
   skill$: any[] = [];
+  
   mySkill: any[] = [];
+  uid: string = '';
 
   constructor(
     private menuCtrl: MenuController,
     private loadingCtrl: LoadingController,
-    private db: FirestoreService
+    private db: FirestoreService,
+    private fAuth: FirebaseAuthService,
   ) { }
 
   ngOnInit() {
-    this.joinCollections();
-    this.db.getCollection<Service>(this.servicePath).subscribe(r => {
-      this.service$ = r;
-    });
 
-    this.db.getCollection<ServicesPerson>(this.servicesPersonPath).pipe(
-      switchMap(servicioPersona => {
-        const servicioID = servicioPersona.map(sp => sp.idService);
-        return servicioID;
-      })
-    ).subscribe(r => {
-      if (!this.mySkill.includes(r)){
-        this.mySkill.push(r)
-      }
-    });
+    this.fAuth.stateAuth().subscribe(r => {
+      this.uid = r.uid;
+      this.getServicesPerson('idPerson', this.uid);
+    })
 
-    
-    
+    this.getServices();
+
   }
 
   toogleMenu() {
@@ -67,8 +61,8 @@ export class TaskerSkillsComponent implements OnInit {
     await this.loading.present();
   }
 
-  joinCollections() {
-    const ServiciosPerona$ = this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', 'UGJMsBjVp7MZpfWo2YBu5vc0clK2')
+  joinCollections(uid: string) {
+    const ServiciosPerona$ = this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', uid)
       .pipe(
         switchMap(serviciosPersonas => {
           const personaIDs = uniq(serviciosPersonas.map(sp => sp.idPerson));
@@ -93,8 +87,8 @@ export class TaskerSkillsComponent implements OnInit {
         })
       );
     ServiciosPerona$.subscribe(r => {
-      console.log(r);
-      this.skill$ = r
+      this.skill$ = r;
+
     })
   }
 
@@ -113,6 +107,46 @@ export class TaskerSkillsComponent implements OnInit {
 
   VerifyArraycontain(value: any) {
     return this.mySkill.includes(value);
+  }
+
+  getServicesPerson(parameter: string, valueParameter: string) {
+    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, parameter, valueParameter).pipe(
+      switchMap(servicioPersona => {
+        this.skill$ = servicioPersona;
+        const servicioID = servicioPersona.map(sp => sp.idService);
+        return servicioID;
+      })
+    ).subscribe(r => {
+      if (!this.mySkill.includes(r)) {
+        this.mySkill.push(r)
+      }
+    });
+  }
+
+  getServices() {
+    this.db.getCollection<Service>(this.servicePath).subscribe(r => {
+      this.service$ = r;
+    });
+  }
+
+  saveSkills() {
+    const newSkill: ServicesPerson = {
+      idPerson: this.uid,
+      idPersonService: '',
+      idService: '',
+      createdAt: new Date(),
+      status: true
+    }
+    this.skill$.forEach(skill => {
+      this.db.deleteDoc(this.servicesPersonPath, skill.idPersonService);
+    });
+
+    this.mySkill.forEach(skill => {
+      newSkill.idPersonService = this.db.getNewID();
+      newSkill.idService = skill
+
+      this.db.createDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
+    })
   }
 
 }

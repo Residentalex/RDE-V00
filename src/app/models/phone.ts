@@ -1,6 +1,6 @@
 export interface Phone {
-    idPhone: string,
+    idPhone?: string,
     phoneNumber?: string,
-    createdAt: Date,
-    status: boolean
+    createdAt?: Date,
+    status?: boolean
 }

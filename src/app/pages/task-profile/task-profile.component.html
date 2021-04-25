@@ -8,4 +8,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <div class="RDE-profile-photo">
+    <img [src]="person.photo" *ngIf="person.photo" class="RDE-profile-image" />
+    <img src="assets/images/profile.png" *ngIf="!person.photo" class="RDE-profile-image" />
+  </div>
+
+  <ion-item lines="none" class="ion-text-center">
+    <ion-label class="RDE-subtitulo">
+      {{ person.name }} {{ person.lastName }}</ion-label>
+  </ion-item>
 </ion-content>  

@@ -17,7 +17,7 @@ export class TaskProfileComponent implements OnInit {
   ) { }
 
   taskerName: string;
-  person: Person;
+  person: Person = {};
 
   ngOnInit() {
     const idPerson = this.route.snapshot.params.id;
@@ -27,11 +27,9 @@ export class TaskProfileComponent implements OnInit {
 
   getPerson(id: string){
     this.db.getDoc<Person>('Personas', id).subscribe(r =>{
-      this.person = r;
-      console.log(this.person.photo);
-      
+      this.person = r;      
       this.taskerName = r.name + ' ' + r.lastName;
-    })
+    });
   }
 
 }

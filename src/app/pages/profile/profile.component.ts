@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
 import { Phone } from 'src/app/models/phone';
+import { ServicesPerson } from 'src/app/models/services-person';
 import { User } from 'src/app/models/user';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
@@ -15,10 +16,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ProfileComponent implements OnInit {
 
+  istasker: boolean = false;
   editMode: boolean = false;
   personPath: string = 'Personas/';
   phonePath: string = 'Telefonos/';
+  servicePersonPath: string = 'ServicioPersona/';
   person: Person;
+
+  servicesPerson: ServicesPerson[] = [];
 
   user: User = {
     email: ""
@@ -59,20 +64,26 @@ export class ProfileComponent implements OnInit {
         this.user.email = res.email;
 
         this.newPerson.idPerson = res.uid;
-        this.getPersonInfo(this.newPerson.idPerson);
+        this.getPersonInfo(res.uid);
+        this.getPersonService(res.uid);
       }
     }); 
   }
 
   getPersonInfo(idPerson: string) {
     this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
-      console.log('nombre: ', res.name, ' ', res.lastName);
-      
-      
+     
       this.newPerson = res;
     });
     this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res => {
       this.newPhone = res;
+    })
+  }
+
+  getPersonService(idPerson: string){
+    this.db.getCollectionbyParameter(this.servicePersonPath, 'idPerson', idPerson).subscribe( r=> {
+      this.servicesPerson = r;
+      r.length > 0 ? this.istasker = true : this.istasker = false;
     })
   }
 

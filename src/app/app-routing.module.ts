@@ -6,7 +6,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ServicesPersonListComponent } from './pages/services-person-list/services-person-list.component';
 import { TaskerSkillsComponent } from './pages/tasker-skills/tasker-skills.component';
+import { TaskerToolsComponent } from './pages/tasker-tools/tasker-tools.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,7 +19,11 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
-  { path: 'tasker-skill', component: TaskerSkillsComponent}
+  { path: 'tasker-skill', component: TaskerSkillsComponent},
+  { path: 'tasker-tools', component: TaskerToolsComponent},
+  { path: 'tasker-skill', component: TaskerSkillsComponent},
+  { path: 'services-person-list', component: ServicesPersonListComponent},
+  { path: 'services-person-list/:id', component: ServicesPersonListComponent}
 ];
 
 @NgModule({

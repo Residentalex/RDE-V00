@@ -73,6 +73,10 @@ export class ServicesListComponent implements OnInit {
     this.router.navigate(['/set-services']);
   }
 
+  goToServicesPersons(idService: string ){
+    this.router.navigate(['/services-person-list', idService]);
+  }
+
   async presentToast(message: string){
     const toast = await this.toastCtrl.create({
       message: message,

@@ -17,7 +17,7 @@
 
   <ion-list *ngFor="let service of service$">
     <ion-item>
-      <ion-label>{{service.serviceName}}</ion-label>
+      <ion-label class="RDE-normal">{{service.serviceName}}</ion-label>
       <ng-container *ngIf="VerifyArraycontain(service.idService); then thenTemplate; else elseTemplate"></ng-container>
       <ng-template #thenTemplate>
         <ion-checkbox [name]= service.idService (ionChange)="verify($event)" checked></ion-checkbox>
@@ -34,6 +34,6 @@
 </ion-content>
 <ion-footer>
   <ion-button (click)="saveSkills()" expand="block" >
-    Guardar
+    Continuar
   </ion-button>
 </ion-footer>

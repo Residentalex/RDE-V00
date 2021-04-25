@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
-import { uniq } from "lodash";
+import { uniq } from 'lodash';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Person } from 'src/app/models/person';
@@ -10,41 +11,38 @@ import { ServicesPerson } from 'src/app/models/services-person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
-
 @Component({
   selector: 'app-tasker-skills',
   templateUrl: './tasker-skills.component.html',
   styleUrls: ['./tasker-skills.component.scss'],
 })
 export class TaskerSkillsComponent implements OnInit {
-
   loading: any;
   servicesPersonPath: string = 'ServicioPersona';
-  servicePath: string = "Servicios";
+  servicePath: string = 'Servicios';
   personPath: string = 'Personas';
 
   service$: Service[] = [];
   skill$: any[] = [];
-  
+
   mySkill: any[] = [];
   uid: string = '';
 
   constructor(
+    private router: Router,
     private menuCtrl: MenuController,
     private loadingCtrl: LoadingController,
     private db: FirestoreService,
-    private fAuth: FirebaseAuthService,
+    private fAuth: FirebaseAuthService
   ) { }
 
   ngOnInit() {
-
-    this.fAuth.stateAuth().subscribe(r => {
+    this.fAuth.stateAuth().subscribe((r) => {
       this.uid = r.uid;
       this.getServicesPerson('idPerson', this.uid);
-    })
+    });
 
     this.getServices();
-
   }
 
   toogleMenu() {
@@ -56,7 +54,7 @@ export class TaskerSkillsComponent implements OnInit {
       message: 'Cargando..',
       cssClass: 'RDE-normal',
       spinner: 'crescent',
-      showBackdrop: true
+      showBackdrop: true,
     });
     await this.loading.present();
   }
@@ -64,32 +62,32 @@ export class TaskerSkillsComponent implements OnInit {
   joinCollections(uid: string) {
     const ServiciosPerona$ = this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', uid)
       .pipe(
-        switchMap(serviciosPersonas => {
-          const personaIDs = uniq(serviciosPersonas.map(sp => sp.idPerson));
+        switchMap((serviciosPersonas) => {
+          const personaIDs = uniq(serviciosPersonas.map((sp) => sp.idPerson));
           return combineLatest(
             of(serviciosPersonas),
             combineLatest(
-              personaIDs.map(personaID =>
-                this.db.getCollectionbyParameter<Person>(this.personPath, 'idPerson', personaID).pipe(
-                  map(personas => personas[0])
-                )
+              personaIDs.map((personaID) =>
+                this.db.getCollectionbyParameter<Person>(this.personPath, 'idPerson', personaID)
+                  .pipe(map((personas) => personas[0]))
               )
             )
-          )
+          );
         }),
         map(([serviciosPersonas, personas]) => {
-          return serviciosPersonas.map(servicioPersona => {
+          return serviciosPersonas.map((servicioPersona) => {
             return {
               ...servicioPersona,
-              persona: personas.find((p: any) => p.idPerson === servicioPersona.idPerson)
-            }
-          })
+              persona: personas.find(
+                (p: any) => p.idPerson === servicioPersona.idPerson
+              ),
+            };
+          });
         })
       );
-    ServiciosPerona$.subscribe(r => {
+    ServiciosPerona$.subscribe((r) => {
       this.skill$ = r;
-
-    })
+    });
   }
 
   verify(event: any) {
@@ -99,10 +97,9 @@ export class TaskerSkillsComponent implements OnInit {
       this.mySkill.push(checkName);
     } else {
       this.mySkill = this.mySkill.filter(function (skill) {
-        return skill !== checkName
-      })
+        return skill !== checkName;
+      });
     }
-    console.log(this.mySkill);
   }
 
   VerifyArraycontain(value: any) {
@@ -110,21 +107,23 @@ export class TaskerSkillsComponent implements OnInit {
   }
 
   getServicesPerson(parameter: string, valueParameter: string) {
-    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, parameter, valueParameter).pipe(
-      switchMap(servicioPersona => {
-        this.skill$ = servicioPersona;
-        const servicioID = servicioPersona.map(sp => sp.idService);
-        return servicioID;
-      })
-    ).subscribe(r => {
-      if (!this.mySkill.includes(r)) {
-        this.mySkill.push(r)
-      }
-    });
+    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, parameter, valueParameter)
+      .pipe(
+        switchMap((servicioPersona) => {
+          this.skill$ = servicioPersona;
+          const servicioID = servicioPersona.map((sp) => sp.idService);
+          return servicioID;
+        })
+      )
+      .subscribe((r) => {
+        if (!this.mySkill.includes(r)) {
+          this.mySkill.push(r);
+        }
+      });
   }
 
   getServices() {
-    this.db.getCollection<Service>(this.servicePath).subscribe(r => {
+    this.db.getCollection<Service>(this.servicePath).subscribe((r) => {
       this.service$ = r;
     });
   }
@@ -135,18 +134,20 @@ export class TaskerSkillsComponent implements OnInit {
       idPersonService: '',
       idService: '',
       createdAt: new Date(),
-      status: true
-    }
-    this.skill$.forEach(skill => {
+      status: true,
+    };
+    this.skill$.forEach((skill) => {
       this.db.deleteDoc(this.servicesPersonPath, skill.idPersonService);
     });
 
-    this.mySkill.forEach(skill => {
+    this.mySkill.forEach((skill) => {
       newSkill.idPersonService = this.db.getNewID();
-      newSkill.idService = skill
+      newSkill.idService = skill;
 
       this.db.createDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
-    })
+    });
+
+    this.router.navigate(['/tasker-tools']);
   }
 
 }

@@ -4,6 +4,24 @@
       <ion-back-button defaultHref="/tasker-skill" text=""></ion-back-button>
     </ion-buttons>
 
-    <ion-title class="RDE-subtitulo">Herramientas que posees</ion-title>
+    <ion-title class="RDE-subtitulo">Herramientas</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+
+  <div *ngFor="let item of tools">
+    <ion-chip color="primary" mode="ios" outline="true" *ngIf="tools.length > 0">
+      <ion-label>{{item}}</ion-label>
+      <ion-icon name="close-circle-outline" (click)="deleteTool(item)"></ion-icon>
+    </ion-chip>
+  </div>
+
+
+
+  <ion-item>
+    <ion-textarea placeholder="Herramientas que poseo" [(ngModel)]="tool" ></ion-textarea>
+    <ion-icon slot="end" name="add" (click)="saveTool()"></ion-icon>
+  </ion-item>
+
+</ion-content>
+

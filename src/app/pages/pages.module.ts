@@ -10,6 +10,7 @@ import { ServicesComponent } from './services/services.component';
 import { TaskerSkillsComponent } from "./tasker-skills/tasker-skills.component";
 import { TaskerToolsComponent } from './tasker-tools/tasker-tools.component';
 import { ServicesPersonListComponent } from './services-person-list/services-person-list.component';
+import { TaskProfileComponent } from "./task-profile/task-profile.component";
 
 
 
@@ -23,6 +24,7 @@ import { ServicesPersonListComponent } from './services-person-list/services-per
     TaskerSkillsComponent,
     TaskerToolsComponent,
     ServicesPersonListComponent,
+    TaskProfileComponent
   ],
   imports: [
     CommonModule,

@@ -21,9 +21,9 @@
     <ion-list>
 
       <ion-item-sliding #item_sliding>
-        <ion-item (click)="goToServicesPersons(service.idService)">
+        <ion-item>
 
-          <ion-label class="RDE-normal">
+          <ion-label class="RDE-normal" (click)="goToServicesPersons(service.idService)">
             <h2>{{ service.serviceName }}</h2>
             <p>{{ service.description }}</p>
           </ion-label>

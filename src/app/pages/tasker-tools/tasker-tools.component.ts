@@ -7,8 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskerToolsComponent implements OnInit {
 
+  tools = [];
+
+  tool: string;
+
   constructor() { }
 
   ngOnInit() {}
+
+  saveTool(){
+    this.tools.push(this.tool);
+    this.tool = '';
+  }
+
+  deleteTool(tool: string){
+    this.tools = this.tools.filter( function (t) {
+      return t != tool
+    })
+  
+  }
 
 }

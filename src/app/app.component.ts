@@ -9,17 +9,24 @@ import { FirebaseAuthService } from './services/firebase-auth.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+
+  uid: string = '';
+
   constructor(
     private auth: FirebaseAuthService,
     private menuCtrl: MenuController,
     private router: Router
-  ) {}
+  ) {
+    this.auth.stateAuth().subscribe(r =>{
+       r ? this.uid = r.uid : this.uid = ''
+    })
+  }
 
-  toogleMenu(){
+  toogleMenu() {
     this.menuCtrl.toggle();
   }
 
-  goPageProfile(){
-    this.router.navigate(['/login']); 
+  goPageProfile() {
+    this.router.navigate(['/login']);
   }
 }

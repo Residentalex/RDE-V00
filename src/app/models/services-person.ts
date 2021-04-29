@@ -1,7 +1,10 @@
 export interface ServicesPerson {
     idPersonService?: string,
     idPerson?: string,
-    idService?: string,
+    idServices?: any,
+    skills?: string,
+    tools?: any,
+    photosWork?: any,
     createdAt?: Date,
     status?: boolean,
 }

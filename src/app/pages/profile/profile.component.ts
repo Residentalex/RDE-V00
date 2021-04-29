@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, NavController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
 import { Phone } from 'src/app/models/phone';
 import { ServicesPerson } from 'src/app/models/services-person';
@@ -50,6 +50,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private menuCtrl: MenuController,
+    private navCtrl: NavController,
     private loadingCtlr: LoadingController,
     private fireST: FirestorageService,
     private db: FirestoreService,
@@ -121,6 +122,7 @@ export class ProfileComponent implements OnInit {
       this.loading.dismiss();
       this.editMode = false;
     }).catch((err) => {
+      this.loading.dismiss();
       console.log(err);
 
     });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { uniq } from 'lodash';
 import { of } from 'rxjs';
-import { combineLatest, map, switchMap } from 'rxjs/operators';
+import { take, map, switchMap } from 'rxjs/operators';
 import { Person } from 'src/app/models/person';
 import { Service } from 'src/app/models/service';
 import { ServicesPerson } from 'src/app/models/services-person';
@@ -29,33 +29,34 @@ export class ServicesPersonListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.servicesID = this.route.snapshot.params.id;
-    this.getServices(this.servicesID);
+
+    this.getServices();
     this.getServicesPerson();
   }
 
-  getServicesPerson() {
-
-    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idService', this.servicesID).subscribe(r => {
-      this.servicesPerson = r
+  getServicesPerson() {  
+    this.db.getCollectioninArray<ServicesPerson>(this.servicesPersonPath, 'idServices', this.servicesID).pipe(take(1))
+    .subscribe(r => {
+      this.servicesPerson = r; 
       this.getPerson();
     });
+    
   }
 
-  getServices(id: string) {
-    this.db.getCollectionbyParameter<Service>('Servicios', 'idService', id).subscribe(r => {
-      this.serviceName = r[0].serviceName
+  getServices() {
+    this.servicesID = this.route.snapshot.params.id;
+    this.db.getDoc<Service>('Servicios', this.servicesID).subscribe(r => {
+      this.serviceName = r.serviceName
     });
   }
 
   getPerson() {
     this.servicesPerson.forEach(person => {
-      this.db.getCollectionbyParameter<Person>('Personas', 'idPerson', person.idPerson).subscribe(r => {
-        this.person.push(r[0])
+      this.db.getDoc<Person>('Personas', person.idPerson).subscribe(r => {
+
+        this.person.push(r)
       })
     });
-
-
 
   }
 

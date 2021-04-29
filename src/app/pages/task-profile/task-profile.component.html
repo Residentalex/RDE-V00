@@ -1,20 +1,65 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/services-person-list" text=""></ion-back-button>
+      <ion-back-button defaultHref="/services-list" text=""></ion-back-button>
     </ion-buttons>
 
-    <ion-title class="RDE-subtitulo">{{taskerName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="RDE-profile-photo">
+  <div class="RDE-profile">
     <img [src]="person.photo" *ngIf="person.photo" class="RDE-profile-image" />
     <img src="assets/images/profile.png" *ngIf="!person.photo" class="RDE-profile-image" />
+
+
+    <ion-item lines="none">
+      <ion-label class="RDE-name ion-text-wrap">
+        {{ person.name }} {{ person.lastName }}</ion-label>
+    </ion-item>
+
   </div>
 
-  <ion-item lines="none" class="ion-text-center">
-    <ion-label class="RDE-subtitulo">
-      {{ person.name }} {{ person.lastName }}</ion-label>
+
+  <ion-item lines="none" class="RDe-tasker-work">
+    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+    <ion-label>0 trabajos realizados</ion-label>
   </ion-item>
-</ion-content>  
+
+  <div class="RDe-Content-skils">
+
+    <ion-item lines="none">
+      <ion-label class="RDE-titulo">Habilidades y experiencia</ion-label>
+    </ion-item>
+    <ion-item class="ion-text-wrap">
+      <p class="RDE-normal rde-skill" >
+        {{tasker.skills}}
+      </p>
+    </ion-item>
+  </div>
+    
+    <ion-item lines="none">
+      <ion-label class="RDE-titulo">
+        Fotos
+      </ion-label>
+  </ion-item>
+
+  <div class="RDe-carrousel">
+    <ul class="RDe-carrousel-list">
+      <li *ngFor="let item of tasker.photosWork">
+        
+        <ion-img [src]="item"></ion-img>
+      </li>
+    </ul>
+
+  </div>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" (click)="contact()">
+      Contactar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

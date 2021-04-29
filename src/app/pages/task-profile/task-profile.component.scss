@@ -1,15 +1,15 @@
 .RDE-profile-image {
     border: 0;
     margin: 15px;
-    margin-top: 40px;
-    margin-bottom: 0px;
     width: 120px;
     height: 120px;
   }
   
-  .RDE-profile-photo {
+  .RDE-profile {
+    display: flex;
+    flex-direction: row;
     margin: auto;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
   }
   
   .RDE-profile-photo label {
@@ -25,3 +25,61 @@
     font-size: 32px;
   }
   
+  .RDE-name{
+    margin: 0;
+    margin-top: 15px;
+    overflow: hidden;
+    max-width: 180px;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .rde-skill{
+    white-space: normal !important;
+  }
+
+  .RDe-tasker-work{
+    color: rgb(124, 124, 124);
+    font-size: 16px;
+  }
+
+  .RDe-tasker-work ion-icon {
+    margin-right: 5px;
+    
+  }
+
+  .RDe-Content-skils{
+    margin-top: 15px;
+  }
+
+
+  .RDe-carrousel{
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .RDe-carrousel-list{
+    border-color: rgba(0,0,0,0);
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -ms-scroll-snap-type: mandatory;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: mandatory;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    transition: border-color .5s,transform .45s ease-in-out;
+  }
+
+  .RDe-carrousel-list>li{
+    display: inline-block;
+    flex-shrink: 0;
+    list-style: none;
+    width: calc(40% - 4.8px);
+    margin-right: 8px;
+  }

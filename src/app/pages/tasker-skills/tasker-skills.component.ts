@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
-import { uniq } from 'lodash';
+import { isUndefined, uniq } from 'lodash';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Person } from 'src/app/models/person';
@@ -23,10 +23,11 @@ export class TaskerSkillsComponent implements OnInit {
   personPath: string = 'Personas';
 
   service$: Service[] = [];
-  skill$: any[] = [];
-
+  editMode: boolean = false;
   mySkill: any[] = [];
   uid: string = '';
+  idPersonServices = '';
+
 
   constructor(
     private router: Router,
@@ -37,12 +38,28 @@ export class TaskerSkillsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fAuth.stateAuth().subscribe((r) => {
-      this.uid = r.uid;
-      this.getServicesPerson('idPerson', this.uid);
-    });
-
     this.getServices();
+    this.fAuth.stateAuth().subscribe(r => {
+
+      if(r){
+
+        this.uid = r.uid;
+        this.getServicesPerson(r.uid);
+      }
+    })
+  }
+
+
+  getServicesPerson(id: string) {
+    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id).subscribe(r => {
+      if (r.length > 0) {
+        this.mySkill = r[0].idServices;
+        this.idPersonServices = r[0].idPersonService;
+        this.editMode = true
+      } else {
+        this.mySkill = []
+      }
+    })
   }
 
   toogleMenu() {
@@ -59,71 +76,27 @@ export class TaskerSkillsComponent implements OnInit {
     await this.loading.present();
   }
 
-  joinCollections(uid: string) {
-    const ServiciosPerona$ = this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', uid)
-      .pipe(
-        switchMap((serviciosPersonas) => {
-          const personaIDs = uniq(serviciosPersonas.map((sp) => sp.idPerson));
-          return combineLatest(
-            of(serviciosPersonas),
-            combineLatest(
-              personaIDs.map((personaID) =>
-                this.db.getCollectionbyParameter<Person>(this.personPath, 'idPerson', personaID)
-                  .pipe(map((personas) => personas[0]))
-              )
-            )
-          );
-        }),
-        map(([serviciosPersonas, personas]) => {
-          return serviciosPersonas.map((servicioPersona) => {
-            return {
-              ...servicioPersona,
-              persona: personas.find(
-                (p: any) => p.idPerson === servicioPersona.idPerson
-              ),
-            };
-          });
-        })
-      );
-    ServiciosPerona$.subscribe((r) => {
-      this.skill$ = r;
-    });
-  }
-
   verify(event: any) {
+
     const checkName = event.target.name;
 
     if (event.detail.checked) {
+      console.log('checked: ', checkName)
       this.mySkill.push(checkName);
     } else {
+      console.log("eliminado: ", checkName)
       this.mySkill = this.mySkill.filter(function (skill) {
         return skill !== checkName;
       });
     }
   }
 
-  VerifyArraycontain(value: any) {
+  VerifyArraycontain(value: any) {    
     return this.mySkill.includes(value);
   }
 
-  getServicesPerson(parameter: string, valueParameter: string) {
-    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, parameter, valueParameter)
-      .pipe(
-        switchMap((servicioPersona) => {
-          this.skill$ = servicioPersona;
-          const servicioID = servicioPersona.map((sp) => sp.idService);
-          return servicioID;
-        })
-      )
-      .subscribe((r) => {
-        if (!this.mySkill.includes(r)) {
-          this.mySkill.push(r);
-        }
-      });
-  }
-
   getServices() {
-    this.db.getCollection<Service>(this.servicePath).subscribe((r) => {
+    this.db.getCollection<Service>(this.servicePath).subscribe(r => {
       this.service$ = r;
     });
   }
@@ -131,23 +104,23 @@ export class TaskerSkillsComponent implements OnInit {
   saveSkills() {
     const newSkill: ServicesPerson = {
       idPerson: this.uid,
-      idPersonService: '',
-      idService: '',
+      idServices: this.mySkill,
       createdAt: new Date(),
       status: true,
     };
-    this.skill$.forEach((skill) => {
-      this.db.deleteDoc(this.servicesPersonPath, skill.idPersonService);
-    });
 
-    this.mySkill.forEach((skill) => {
+    if(this.editMode){
+      newSkill.idPersonService = this.idPersonServices;
+      this.db.updateDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
+    }else{
       newSkill.idPersonService = this.db.getNewID();
-      newSkill.idService = skill;
-
       this.db.createDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
-    });
+    }
+
+    
 
     this.router.navigate(['/tasker-tools']);
   }
 
+  
 }

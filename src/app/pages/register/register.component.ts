@@ -14,6 +14,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class RegisterComponent implements OnInit {
 
+  appLogo = "./assets/images/logo.jpg";
+
   loading: any;
   personPath = "Personas/";
   phonePath = "Telefonos/";

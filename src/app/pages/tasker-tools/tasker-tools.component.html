@@ -8,20 +8,59 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <div class="RDe-tools-container">
 
-  <div *ngFor="let item of tools">
-    <ion-chip color="primary" mode="ios" outline="true" *ngIf="tools.length > 0">
-      <ion-label>{{item}}</ion-label>
-      <ion-icon name="close-circle-outline" (click)="deleteTool(item)"></ion-icon>
-    </ion-chip>
+    <ion-list>
+
+      <ion-item>
+        <ion-label class="RDE-subtitulo" position="floating">Habilidades y Experiencia:</ion-label>
+        <ion-textarea rows="3" [(ngModel)]="servicioPersona.skills"></ion-textarea>
+
+      </ion-item>
+
+
+      <ion-item lines="none">
+        <ion-label class="RDE-subtitulo" position="floating">Herramientas</ion-label>
+        <ion-textarea placeholder="Herramientas que poseo" [(ngModel)]="tool" rows="2" (keyup.enter)="saveTool()">
+        </ion-textarea>
+      </ion-item>
+
+      <p>
+        <ng-container *ngFor="let item of tools">
+          <ion-chip color="primary" mode="ios" outline="true" *ngIf="tools.length > 0">
+            <ion-label class="ion-text-wrap">{{item}}</ion-label>
+            <ion-icon name="close-circle-outline" (click)="deleteTool(item)"></ion-icon>
+          </ion-chip>
+        </ng-container>
+      </p>
+
+      <ion-item>
+        <ion-label class="RDE-subtitulo">Subir fotos</ion-label>
+        <label for="photo" class="ion-text-right rde-upload-photo">
+          <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
+          <ion-icon slot="end" name="Camera"></ion-icon>
+        </label>
+
+      </ion-item>
+      <div class="RDe-carrousel">
+        <ul class="RDe-carrousel-list">
+          <li *ngFor="let item of photos">
+            <label>
+              <ion-img [src]="item"></ion-img>
+              <ion-icon name="remove-circle-outline" (click)="deleteImage(item)"></ion-icon>
+            </label>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+    </ion-list>
   </div>
-
-
-
-  <ion-item>
-    <ion-textarea placeholder="Herramientas que poseo" [(ngModel)]="tool" ></ion-textarea>
-    <ion-icon slot="end" name="add" (click)="saveTool()"></ion-icon>
-  </ion-item>
-
 </ion-content>
-
+<ion-footer>
+  <ion-button (click)="onFinish()" expand="full">
+    Finalizar
+  </ion-button>
+</ion-footer>

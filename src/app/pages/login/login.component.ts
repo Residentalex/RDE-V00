@@ -26,19 +26,20 @@ export class LoginComponent implements OnInit {
     private fAuth: FirebaseAuthService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  toogleMenu(){
+  toogleMenu() {
     this.menuCtrl.toggle();
   }
 
-  onLogin(){
-    this.fAuth.loginWithEmailandPassword(this.user.email, this.user.password).then(()=>{
+  onLogin() {
+    this.fAuth.loginWithEmailandPassword(this.user.email, this.user.password).then(() => {
+      this.user = {};
       this.router.navigate(['/home']);
     });
   }
 
-  goPageRegister(){
+  goPageRegister() {
     this.router.navigate(['/register']);
   }
 

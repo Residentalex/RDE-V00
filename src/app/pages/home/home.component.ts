@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   ) { 
     this.fAuth.stateAuth().subscribe(res =>{
       res ? this.userUid = res.uid : this.userUid = "";
-    })
+    });
   }
 
   ngOnInit() {

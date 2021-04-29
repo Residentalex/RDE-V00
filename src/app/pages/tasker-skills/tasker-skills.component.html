@@ -30,6 +30,10 @@
 
   </ion-list>
 
+  <div class="RDE-noContent" *ngIf="service$.length == 0">
+    <ion-label class="RDE-normal">No se encontraron coincidencias</ion-label>
+  </div>
+
 
 </ion-content>
 <ion-footer>

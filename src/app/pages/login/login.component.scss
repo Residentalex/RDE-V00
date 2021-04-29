@@ -1,4 +1,3 @@
-
 ion-item {
   margin-right: 10px;
 }
@@ -13,14 +12,14 @@ ion-button {
 
 .RDE-login-button {
   background-color: rgb(84, 186, 204);
-  margin: 30px;
+  margin: 20px;
   margin-bottom: 5px;
   border-radius: 10px;
 }
 
 .RDE-register-button {
   background-color: steelblue;
-  margin: 30px;
+  margin: 20px;
   margin-top: 5px;
   border-radius: 10px;
 }
@@ -28,8 +27,8 @@ ion-button {
 .RDE-logo{
     margin: auto;
     margin-top: 30px;
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 30px;
 }
 
@@ -38,7 +37,7 @@ ion-button {
     z-index: 1;
   }
   .RDE-line:before {
-    border-top: 1px solid #d3d3d3;
+    border-top: 1px solid #8bf1ff;
     content: "";
     margin: 0 auto;
     position: absolute;
@@ -46,11 +45,16 @@ ion-button {
     left: 0;
     right: 0;
     bottom: 0;
-    width: 80%;
+    width: 90%;
     z-index: -1;
   }
   .RDE-line span {
   
     background: #fff;
     padding: 0 15px;
+  }
+
+  .RDE-mini-normal{
+    font-weight: bold;
+    font-size: 16px !important;
   }

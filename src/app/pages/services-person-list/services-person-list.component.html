@@ -16,7 +16,9 @@
       <ion-avatar slot="start" *ngIf="item.photo">
         <img [src]="item.photo" />
       </ion-avatar>
-      <ion-icon name="build-outline" slot="start" *ngIf="!item.photo"></ion-icon>
+      <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start">
+        <label>{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
+      </div>
       <ion-label class="RDE-normal" (click)="goProfileDetails(item.idPerson)">{{item.name}} {{item.lastName}}</ion-label>
     </ion-item>
   </ion-list>

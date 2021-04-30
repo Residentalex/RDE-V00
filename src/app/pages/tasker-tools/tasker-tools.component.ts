@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { isUndefined } from 'lodash';
 import { switchMap } from 'rxjs/operators';
 import { ServicesPerson } from 'src/app/models/services-person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -13,8 +14,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class TaskerToolsComponent implements OnInit {
 
-  tools = [];
-  tool: string;
+  tools:any[] = [];
+  tool: string = '';
 
   newFile: any;
 
@@ -22,7 +23,7 @@ export class TaskerToolsComponent implements OnInit {
   servicioPersona: ServicesPerson = {
     skills: ''
   };
-  photos = [];
+  photos:any[] = [];
 
   uid: string;
   servicesPersonPath: string = "ServicioPersona"
@@ -60,8 +61,13 @@ export class TaskerToolsComponent implements OnInit {
   }
 
   saveTool() {
-    this.tools.push(this.tool);
+    if(isUndefined(this.tools)){
+      this.tools = [this.tool]
+    }else{
+      this.tools.push(this.tool);
+    }
     this.tool = '';
+
   }
 
   deleteTool(tool: string) {
@@ -87,7 +93,12 @@ export class TaskerToolsComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (image) => {
         
-        this.photos.push(image.target.result as string)
+        if(isUndefined(this.photos)){
+          this.photos = [image.target.result as string]
+        }else{
+          this.photos.push(image.target.result as string)
+        }
+        
         
       };
 
@@ -116,3 +127,4 @@ export class TaskerToolsComponent implements OnInit {
   }
 
 }
+

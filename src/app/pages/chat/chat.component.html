@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+<!--    <ion-title> {{name}}</ion-title>-->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+
+  <div *ngIf="room">
+    <ion-card *ngFor="let mensaje of room.messages">
+      <ion-card-content>
+        {{mensaje.content + " " +  mensaje.name}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
+</ion-content>
+
+<ion-footer padding>
+  <ion-item>
+    <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    <ion-button color="success" (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

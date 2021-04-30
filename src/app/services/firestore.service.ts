@@ -3,6 +3,9 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
+import firebase from 'firebase';
+import firestore = firebase.firestore;
+import { message } from "../models/message";
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +59,20 @@ export class FirestoreService {
     const collection = this.db.collection(path);
     return collection.doc(id).update(data);
   }
+
+
+
+//Servicio para el chat
+  getChatRoom( chat_id : string){
+    return this.db.collection('ChatRooms').doc(chat_id).valueChanges()
+  }//Retorna el id del chatRoom
+
+  sendMsgToFirebase( message : message, chat_id : string){
+
+    this.db.collection('ChatRooms').doc(chat_id).update({
+      messages : firestore.FieldValue.arrayUnion(message),
+    })}//Manda los menmsajes a la BD
+
+
 
 }

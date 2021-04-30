@@ -10,6 +10,7 @@ import { ServicesPersonListComponent } from './pages/services-person-list/servic
 import { TaskProfileComponent } from './pages/task-profile/task-profile.component';
 import { TaskerSkillsComponent } from './pages/tasker-skills/tasker-skills.component';
 import { TaskerToolsComponent } from './pages/tasker-tools/tasker-tools.component';
+import {ChatComponent} from './pages/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +27,8 @@ const routes: Routes = [
   { path: 'services-person-list', component: ServicesPersonListComponent},
   { path: 'services-person-list/:id', component: ServicesPersonListComponent},
   { path: 'profile/:id', component: TaskProfileComponent},
+  { path: 'chat', component: ChatComponent },
+  { path: 'chat/:id', component: ChatComponent },
 ];
 
 @NgModule({

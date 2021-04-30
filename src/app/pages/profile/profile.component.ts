@@ -44,13 +44,12 @@ export class ProfileComponent implements OnInit {
     status: true,
   }
 
-  newFile: string = '';
+  newFile: string = 'assets/images/profile.png';
   loading: any;
 
   constructor(
     private router: Router,
     private menuCtrl: MenuController,
-    private navCtrl: NavController,
     private loadingCtlr: LoadingController,
     private fireST: FirestorageService,
     private db: FirestoreService,
@@ -152,6 +151,12 @@ export class ProfileComponent implements OnInit {
 
   becomeTasker(){
     this.router.navigate(['/tasker-skill'])
+  }
+
+  deleteImage(){
+
+    this.newPerson.photo = '';
+    this.newFile = undefined
   }
 
 }

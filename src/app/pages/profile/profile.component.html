@@ -14,9 +14,13 @@
   <div class="RDE-profile-photo">
     <img [src]="newPerson.photo" *ngIf="newPerson.photo" class="RDE-profile-image" />
 
-    <label *ngIf="editMode">
+    <label *ngIf="editMode" class="RDe-Icon-photo">
       <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
       <ion-icon name="camera-outline"></ion-icon>
+    </label>
+
+    <label *ngIf="editMode" class="RDe-delete-photo" (click)="deleteImage()">
+      <ion-icon name="remove-outline"></ion-icon>
     </label>
 
     <img src="assets/images/profile.png" *ngIf="!newPerson.photo" class="RDE-profile-image" />

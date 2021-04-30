@@ -32,7 +32,6 @@ export class ProfileComponent implements OnInit {
   newPerson: Person = {
     idPerson: this.db.getNewID(),
     name: '',
-    lastName: '',
     dateBirth: new Date(),
     createdAt: new Date(),
     status: true,
@@ -158,10 +157,6 @@ export class ProfileComponent implements OnInit {
 
     this.newPerson.photo = '';
     this.newFile = undefined
-  }
-
-  goPageChangePassword(){
-    this.router.navigate(['/change-password'])
   }
 
 }

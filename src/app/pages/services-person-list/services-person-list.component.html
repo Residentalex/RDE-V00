@@ -17,7 +17,7 @@
         <img [src]="item.photo" />
       </ion-avatar>
       <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start">
-        <label class="RDE-normal">{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
+        <label>{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
       </div>
       <ion-label class="RDE-normal" (click)="goProfileDetails(item.idPerson)">{{item.name}} {{item.lastName}}</ion-label>
     </ion-item>

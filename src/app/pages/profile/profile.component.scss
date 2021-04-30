@@ -20,10 +20,9 @@
   margin: 15px;
   margin-top: 40px;
   margin-bottom: 0px;
-  width: 180px;
-  height: 180px;
-  border-radius: 100%;
-  padding: 5px;
+  width: 200px;
+  height: 200px;
+  border-radius: 150px;
 }
 
 .RDE-profile-photo {
@@ -33,18 +32,13 @@
   margin-bottom: 5px;
 }
 
-.RDE-profile-name{
-  color: #6b81ff;
-  font-weight: bold;
-}
-
 .RDE-profile-photo .RDe-Icon-photo {
   text-align: center;
   width: 48px;
   height: 48px;
   background-color: rgb(238, 238, 238);
   padding: 5px;
-  border-radius: 100%;
+  border-radius: 150px;
   position: absolute;
   right: 15px;
   bottom: 5px;
@@ -65,7 +59,7 @@
 }
 
 ion-content{
-  --background: #ffffff;
+  --background: #f6f6f6;
 }
 
 .RDE-label-sub {
@@ -73,10 +67,5 @@ ion-content{
   font-size: 16px;
   font-weight: 500;
   color: rgb(126, 126, 126);
-}
-
-.rde-logout{
-  color: rgb(204, 0, 0);
-  font-weight: bold;
 }
 

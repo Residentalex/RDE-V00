@@ -12,6 +12,7 @@ import {any} from 'codelyzer/util/function';
   templateUrl: './task-profile.component.html',
   styleUrls: ['./task-profile.component.scss'],
 })
+
 export class TaskProfileComponent implements OnInit {
 
   constructor(
@@ -63,10 +64,25 @@ export class TaskProfileComponent implements OnInit {
 
     this.newChat.idchat = this.person.idPerson;
     this.newChat.chatName = this.person.name + ' ' + this.person.lastName;
-    this.newChat.idtasker = this.uid;
+    this.newChat.idtasker = this.person.idPerson;
 
-    this.router.navigate(['/chat', this.newChat.idchat]);
-    this.db.createDoc(this.newChat, 'ChatRooms', this.newChat.idchat);
+this.newChat.idperson=this.uid
+
+    this.db.getDoc("ChatRooms",this.newChat.idchat).subscribe(r => {
+      if (r){
+        this.router.navigate(['/chat', this.newChat.idchat]);
+
+      }else{
+        this.db.createDoc(this.newChat, 'ChatRooms', this.newChat.idchat);
+        this.router.navigate(['/chat', this.newChat.idchat]);
+      }
+
+    })
+
+
+
+
+
 
 
 

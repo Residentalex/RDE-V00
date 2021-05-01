@@ -2,10 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {message} from '../../models/message';
 import {FirestoreService} from 'src/app/services/firestore.service';
-//import {Chat} from '../../models/chat';
+import {Chat} from '../../models/chat';
 
 import {ActivatedRoute} from '@angular/router';
-import {Chat} from '../../models/chat';
+import {Person} from '../../models/person';
+
+
 
 @Component({
   selector: 'app-chat',
@@ -14,16 +16,16 @@ import {Chat} from '../../models/chat';
 })
 
 
-
 export class ChatComponent implements OnInit {
 
 
   //mesajes del chat
-  public chat: any;
-  public messages = [];
-  public room: any;
-  public msg: string;
-  private uid: string = this.route.snapshot.params.id;
+  public chat: any;//esto es para el id
+  public messages = [];//Arreglo que contiene el contenido del chat
+  public room: any;// esta me da el chatRooms
+  public msg: string;//esta variable es el mensaje
+  private idChat: string = '';//aqui guardo el idchat
+  private chatRoom: Chat = {};//en este objeto guardo todo lo relaciona con las personas que estan chateando
 
 
 
@@ -32,19 +34,29 @@ export class ChatComponent implements OnInit {
     private modal: ModalController,
     private db: FirestoreService,
     private route: ActivatedRoute,
-  ) {}
 
-  newChat: Chat = {};
-
-  name:string = this.newChat.chatName;
+  ) {
+  }
 
 
   ngOnInit() {
 
-    this.db.getChatRoom( this.uid).subscribe( room => {
-      console.log(room);
+    this.idChat = this.route.snapshot.params.id;//obtengo el id del chat
+
+    this.db.getDoc('ChatRooms', this.idChat).subscribe(datos => {
+      this.chatRoom = datos;
+
+      this.db.getDoc<Person>('Personas', this.chatRoom.idperson).subscribe(datosP => {
+
+
+      });//obtengo el nombre de la persona que esta logueda
+
+
+    });//obtengo infomacion relacionas con los usuarios que esta chateando
+
+    this.db.getChatRoom(this.idChat).subscribe(room => {
       this.room = room;
-    })// con esta linear consigo le id del chat que quiero usar
+    });// con esta linear consigo le id del chat que quiero usar
 
 
   }
@@ -58,7 +70,7 @@ export class ChatComponent implements OnInit {
       date: new Date()
     };//esto contiene la infomacion que va a tener el mensaje
 
-    this.db.sendMsgToFirebase(mensaje, this.uid);
+    this.db.sendMsgToFirebase(mensaje, this.idChat);
     this.msg = '';
 
   }

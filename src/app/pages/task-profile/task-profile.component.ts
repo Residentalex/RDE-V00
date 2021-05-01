@@ -31,7 +31,6 @@ export class TaskProfileComponent implements OnInit {
   uid: string = '';
 
 
-
   ngOnInit() {
 
     this.fAuth.stateAuth().subscribe(r => {
@@ -65,26 +64,18 @@ export class TaskProfileComponent implements OnInit {
     this.newChat.idchat = this.person.idPerson;
     this.newChat.chatName = this.person.name + ' ' + this.person.lastName;
     this.newChat.idtasker = this.person.idPerson;
+    this.newChat.idperson = this.uid;
 
-this.newChat.idperson=this.uid
-
-    this.db.getDoc("ChatRooms",this.newChat.idchat).subscribe(r => {
-      if (r){
+    this.db.getDoc('ChatRooms', this.newChat.idchat).subscribe(r => {
+      if (r) {
         this.router.navigate(['/chat', this.newChat.idchat]);
 
-      }else{
+      } else {
         this.db.createDoc(this.newChat, 'ChatRooms', this.newChat.idchat);
         this.router.navigate(['/chat', this.newChat.idchat]);
       }
 
-    })
-
-
-
-
-
-
-
+    });
 
 
   }

@@ -27,18 +27,18 @@ export class ChatComponent implements OnInit {
   private nameLog: any;
 
 
-
   constructor(
     private modal: ModalController,
     private db: FirestoreService,
     private route: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
 
   ngOnInit() {
 
     this.idChat = this.route.snapshot.params.id;//obtengo el id del chat
-
+    console.log(this.idChat);
     this.db.getDoc('ChatRooms', this.idChat).subscribe(datos => {
       this.chatRoom = datos;
 
@@ -57,7 +57,7 @@ export class ChatComponent implements OnInit {
 
     this.db.getChatRoom(this.idChat).subscribe(room => {
 
-      if(room){
+      if (room) {
         this.room = room;
       }
 
@@ -65,7 +65,6 @@ export class ChatComponent implements OnInit {
 
 
   }
-
 
 
   sendMessage() {

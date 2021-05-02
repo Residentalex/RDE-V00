@@ -24,17 +24,17 @@ export class TaskProfileComponent implements OnInit {
   person: Person = {};
   tasker: ServicesPerson = {};
 
-  newChat : Chat = {}
+  newChat: Chat = {}
   uid: string = '';
 
 
   ngOnInit() {
 
-    this.fAuth.stateAuth().subscribe(r =>{
-      if(r){
+    this.fAuth.stateAuth().subscribe(r => {
+      if (r) {
         this.uid = r.uid;
       }
-      
+
     })
 
     const idPerson = this.route.snapshot.params.id;
@@ -42,19 +42,24 @@ export class TaskProfileComponent implements OnInit {
   }
 
 
-  getPerson(id: string){
-    this.db.getDoc<Person>('Personas', id).subscribe(r =>{
-      if(r){    
+  getPerson(id: string) {
+    this.db.getDoc<Person>('Personas', id).subscribe(r => {
+      if (r) {
         this.person = r
         this.taskerName = r.name + ' ' + r.lastName;
-        this.db.getCollectionbyParameter('ServicioPersona', 'idPerson', r.idPerson).subscribe(r =>{
+        this.db.getCollectionbyParameter('ServicioPersona', 'idPerson', r.idPerson).subscribe(r => {
           this.tasker = r[0]
         })
       }
     });
   }
 
-  contact(){
+  contact() {
+    console.log(this.tasker.idPerson)
+    console.log(this.uid)
+    this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid).subscribe(datos => {
+      console.log(datos)
+    })
   }
 
 }

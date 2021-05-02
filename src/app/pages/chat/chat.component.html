@@ -14,7 +14,7 @@
   <div *ngIf="room">
     <ion-card *ngFor="let prueba of room.messages">
       <ion-card-content>
-        {{nameLog}}
+        {{prueba.name}}
         {{prueba.content }}
       </ion-card-content>
     </ion-card>

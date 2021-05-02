@@ -19,12 +19,12 @@ export class ChatComponent implements OnInit {
 
 
   //mesajes del chat
-  public chat: any;//esto es para el id
-  public room: any;// esto me da todas las propiedades del chatRooms
-  public msg: string;//esta variable es el mensaje
-  private idChat: string = ' ';//aqui guardo el idchat
-  private chatRoom: Chat = {};//en este objeto guardo todo lo relaciona con las personas que estan chateando
-  private nameLog: any;
+   chat: any;//esto es para el id
+   room: any;// esto me da todas las propiedades del chatRooms
+   msg: string;//esta variable es el mensaje
+   idChat: string = ' ';//aqui guardo el idchat
+   chatRoom: Chat = {};//en este objeto guardo todo lo relaciona con las personas que estan chateando
+   person: Person = {};
 
 
   constructor(
@@ -37,18 +37,15 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.idChat = this.route.snapshot.params.id;//obtengo el id del chat
-    console.log(this.idChat);
     this.db.getDoc('ChatRooms', this.idChat).subscribe(datos => {
       this.chatRoom = datos;
 
-      //console.log(datos)
-
       this.db.getDoc<Person>('Personas', this.chatRoom.idperson).subscribe(datosP => {
-
-        this.nameLog = datosP.name;
-
-
+        if(datosP){
+          this.person = datosP
+        }
       });//obtengo el nombre de la persona que esta logueda
 
 
@@ -70,7 +67,7 @@ export class ChatComponent implements OnInit {
   sendMessage() {
 
     const mensaje: message = {
-      //name: this.name,
+      name: this.person.name,
       content: this.msg,
       type: 'text',
       date: new Date()

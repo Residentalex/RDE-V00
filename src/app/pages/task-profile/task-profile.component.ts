@@ -58,7 +58,13 @@ export class TaskProfileComponent implements OnInit {
     console.log(this.tasker.idPerson)
     console.log(this.uid)
     this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid).subscribe(datos => {
-      console.log(datos)
+      if(datos){
+        console.log("de Person a Tasker: ", datos)
+      }else{
+        this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson).subscribe(datos =>{
+          console.log("de Tasker a Person: ", datos)
+        })
+      }
     })
   }
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ServicesListComponent } from './backend/services-list/services-list.component';
 import { SetServicesComponent } from './backend/set-services/set-services.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'services-person-list', component: ServicesPersonListComponent},
   { path: 'services-person-list/:id', component: ServicesPersonListComponent},
   { path: 'profile/:id', component: TaskProfileComponent},
+  { path: 'change-password', component: ChangePasswordComponent},
 ];
 
 @NgModule({

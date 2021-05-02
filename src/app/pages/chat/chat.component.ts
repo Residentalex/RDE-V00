@@ -6,6 +6,7 @@ import {Chat} from '../../models/chat';
 
 import {ActivatedRoute} from '@angular/router';
 import {Person} from '../../models/person';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 
 @Component({
@@ -31,23 +32,26 @@ export class ChatComponent implements OnInit {
     private modal: ModalController,
     private db: FirestoreService,
     private route: ActivatedRoute,
+    private fAuth: FirebaseAuthService,
   ) {
   }
 
 
   ngOnInit() {
 
+    this.fAuth.stateAuth().subscribe(datos =>{
+      if(datos){
+        this.db.getDoc<Person>("Personas", datos.uid).subscribe(r =>{
+          if(r){
+            this.person = r
+          }
+        })
+      }
+    })
 
     this.idChat = this.route.snapshot.params.id;//obtengo el id del chat
     this.db.getDoc('ChatRooms', this.idChat).subscribe(datos => {
       this.chatRoom = datos;
-
-      this.db.getDoc<Person>('Personas', this.chatRoom.idperson).subscribe(datosP => {
-        if(datosP){
-          this.person = datosP
-        }
-      });//obtengo el nombre de la persona que esta logueda
-
 
     });//obtengo infomacion relacionas con los usuarios que esta chateando
 

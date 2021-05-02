@@ -1,18 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Chat} from 'src/app/models/chat';
-import {Person} from 'src/app/models/person';
-import {ServicesPerson} from 'src/app/models/services-person';
-import {FirebaseAuthService} from 'src/app/services/firebase-auth.service';
-import {FirestoreService} from 'src/app/services/firestore.service';
-import {any} from 'codelyzer/util/function';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Chat } from 'src/app/models/chat';
+import { Person } from 'src/app/models/person';
+import { ServicesPerson } from 'src/app/models/services-person';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-task-profile',
   templateUrl: './task-profile.component.html',
   styleUrls: ['./task-profile.component.scss'],
 })
-
 export class TaskProfileComponent implements OnInit {
 
   constructor(
@@ -20,14 +18,13 @@ export class TaskProfileComponent implements OnInit {
     private router: Router,
     private db: FirestoreService,
     private fAuth: FirebaseAuthService
-  ) {
-  }
+  ) { }
 
   taskerName: string;
   person: Person = {};
   tasker: ServicesPerson = {};
 
-  newChat: Chat = {};
+  newChat: Chat = {}
   uid: string = '';
 
 
@@ -38,46 +35,31 @@ export class TaskProfileComponent implements OnInit {
         this.uid = r.uid;
       }
 
-    });
+    })
 
     const idPerson = this.route.snapshot.params.id;
     this.getPerson(idPerson);
-
-
   }
 
 
   getPerson(id: string) {
     this.db.getDoc<Person>('Personas', id).subscribe(r => {
       if (r) {
-        this.person = r;
+        this.person = r
         this.taskerName = r.name + ' ' + r.lastName;
         this.db.getCollectionbyParameter('ServicioPersona', 'idPerson', r.idPerson).subscribe(r => {
-          this.tasker = r[0];
-        });
+          this.tasker = r[0]
+        })
       }
     });
   }
 
   contact() {
-
-    this.newChat.idchat = this.person.idPerson;
-    this.newChat.chatName = this.person.name + ' ' + this.person.lastName;
-    this.newChat.idtasker = this.person.idPerson;
-    this.newChat.idperson = this.uid;
-
-    this.db.getDoc('ChatRooms', this.newChat.idchat).subscribe(r => {
-      if (r) {
-        this.router.navigate(['/chat', this.newChat.idchat]);
-
-      } else {
-        this.db.createDoc(this.newChat, 'ChatRooms', this.newChat.idchat);
-        this.router.navigate(['/chat', this.newChat.idchat]);
-      }
-
-    });
-
-
+    console.log(this.tasker.idPerson)
+    console.log(this.uid)
+    this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid).subscribe(datos => {
+      console.log(datos)
+    })
   }
 
 }

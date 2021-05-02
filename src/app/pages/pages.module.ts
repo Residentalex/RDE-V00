@@ -11,6 +11,7 @@ import { TaskerSkillsComponent } from "./tasker-skills/tasker-skills.component";
 import { TaskerToolsComponent } from './tasker-tools/tasker-tools.component';
 import { ServicesPersonListComponent } from './services-person-list/services-person-list.component';
 import { TaskProfileComponent } from "./task-profile/task-profile.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 
 
@@ -24,7 +25,8 @@ import { TaskProfileComponent } from "./task-profile/task-profile.component";
     TaskerSkillsComponent,
     TaskerToolsComponent,
     ServicesPersonListComponent,
-    TaskProfileComponent
+    TaskProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

@@ -5,12 +5,16 @@ import { AngularFireAuth } from "@angular/fire/auth";
   providedIn: 'root'
 })
 export class FirebaseAuthService {
+  user: firebase.default.User;
+
 
   constructor(
     private auth: AngularFireAuth
   ) { 
     this.getUid();
   }
+
+  
 
   createUserWithEmailandPassword(email: string, password: string){
     return this.auth.createUserWithEmailAndPassword(email, password);
@@ -37,5 +41,6 @@ export class FirebaseAuthService {
   stateAuth(){
     return this.auth.authState;
   }
+
 
 }

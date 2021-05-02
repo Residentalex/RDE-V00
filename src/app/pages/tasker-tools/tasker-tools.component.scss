@@ -28,14 +28,18 @@
     display: inline-block;
     flex-shrink: 0;
     list-style: none;
-    width: calc(30% - 4.8px);
-    margin-right: 8px;
-    padding: 20px;
-    padding-left: 5px;
+    padding-top: 20px;
+  }
+
+  .RDe-carrousel-list ion-img{
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    margin-right: 20px;
   }
 
   ion-icon{
-    color: brown;
+    color: rgb(92, 92, 92);
     font-size: 22px;
   }
 

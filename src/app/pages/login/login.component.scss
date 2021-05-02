@@ -10,6 +10,10 @@ ion-button {
   color: white !important;
 }
 
+ion-content {
+  --background: rgb(245, 245, 245);
+}
+
 .RDE-login-button {
   background-color: rgb(84, 186, 204);
   margin: 20px;
@@ -24,37 +28,90 @@ ion-button {
   border-radius: 10px;
 }
 
-.RDE-logo{
-    margin: auto;
-    margin-top: 30px;
-    width: 180px;
-    height: 180px;
-    border-radius: 30px;
+.RDE-logo {
+  margin: auto;
+  margin-top: 30px;
+  width: 180px;
+  height: 180px;
 }
 
-  .RDE-line {
-    position: relative;
-    z-index: 1;
-  }
-  .RDE-line:before {
-    border-top: 1px solid #8bf1ff;
-    content: "";
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 90%;
-    z-index: -1;
-  }
-  .RDE-line span {
-  
-    background: #fff;
-    padding: 0 15px;
-  }
+.RDE-logo img {
+  border-radius: 50px;
+  background-color: rgb(245, 245, 245);
+}
 
-  .RDE-mini-normal{
-    font-weight: bold;
-    font-size: 16px !important;
-  }
+.RDE-line {
+  position: relative;
+  z-index: 1;
+}
+.RDE-line:before {
+  border-top: 1px solid #8bf1ff;
+  content: "";
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 90%;
+  z-index: -1;
+}
+.RDE-line span {
+  background: #fff;
+  padding: 0 15px;
+}
+
+.RDE-mini-normal {
+  font-weight: bold;
+  font-size: 16px !important;
+}
+
+.rde-login-content {
+  margin-top: 30px;
+  background-color: white;
+  padding-bottom: 40px;
+  margin: 15px;
+}
+
+.RDE-login-label {
+  font-family: "Dosis", sans-serif !important;
+  text-align: center;
+  font-size: 22px;
+  color: black;
+  font-weight: bold;
+  padding: 10px;
+  display: block;
+}
+
+.RDE-normal-sub {
+  font-family: "Dosis", sans-serif !important;
+  font-size: 16px !important;
+  color: rgb(150, 150, 150);
+}
+
+.rde-socials {
+  width: 30px;
+  height: 30px;
+  margin: 8px;
+}
+
+.rde-socials-content {
+  display: flex;
+  justify-content: center;
+}
+
+.rde-footer{
+  font-family: "Dosis", sans-serif !important;
+  text-align: center;
+  color: black;
+}
+
+.rde-register-label{
+  font-weight: bold;
+  color: darkolivegreen;
+}
+
+ion-footer{
+  background-color: rgb(245, 245, 245);
+  padding: 10px;
+}

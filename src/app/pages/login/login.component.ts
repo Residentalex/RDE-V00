@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   }
 
   appLogo = "./assets/images/logo.jpg";
+  facebookIcon = "./assets/images/facebook.png"
+  googleIcon = "./assets/images/google.png"
 
   constructor(
     private menuCtrl: MenuController,

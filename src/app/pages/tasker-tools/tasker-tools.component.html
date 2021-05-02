@@ -26,8 +26,8 @@
 
       <p>
         <ng-container *ngFor="let item of tools">
-          <ion-chip color="primary" mode="ios" outline="true" *ngIf="tools.length > 0">
-            <ion-label class="ion-text-wrap">{{item}}</ion-label>
+          <ion-chip color="medium" mode="ios" outline="true" *ngIf="tools.length > 0">
+            <ion-label class="ion-text-wrap RDE-normal">{{item}}</ion-label>
             <ion-icon name="close-circle-outline" (click)="deleteTool(item)"></ion-icon>
           </ion-chip>
         </ng-container>

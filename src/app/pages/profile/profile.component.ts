@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, NavController } from '@ionic/angular';
 import { Person } from 'src/app/models/person';
 import { Phone } from 'src/app/models/phone';
+import { ServicesPerson } from 'src/app/models/services-person';
 import { User } from 'src/app/models/user';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
@@ -15,10 +16,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ProfileComponent implements OnInit {
 
+  istasker: boolean = false;
   editMode: boolean = false;
   personPath: string = 'Personas/';
   phonePath: string = 'Telefonos/';
+  servicePersonPath: string = 'ServicioPersona/';
   person: Person;
+
+  servicesPerson: ServicesPerson[] = [];
 
   user: User = {
     email: ""
@@ -27,19 +32,20 @@ export class ProfileComponent implements OnInit {
   newPerson: Person = {
     idPerson: this.db.getNewID(),
     name: '',
+    lastName: '',
     dateBirth: new Date(),
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true,
   };
 
   newPhone: Phone = {
     idPhone: '',
     phoneNumber: '',
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true,
   }
 
-  newFile: string = '';
+  newFile: string = 'assets/images/profile.png';
   loading: any;
 
   constructor(
@@ -50,27 +56,35 @@ export class ProfileComponent implements OnInit {
     private db: FirestoreService,
     private fAuth: FirebaseAuthService
   ) {
+
+  }
+
+  ngOnInit() {   
     this.fAuth.stateAuth().subscribe(res => {
       if (res) {
         this.user.email = res.email;
 
         this.newPerson.idPerson = res.uid;
-        this.getPersonInfo(this.newPerson.idPerson);
+        this.getPersonInfo(res.uid);
+        this.getPersonService(res.uid);
       }
-    });
-  }
-
-  ngOnInit() {
-    console.log(this.newPerson.dateBirth);
-    
+    }); 
   }
 
   getPersonInfo(idPerson: string) {
     this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
+     
       this.newPerson = res;
     });
     this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res => {
       this.newPhone = res;
+    })
+  }
+
+  getPersonService(idPerson: string){
+    this.db.getCollectionbyParameter(this.servicePersonPath, 'idPerson', idPerson).subscribe( r=> {
+      this.servicesPerson = r;
+      r.length > 0 ? this.istasker = true : this.istasker = false;
     })
   }
 
@@ -108,6 +122,7 @@ export class ProfileComponent implements OnInit {
       this.loading.dismiss();
       this.editMode = false;
     }).catch((err) => {
+      this.loading.dismiss();
       console.log(err);
 
     });
@@ -124,6 +139,8 @@ export class ProfileComponent implements OnInit {
   }
 
   signOut() {
+    this.newPerson = {};
+    this.newPhone = {}
     this.fAuth.logout().then(() => {
       this.router.navigate(['/home']);
     })
@@ -137,5 +154,14 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/tasker-skill'])
   }
 
-  
+  deleteImage(){
+
+    this.newPerson.photo = '';
+    this.newFile = undefined
+  }
+
+  goPageChangePassword(){
+    this.router.navigate(['/change-password'])
+  }
+
 }

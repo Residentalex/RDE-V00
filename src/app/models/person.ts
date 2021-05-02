@@ -6,8 +6,8 @@ export interface Person {
     sex?: string,
     photo?: string,
     dateBirth?: Date,
-    createAt: Date,
-    status: boolean,
+    createdAt?: Date,
+    status?: boolean,
     modifyAt?: Date
 
 }

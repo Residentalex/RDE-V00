@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="toogleMenu()">
@@ -14,18 +14,25 @@
   <div class="RDE-profile-photo">
     <img [src]="newPerson.photo" *ngIf="newPerson.photo" class="RDE-profile-image" />
 
-    <label *ngIf="editMode">
+    <label *ngIf="editMode" class="RDe-Icon-photo">
       <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
       <ion-icon name="camera-outline"></ion-icon>
+    </label>
+
+    <label *ngIf="editMode" class="RDe-delete-photo" (click)="deleteImage()">
+      <ion-icon name="remove-outline"></ion-icon>
     </label>
 
     <img src="assets/images/profile.png" *ngIf="!newPerson.photo" class="RDE-profile-image" />
   </div>
 
   <ion-item lines="none" *ngIf="!editMode" class="ion-text-center">
-    <ion-label class="RDE-subtitulo">
-      {{ newPerson.name }} {{ newPerson.lastName }}</ion-label>
+    <ion-label class="RDE-profile-name">
+      {{ newPerson.name.charAt(0).toUpperCase() + newPerson.name.slice(1) }}
+      {{ newPerson.lastName.charAt(0).toUpperCase() + newPerson.lastName.slice(1) }}
+    </ion-label>
   </ion-item>
+
 
   <div class="RDE-edit" (click)="onEditMode()">
     <ion-icon name="create-outline" *ngIf="!editMode"></ion-icon>
@@ -47,6 +54,7 @@
 
     <ion-item *ngIf="editMode">
       <ion-label class="RDE-label-sub">Telefono:</ion-label>
+      <ion-icon name="call-outline" slot="start"></ion-icon>
       <ion-input type="tel" placeholder="Número de telefono" [(ngModel)]="newPhone.phoneNumber"
         class="ion-text-right RDE-normal">
       </ion-input>
@@ -59,38 +67,56 @@
     </ion-item>
 
     <ion-item *ngIf="!editMode">
+      <ion-icon name="accessibility-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Cuenta:</ion-label>
       <ion-label class="RDE-mini-normal">{{ user.email }}</ion-label>
     </ion-item>
 
-    <ion-item detail *ngIf="!editMode">
+    <ion-item detail *ngIf="!editMode" (click)="goPageChangePassword()">
+      <ion-icon name="key-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Cambiar contraseña</ion-label>
     </ion-item>
 
     <ion-item detail *ngIf="!editMode">
+      <ion-icon name="wallet-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Pagos</ion-label>
     </ion-item>
 
     <ion-item detail *ngIf="!editMode">
+      <ion-icon name="notifications-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Notificaciones</ion-label>
     </ion-item>
 
     <ion-item detail *ngIf="!editMode">
+      <ion-icon name="headset-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Soporte</ion-label>
     </ion-item>
+
+    <ion-item detail *ngIf="istasker" (click)="becomeTasker()">
+      <ion-icon name="hammer-outline" slot="start"></ion-icon>
+      <ion-label class="RDE-normal">Editar Colaborador</ion-label>
+    </ion-item>
+
   </ion-list>
 
   <div class="RDE-buttons">
-    
+
     <ion-button (click)="onSave()" expand="block" *ngIf="editMode">
       GUARDAR
     </ion-button>
-    <ion-button (click)="becomeTasker()" fill="clear" expand="full" *ngIf="!editMode">
-      Convertirse en Colaborador
-    </ion-button>
-    <ion-button (click)="signOut()" fill="clear" expand="full" *ngIf="!editMode">
-      Cerrar sesión
-    </ion-button>
+    <div *ngIf="!istasker">
+      <ion-button (click)="becomeTasker()" fill="clear" expand="full" *ngIf="!editMode">
+        Convertirse en Colaborador
+      </ion-button>
+    </div>
 
   </div>
 </ion-content>
+
+
+<ion-footer>
+  <ion-item (click)="signOut()" class="rde-logout">
+    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+    <ion-label>Cerrar Sesión</ion-label>
+  </ion-item>
+</ion-footer>

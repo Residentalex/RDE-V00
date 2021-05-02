@@ -1,8 +1,8 @@
 export interface Service {
-    idService: string,
-    serviceName: string,
+    idService?: string,
+    serviceName?: string,
     description?: string,
-    createAt: Date,
+    createdAt?: Date,
     modifyAt?: Date,
-    status: boolean
+    status?: boolean
 }

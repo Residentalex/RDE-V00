@@ -29,11 +29,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200;500;700;800&display=swap");
 
 .RDE-titulo {
-  font-family: "Dosis", sans-serif;
+  font-family: "Dosis", sans-serif !important;
   font-weight: bold;
-  font-size: 24px;
-  color: darkcyan;
+  font-size: 20px !important;
+  color: rgb(0, 12, 12);
 }
+
 
 .RDE-subtitulo {
   font-family: "Dosis", sans-serif !important;
@@ -50,7 +51,8 @@
 .RDE-mini-normal {
   font-family: "Dosis", sans-serif !important;
   font-size: 14px !important;
-  color: rgb(141, 141, 141);
+  color: rgb(158, 158, 158) !important;
+  font-weight: bold;
 }
 
 .RDE-label {

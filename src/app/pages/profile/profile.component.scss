@@ -20,9 +20,10 @@
   margin: 15px;
   margin-top: 40px;
   margin-bottom: 0px;
-  width: 200px;
-  height: 200px;
-  border-radius: 150px;
+  width: 180px;
+  height: 180px;
+  border-radius: 100%;
+  padding: 5px;
 }
 
 .RDE-profile-photo {
@@ -32,28 +33,50 @@
   margin-bottom: 5px;
 }
 
-.RDE-profile-photo label {
+.RDE-profile-name{
+  color: #6b81ff;
+  font-weight: bold;
+}
+
+.RDE-profile-photo .RDe-Icon-photo {
   text-align: center;
   width: 48px;
   height: 48px;
   background-color: rgb(238, 238, 238);
   padding: 5px;
-  border-radius: 150px;
+  border-radius: 100%;
   position: absolute;
   right: 15px;
   bottom: 5px;
   font-size: 32px;
 }
 
-ion-content{
-  --background: #f6f6f6;
+.RDe-delete-photo{
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  color: rgb(78, 0, 0);
+  background-color: rgb(235, 235, 235);
+  border-radius: 150px;
+  top: 40px;
+  right: 45px;
+  width: 25px;
+  height: 25px;
 }
 
+ion-content{
+  --background: #ffffff;
+}
 
 .RDE-label-sub {
   font-family: "Dosis", sans-serif !important;
   font-size: 16px;
   font-weight: 500;
   color: rgb(126, 126, 126);
+}
+
+.rde-logout{
+  color: rgb(204, 0, 0);
+  font-weight: bold;
 }
 

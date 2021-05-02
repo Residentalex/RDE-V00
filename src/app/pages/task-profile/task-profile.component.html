@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/services-list" text=""></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="RDE-profile">
+    <img [src]="person.photo" *ngIf="person.photo" class="RDE-profile-image" />
+    <img src="assets/images/profile.png" *ngIf="!person.photo" class="RDE-profile-image" />
+
+  </div>
+
+  <div class="RDe-Content-skils">
+    <p class="RDE-name">
+      {{ person.name }} {{ person.lastName }}
+    </p>
+    <ion-label class="RDE-normal rde-work-count">0 trabajos realizados</ion-label>
+      <p class="RDE-normal rde-skill" >
+        {{tasker.skills}}
+      </p>
+  </div>
+  
+
+  <div class="share-tasker-content">
+    <div class="share-tasker">
+      <div class="share-options">
+        <ion-icon name="bookmark"></ion-icon>
+        <span>Favorito</span>
+      </div>
+      <div class="share-options">
+        <ion-icon name="arrow-redo"></ion-icon>
+        <span>Compartir</span>
+      </div>
+      <div class="share-options">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+
+
+  <hr class="divider">
+
+    <ion-item lines="none">
+      <ion-label class="RDE-subtitulo">
+        Fotos
+      </ion-label>
+  </ion-item>
+
+  <div class="RDe-carrousel">
+    <ul class="RDe-carrousel-list">
+      <li *ngFor="let item of tasker.photosWork">
+        
+        <ion-img [src]="item"></ion-img>
+      </li>
+    </ul>
+
+  </div>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label class="rde-contact">Enviar mensaje al vendedor</ion-label>
+    <ion-button expand="block"  (click)="contact()">
+      Contactar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

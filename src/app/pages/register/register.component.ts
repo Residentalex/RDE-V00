@@ -14,12 +14,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class RegisterComponent implements OnInit {
 
+  appLogo = "./assets/images/logo.jpg";
+
   loading: any;
   personPath = "Personas/";
   phonePath = "Telefonos/";
 
   NewPerson: Person = {
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true
   }
 
@@ -33,7 +35,7 @@ export class RegisterComponent implements OnInit {
   newPhone: Phone ={
     idPhone: '',
     phoneNumber: '',
-    createAt: new Date(),
+    createdAt: new Date(),
     status: true
   }
 

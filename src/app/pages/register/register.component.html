@@ -1,15 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="RDE-subtitulo">RDE</ion-title>
+    <ion-title class="RDE-subtitulo">Registro</ion-title>
 
     <ion-buttons slot="start">
-      <ion-button (click)="toogleMenu()">
-        <ion-icon name="menu-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/login" text=""></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content>
+
+  <div class="RDE-logo">
+    <img [src]="appLogo" alt="">
+  </div>
+
   <ion-list>
     <ion-item>
       <ion-label position="floating" class="RDE-label">Nombres</ion-label>
@@ -57,6 +62,6 @@
       ></ion-input>
     </ion-item>
 
-    <ion-button (click)="onRegister()" expand="full"> Guardar </ion-button>
+    <ion-button (click)="onRegister()" expand="block" fill="clear" class="RDE-register"> Guardar </ion-button>
   </ion-list>
 </ion-content>

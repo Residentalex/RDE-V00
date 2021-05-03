@@ -17,6 +17,7 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar placeholder="Buscar un servicio" (ionInput)="filterItems($event)"></ion-searchbar>
   <ion-list *ngFor="let service of services">
     <ion-list>
 
@@ -25,7 +26,7 @@
 
           <ion-label class="RDE-normal" (click)="goToServicesPersons(service.idService)">
             <h2>{{ service.serviceName }}</h2>
-            <p>{{ service.description }}</p>
+            <p>{{ service.description }}</p>            
           </ion-label>
 
           <ion-buttons slot="end">

@@ -49,15 +49,15 @@ export class TaskerToolsComponent implements OnInit {
   }
 
 
-  getServicePerson(id: string) {
-    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id).subscribe(r => {
-      if (r) {
-        this.servicioPersona.idPersonService = r[0].idPersonService
-        this.servicioPersona.skills = r[0].skills
-        this.tools = r[0].tools;
-        this.photos = r[0].photosWork;
+  async getServicePerson(id: string) {
+    const servicesPerson = await this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id);
+    
+      if (servicesPerson) {
+        this.servicioPersona.idPersonService = servicesPerson[0].idPersonService
+        this.servicioPersona.skills = servicesPerson[0].skills
+        this.tools = servicesPerson[0].tools;
+        this.photos = servicesPerson[0].photosWork;
       }
-    })
   }
 
   saveTool() {

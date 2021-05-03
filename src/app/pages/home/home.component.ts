@@ -45,9 +45,7 @@ export class HomeComponent implements OnInit {
     
   }
 
-  loadServices(){
-    this.db.getCollection<Service>(this.servicesPath).subscribe(res =>{
-      this.services = res
-    })
+  async loadServices(){
+    this.services = await this.db.getCollection<Service>(this.servicesPath);
   }
 }

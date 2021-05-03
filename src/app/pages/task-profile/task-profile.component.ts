@@ -42,14 +42,13 @@ export class TaskProfileComponent implements OnInit {
   }
 
 
-  getPerson(id: string) {
-    this.db.getDoc<Person>('Personas', id).subscribe(r => {
+  async getPerson(id: string) {
+    this.db.getDoc<Person>('Personas', id).then(async r => {
       if (r) {
         this.person = r
         this.taskerName = r.name + ' ' + r.lastName;
-        this.db.getCollectionbyParameter('ServicioPersona', 'idPerson', r.idPerson).subscribe(r => {
-          this.tasker = r[0]
-        })
+        const tasker = await this.db.getCollectionbyParameter('ServicioPersona', 'idPerson', r.idPerson);
+        this.tasker = tasker[0]
       }
     });
   }
@@ -58,10 +57,10 @@ export class TaskProfileComponent implements OnInit {
     console.log(this.tasker.idPerson)
     console.log(this.uid)
     this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid).subscribe(datos => {
-      if(datos){
+      if (datos) {
         console.log("de Person a Tasker: ", datos)
-      }else{
-        this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson).subscribe(datos =>{
+      } else {
+        this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson).subscribe(datos => {
           console.log("de Tasker a Person: ", datos)
         })
       }

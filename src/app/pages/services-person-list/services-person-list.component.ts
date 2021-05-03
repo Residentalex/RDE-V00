@@ -15,7 +15,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ServicesPersonListComponent implements OnInit {
 
-  servicesPerson: ServicesPerson[];
+  servicesPerson: ServicesPerson[] = [];
   servicesID: string;
   serviceName: string;
   servicesPersonPath: string = 'ServicioPersona';
@@ -28,40 +28,37 @@ export class ServicesPersonListComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.getServices();
-    this.getServicesPerson();
+    this.servicesPerson = await this.getServicesPerson();
+    this.getPerson();
   }
 
-  getServicesPerson() {  
-    this.db.getCollectioninArray<ServicesPerson>(this.servicesPersonPath, 'idServices', this.servicesID).pipe(take(1))
-    .subscribe(r => {
-      this.servicesPerson = r; 
-      this.getPerson();
-    });
-    
+  async getServicesPerson() {
+    const servicesPerson = await this.db.getCollectioninArray<ServicesPerson>(this.servicesPersonPath, 'idServices', this.servicesID);
+    return servicesPerson;
   }
 
-  getServices() {
+  async getServices() {
     this.servicesID = this.route.snapshot.params.id;
-    this.db.getDoc<Service>('Servicios', this.servicesID).subscribe(r => {
-      this.serviceName = r.serviceName
-    });
+    this.serviceName = (await this.db.getDoc<Service>('Servicios', this.servicesID)).serviceName;
   }
 
   getPerson() {
-    this.servicesPerson.forEach(person => {
-      this.db.getDoc<Person>('Personas', person.idPerson).subscribe(r => {
-
-        this.person.push(r)
-      })
+    this.servicesPerson.forEach(async person => {
+      let dataPerson = await this.db.getDoc<Person>('Personas', person.idPerson);
+      this.person.push(dataPerson);
     });
 
   }
 
   goProfileDetails(idPerson: string) {
     this.router.navigate(['/profile', idPerson]);
+  }
+
+  async filterItems(evt: any) {
+
   }
 
 }

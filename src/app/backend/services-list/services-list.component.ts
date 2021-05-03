@@ -23,18 +23,17 @@ export class ServicesListComponent implements OnInit {
     private db: FirestoreService,
   ) { }
 
-  ngOnInit() {
-    this.getServices();
+  async ngOnInit() {
+    this.services = await this.getServices();
   }
 
   toogleMenu(){
     this.menuCtrl.toggle();
   }
 
-  getServices(){ 
-    this.db.getCollection<Service>(this.path).subscribe( data =>{   
-      this.services = data;
-    });
+  async getServices(){ 
+    const services = await this.db.getCollection<Service>(this.path);
+    return services;
   }
 
   async onDeleteService(service: Service){
@@ -84,6 +83,22 @@ export class ServicesListComponent implements OnInit {
       position: 'middle'
     });
     toast.present();
+  }
+
+  async filterItems(evt: any){
+    this.services = await this.getServices();
+    const searchTerm: string = evt.target.value;
+    
+    if(!searchTerm){
+      return;
+    }
+
+    this.services = this.services.filter(currentService =>{
+      if(currentService.serviceName && searchTerm){
+        return (currentService.serviceName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 
+        || currentService.description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    })
   }
 
 }

@@ -41,7 +41,7 @@ export class TaskerSkillsComponent implements OnInit {
     this.getServices();
     this.fAuth.stateAuth().subscribe(r => {
 
-      if(r){
+      if (r) {
 
         this.uid = r.uid;
         this.getServicesPerson(r.uid);
@@ -50,16 +50,18 @@ export class TaskerSkillsComponent implements OnInit {
   }
 
 
-  getServicesPerson(id: string) {
-    this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id).subscribe(r => {
-      if (r.length > 0) {
-        this.mySkill = r[0].idServices;
-        this.idPersonServices = r[0].idPersonService;
-        this.editMode = true
-      } else {
-        this.mySkill = []
-      }
-    })
+  async getServicesPerson(id: string) {
+    const servicesPerson = await this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id);
+
+    if (servicesPerson.length > 0) {
+      this.mySkill = servicesPerson[0].idServices;
+      this.idPersonServices = servicesPerson[0].idPersonService;
+      this.editMode = true
+    } else {
+      this.mySkill = []
+    }
+    return servicesPerson;
+
   }
 
   toogleMenu() {
@@ -91,12 +93,12 @@ export class TaskerSkillsComponent implements OnInit {
     }
   }
 
-  VerifyArraycontain(value: any) {    
+  VerifyArraycontain(value: any) {
     return this.mySkill.includes(value);
   }
 
   getServices() {
-    this.db.getCollection<Service>(this.servicePath).subscribe(r => {
+    this.db.getCollection<Service>(this.servicePath).then(r => {
       this.service$ = r;
     });
   }
@@ -109,18 +111,18 @@ export class TaskerSkillsComponent implements OnInit {
       status: true,
     };
 
-    if(this.editMode){
+    if (this.editMode) {
       newSkill.idPersonService = this.idPersonServices;
       this.db.updateDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
-    }else{
+    } else {
       newSkill.idPersonService = this.db.getNewID();
       this.db.createDoc(newSkill, this.servicesPersonPath, newSkill.idPersonService);
     }
 
-    
+
 
     this.router.navigate(['/tasker-tools']);
   }
 
-  
+
 }

@@ -40,8 +40,8 @@ export class SetServicesComponent implements OnInit {
   }
 
   getDoc(id: string) {
-    this.db.getDoc<Service>(this.path, id).subscribe(res => {
-      this.newService = res
+    this.db.getDoc<Service>(this.path, id).then(service => {
+      this.newService = service
     })
   }
 

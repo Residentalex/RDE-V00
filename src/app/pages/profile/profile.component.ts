@@ -59,33 +59,32 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  ngOnInit() {   
-    this.fAuth.stateAuth().subscribe(res => {
+  ngOnInit() {
+    this.fAuth.stateAuth().subscribe(async res => {
       if (res) {
         this.user.email = res.email;
 
         this.newPerson.idPerson = res.uid;
         this.getPersonInfo(res.uid);
-        this.getPersonService(res.uid);
+        this.servicesPerson = await this.getPersonService(res.uid)
       }
-    }); 
+    });
   }
 
   getPersonInfo(idPerson: string) {
-    this.db.getDoc<Person>(this.personPath, idPerson).subscribe(res => {
-     
+    this.db.getDoc<Person>(this.personPath, idPerson).then(res => {
+
       this.newPerson = res;
     });
-    this.db.getDoc<Phone>(this.phonePath, idPerson).subscribe(res => {
+    this.db.getDoc<Phone>(this.phonePath, idPerson).then(res => {
       this.newPhone = res;
     })
   }
 
-  getPersonService(idPerson: string){
-    this.db.getCollectionbyParameter(this.servicePersonPath, 'idPerson', idPerson).subscribe( r=> {
-      this.servicesPerson = r;
-      r.length > 0 ? this.istasker = true : this.istasker = false;
-    })
+  async getPersonService(idPerson: string) {
+    const servicesPerson = await this.db.getCollectionbyParameter(this.servicePersonPath, 'idPerson', idPerson);
+    servicesPerson ? this.istasker = true : this.istasker = false;
+    return servicesPerson;
   }
 
   toogleMenu() {
@@ -93,15 +92,15 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage(event: any) {
-    
-    
+
+
     if (event.target.files && event.target.files[0]) {
       this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (image) => {
-        
+
         this.newPerson.photo = image.target.result as string;
-        
+
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -150,17 +149,17 @@ export class ProfileComponent implements OnInit {
     this.editMode ? this.editMode = false : this.editMode = true;
   }
 
-  becomeTasker(){
+  becomeTasker() {
     this.router.navigate(['/tasker-skill'])
   }
 
-  deleteImage(){
+  deleteImage() {
 
     this.newPerson.photo = '';
     this.newFile = undefined
   }
 
-  goPageChangePassword(){
+  goPageChangePassword() {
     this.router.navigate(['/change-password'])
   }
 

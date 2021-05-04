@@ -16,6 +16,9 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import {ChatComponent } from './pages/chat/chat.component'
 import { FormsModule } from "@angular/forms";
 
+//Notificaciones
+import { FCM } from '@ionic-native/fcm/ngx';
+
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -34,7 +37,7 @@ import { environment } from 'src/environments/environment';
 
     FormsModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [ FCM,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

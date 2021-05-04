@@ -12,6 +12,7 @@ import {take} from 'rxjs/operators';
   templateUrl: './task-profile.component.html',
   styleUrls: ['./task-profile.component.scss'],
 })
+
 export class TaskProfileComponent implements OnInit {
 
   constructor(
@@ -66,31 +67,35 @@ export class TaskProfileComponent implements OnInit {
     this.newChat.idchat = this.tasker.idPerson; // el id del chat
 
     //Hago una busqueda en la base de datos (coleccion) 'ChatRooms', donde yo soy el que esta logueado
-    //
-    this.db.getCollectionby2Parameter('ChatRooms', 'idtasker', this.tasker.idPerson, 'idperson', this.uid)
-      .pipe(take(1)).subscribe(datos => { // solo observa una sola vez
 
-        //si hay algun dato por lo menos 1
+    this.db.getCollectionby2Parameter('ChatRooms', 'idtasker', this.tasker.idPerson, 'idperson', this.uid).pipe(take(1)).subscribe(datos => { // solo observa una sola vez
+
+      //si hay algun dato por lo menos 1
       if (datos.length) {
 
         this.router.navigate(['/chat', this.tasker.idPerson]);
 
       } else {
+
         //aqui hago una busqueda donde yo soy el colaborador
         this.db.getCollectionby2Parameter('ChatRooms', 'idtasker', this.uid, 'idperson', this.tasker.idPerson)
           .pipe(take(1))
           .subscribe(datos => {
-            if (datos.length){
+            if (datos.length) {
               this.router.navigate(['/chat', this.uid]);
-            }else{
-              this.db.createDoc(this.newChat,"ChatRooms",this.newChat.idchat).then(()=> {
-                this.router.navigate(["/chat", this.tasker.idPerson]);
-              })
+            } else {
+              this.db.createDoc(this.newChat, 'ChatRooms', this.newChat.idchat).then(() => {
+                this.router.navigate(['/chat', this.tasker.idPerson]);
+              });
             }
           });
+
       }
 
     });
+
+
+
   }
 
 }

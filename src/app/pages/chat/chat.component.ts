@@ -9,6 +9,9 @@ import {Person} from '../../models/person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
 
+import { FCM } from '@ionic-native/fcm/ngx';
+
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -33,6 +36,7 @@ export class ChatComponent implements OnInit {
     private db: FirestoreService,
     private route: ActivatedRoute,
     private fAuth: FirebaseAuthService,
+    private fcm :FCM
   ) {
   }
 
@@ -50,6 +54,7 @@ export class ChatComponent implements OnInit {
     })
 
     this.idChat = this.route.snapshot.params.id;//obtengo el id del chat
+
     this.db.getDoc('ChatRooms', this.idChat).subscribe(datos => {
       this.chatRoom = datos;
 
@@ -64,6 +69,9 @@ export class ChatComponent implements OnInit {
 
     });// con esta linear consigo le id del chat que quiero usar
 
+    this.fcm.getToken().then(token => {
+    console.log(token)
+    });
 
   }
 

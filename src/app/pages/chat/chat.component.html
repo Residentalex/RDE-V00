@@ -12,10 +12,12 @@
 
 
   <div *ngIf="room">
-    <ion-card *ngFor="let prueba of room.messages">
+    <ion-card *ngFor="let mensaje of room.messages">
       <ion-card-content>
-        {{prueba.name}}
-        {{prueba.content }}
+        {{mensaje.name}}
+        {{mensaje.content }}
+<!--        {{mensaje.date }}-->
+
       </ion-card-content>
     </ion-card>
   </div>

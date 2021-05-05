@@ -1,0 +1,47 @@
+.data-add {
+  margin-left: 20px;
+}
+
+.share-tasker-content {
+  display: block;
+  align-items: center;
+}
+
+.share-tasker {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.share-tasker .share-options {
+  margin-right: 8px;
+  flex-grow: 1;
+  background-color: #e4e6eb;
+  height: 36px;
+  border-radius: 6px;
+  align-items: center;
+  padding-left: 12px;
+  font-weight: bold;
+  color: #050505 !important;
+  padding-top: 7px;
+}
+.share-tasker span {
+  text-align: center;
+}
+
+.share-tasker ion-icon {
+  padding-top: 1px;
+  margin-left: 4px;
+  margin-right: 8px;
+  text-align: center;
+}
+
+#map {
+  margin-right: 15px;
+  margin-left: 15px;
+  display: block;
+  height: 160px;
+}

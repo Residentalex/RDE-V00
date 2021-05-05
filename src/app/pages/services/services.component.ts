@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Add } from 'src/app/models/add';
 import { Person } from 'src/app/models/person';
 import { Service } from 'src/app/models/service';
@@ -16,7 +17,8 @@ export class ServicesComponent implements OnInit {
   person: Person = {};
 
   constructor(
-    private db: FirestoreService
+    private db: FirestoreService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
@@ -29,5 +31,8 @@ export class ServicesComponent implements OnInit {
     const person = await this.db.getDoc('Personas', this.adds.idPerson);
     return person;
   }
-
+  
+  goPageAdd(){
+    this.router.navigate(['/add', this.adds.idAdd]);
+  }
 }

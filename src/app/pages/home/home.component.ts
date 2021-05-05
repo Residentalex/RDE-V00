@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { add } from 'lodash';
+import { Add } from 'src/app/models/add';
 import { Service } from 'src/app/models/service';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -16,6 +18,7 @@ export class HomeComponent implements OnInit {
   userUid: string = '';
   services: Service[] = [];
   servicesPath = "Servicios";
+  adds: Add[] = []
 
   constructor(
     private menuCtrl: MenuController,
@@ -28,8 +31,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadServices();
+   this.adds = await this.loadAdds();
   }
 
   toogleMenu(){
@@ -47,5 +51,14 @@ export class HomeComponent implements OnInit {
 
   async loadServices(){
     this.services = await this.db.getCollection<Service>(this.servicesPath);
+  }
+
+  async loadAdds(){
+    const add = await this.db.getCollection('Anuncios');
+    return add;
+  }
+
+  publishAdd(){
+    this.router.navigate(['/publish-add'])
   }
 }

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Add } from 'src/app/models/add';
+import { Person } from 'src/app/models/person';
 import { Service } from 'src/app/models/service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-services',
@@ -8,10 +11,23 @@ import { Service } from 'src/app/models/service';
 })
 export class ServicesComponent implements OnInit {
 
-  @Input() servicios: Service
+  @Input() adds: Add
 
-  constructor() { }
+  person: Person = {};
 
-  ngOnInit() {}
+  constructor(
+    private db: FirestoreService
+  ) { }
+
+  async ngOnInit() {
+    this.person = await this.getPerson();
+    this.person.name = this.person.name.split(' ')[0]
+    this.person.lastName = this.person.lastName.split(' ')[0]
+  }
+
+  async getPerson(){
+    const person = await this.db.getDoc('Personas', this.adds.idPerson);
+    return person;
+  }
 
 }

@@ -1,0 +1,72 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="RDE-subtitulo">Publicando Anuncio</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+
+  <ion-item lines="none" class="RDe-input">
+    <ion-label position="floating" class="RDE-label">Titulo</ion-label>
+    <ion-input type="text" placeholder="" class="RDE-normal" [(ngModel)]="add.tittle"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="RDe-input">
+    <ion-label position="floating" class="RDE-label">Descripción</ion-label>
+    <ion-input type="text" placeholder="" class="RDE-normal" [(ngModel)]="add.details"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="RDe-input">
+    <ion-label position="floating">Servicio</ion-label>
+    <ion-select class="RDE-normal" >
+      <ion-select-option *ngFor="let item of services" value="{{item.idService}}">{{item.serviceName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item lines="none" class="RDe-input">
+    <ion-label position="floating" class="RDE-label">Ubicación</ion-label>
+    <ion-input type="text" placeholder="" class="RDE-normal"></ion-input>
+  </ion-item>
+
+  <div class="" id="mapa"></div>
+
+  <div class="RDE-photos">
+
+    
+    <span class="min-span">Fotos {{photosCount}} / 10 - Puedes agregar un máximo de 10 fotos.</span>
+    <div class="RDE-publish-photo" *ngIf="!photos.length">
+      <div class="RDe-add-photo">
+        
+        <label for="photo">
+        <span RDE-normal>
+            
+            <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
+            <ion-icon name="images-outline" slot="start"></ion-icon>
+            Agregar fotos
+          </span>
+        </label>
+      </div>
+
+    </div>
+    <div class="photos-array" *ngIf="photos.length">
+      <div class="publish-array-photo" *ngFor="let item of photos">
+        <img [src]="item" alt="">
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <div class="footer-publish">
+
+    <ion-card class="rde-add-button" (click)="onPublish()">
+      <ion-label>Publicar</ion-label>
+    </ion-card>
+  </div>
+</ion-footer>

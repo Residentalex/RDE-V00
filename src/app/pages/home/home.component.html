@@ -16,8 +16,15 @@
 
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <div *ngFor="let service of services">
-    <app-services [servicios] = "service"></app-services>
+
+  <div *ngFor="let add of adds">
+    <app-services [adds] = "add"></app-services>
   </div>
 </ion-content>
+<ion-footer>
+  <ion-card class="rde-add-button" (click)="publishAdd()">
+    <ion-label>Publicar un anuncio</ion-label>
+  </ion-card>
+</ion-footer>

@@ -3,6 +3,7 @@
   "appName": "RDE-V00",
   "bundledWebRuntime": false,
   "npmClient": "npm",
+  "linuxAndroidStudioPath": "/usr/local/android-studio/bin/studio.sh",
   "webDir": "www",
   "plugins": {
     "SplashScreen": {

@@ -54,7 +54,7 @@ export class FirestoreService {
     const dataCollection: AngularFirestoreCollection<tipo> = this.db.collection<tipo>(
       path, (ref) => ref.where(parameter, 'array-contains', valueParameter));
     return dataCollection.valueChanges();
-  }
+  }20
 
   deleteDoc(path: string, id: string) {
     const collection = this.db.collection(path);

@@ -15,7 +15,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 
 import { environment } from 'src/environments/environment';
 
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 
@@ -36,6 +36,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Geolocation,
     NativeGeocoder
   ],
   bootstrap: [AppComponent],

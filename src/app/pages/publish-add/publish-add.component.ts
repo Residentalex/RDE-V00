@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { isUndefined } from 'lodash';
 import { Add } from 'src/app/models/add';
@@ -19,7 +20,8 @@ export class PublishAddComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private router: Router,
     private db: FirestoreService,
-    private fAuth: FirebaseAuthService
+    private fAuth: FirebaseAuthService,
+    private geolocation: Geolocation
   ) { }
 
   loading: any;
@@ -29,6 +31,8 @@ export class PublishAddComponent implements OnInit {
   uid: string = '';
   photos: any[] = [];
   newFile: any;
+  position: Geoposition
+  
 
 
 
@@ -37,7 +41,9 @@ export class PublishAddComponent implements OnInit {
 
     this.fAuth.stateAuth().subscribe(r =>{
       this.uid = r.uid
-    })
+    });
+
+    this.position = await this.getGeolocation();
   }
 
   toogleMenu(){
@@ -67,6 +73,10 @@ export class PublishAddComponent implements OnInit {
     this.add.createdAt = new Date();
     this.add.status = true
     this.add.addPhotos = this.photos;
+    this.add.location = {
+      latitude: this.position.coords.latitude,
+      longitude: this.position.coords.longitude
+    }
 
     this.db.createDoc(this.add, 'Anuncios',  this.add.idAdd).then(()=>{
       this.loading.dismiss();
@@ -94,6 +104,11 @@ export class PublishAddComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]);
     }
+  }
+
+  async getGeolocation() {
+    const position = await this.geolocation.getCurrentPosition()
+    return position;
   }
 
 }

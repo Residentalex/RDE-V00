@@ -5,6 +5,10 @@ export interface Add {
     idTasker?: string,
     price?: Number,
     tittle?: string,
+    location?: {
+        latitude: number,
+        longitude: number
+    },
     details?: string,
     addPhotos?: any,
     createdAt?: Date,

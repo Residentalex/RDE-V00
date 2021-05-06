@@ -25,40 +25,41 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private fAuth: FirebaseAuthService,
     private db: FirestoreService
-  ) { 
-    this.fAuth.stateAuth().subscribe(res =>{
+  ) {
+    this.fAuth.stateAuth().subscribe(res => {
       res ? this.userUid = res.uid : this.userUid = "";
     });
   }
 
   async ngOnInit() {
     this.loadServices();
-   this.adds = await this.loadAdds();
+    this.loadAdds();
   }
 
-  toogleMenu(){
+  toogleMenu() {
     this.menuCtrl.toggle();
   }
 
-  goPageProfile(){    
-    if(this.userUid){
+  goPageProfile() {
+    if (this.userUid) {
       this.router.navigate(['/profile']);
-    }else {
-      this.router.navigate(['/login']); 
+    } else {
+      this.router.navigate(['/login']);
     }
-    
+
   }
 
-  async loadServices(){
+  async loadServices() {
     this.services = await this.db.getCollection<Service>(this.servicesPath);
   }
 
-  async loadAdds(){
-    const add = await this.db.getCollection('Anuncios');
-    return add;
+  loadAdds() {
+    this.db.subscribeCollection('Anuncios').subscribe((r)=>{
+      this.adds = r
+    });
   }
 
-  publishAdd(){
+  publishAdd() {
     this.router.navigate(['/publish-add'])
   }
 }

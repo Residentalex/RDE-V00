@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "21838316561",
+    "project_id": "rde-servicesrd",
+    "storage_bucket": "rde-servicesrd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21838316561:android:f1e7f44cf7a95b679b9db0",
+        "android_client_info": {
+          "package_name": "chat.Prueba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21838316561-3ctivsm5381bcogd92sledhn182crs9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6lps7btjdi9wG9xj9Mo5zwbYUuHaCnvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21838316561-3ctivsm5381bcogd92sledhn182crs9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

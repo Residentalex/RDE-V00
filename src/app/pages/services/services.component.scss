@@ -1,3 +1,34 @@
 .RDE-services-content{
-    padding: 10px;
+    padding: 5px;
+    position: relative;
 }
+
+.rde-wrap{
+    white-space: break-spaces;
+}
+
+.add-title{
+    display: block;
+    font-family: "Dosis", sans-serif !important;
+    color: rgb(96, 150, 250);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.add-person{
+    display: block;
+    font-family: "Dosis", sans-serif !important;
+    font-size: 14px;
+    color: rgb(121, 121, 121);
+}
+
+.contact{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.contact ion-icon{
+    font-size: 30px;
+    color: #29bac0;
+}
+

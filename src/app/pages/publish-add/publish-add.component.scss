@@ -1,0 +1,82 @@
+.RDe-input {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 6px;
+  border-color: #e4e4e4;
+  border-style: solid;
+  border-radius: 6px;
+  border-width: 2px;
+  height: 70px;
+}
+
+.RDe-add-photo {
+  line-height: 160px;
+  text-align: center;
+  display: block;
+}
+
+.RDe-add-photo span{
+  background-color: #e4e6eb;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+ion-item {
+  margin-right: 10px;
+}
+
+.item-label-floating {
+  color: rgb(184, 184, 184);
+}
+
+.RDE-publish-photo {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 6px;
+  border-color: #e4e4e4;
+  border-style: solid;
+  border-radius: 6px;
+  border-width: 2px;
+  height: 160px;
+}
+
+.min-span{
+  font-family: "Dosis", sans-serif !important;
+  font-size: 15px !important;
+  color: rgb(158, 158, 158) !important;
+  padding-left: 20px;
+}
+
+.RDE-photos{
+  margin-top: 25px;
+}
+
+
+#map {
+  width: 160px;
+  height: 160px;
+}
+
+.photos-array{
+  width: 106px;
+  height: 100%;
+
+  padding-bottom: 100%;
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.photos-array ion-img{
+  border-radius: 6px;
+}
+
+.rde-add-button{
+  padding: 12px;
+  text-align: center;
+  background-color: rgb(65, 159, 236);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}

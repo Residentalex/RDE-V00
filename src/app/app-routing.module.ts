@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ServicesListComponent } from './backend/services-list/services-list.component';
 import { SetServicesComponent } from './backend/set-services/set-services.component';
+import { AddComponent } from './pages/add/add.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { PublishAddComponent } from './pages/publish-add/publish-add.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ServicesPersonListComponent } from './pages/services-person-list/services-person-list.component';
 import { TaskProfileComponent } from './pages/task-profile/task-profile.component';
@@ -28,6 +30,8 @@ const routes: Routes = [
   { path: 'services-person-list/:id', component: ServicesPersonListComponent},
   { path: 'profile/:id', component: TaskProfileComponent},
   { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'publish-add', component: PublishAddComponent},
+  { path: 'add/:id', component: AddComponent}
 ];
 
 @NgModule({

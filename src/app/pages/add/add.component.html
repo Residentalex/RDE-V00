@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="RDE-subtitulo">Anuncio</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="data-add">
+    <h2 class="RDE-subtitulo">{{add.tittle}}</h2>
+    <h3 class="RDE-normal">{{add.details}}</h3>
+    <span class="RDE-mini-normal">publicado por {{person.name}} {{person.lastName}}</span>
+  </div>
+
+  <hr class="divider">
+
+  <div class="share-tasker-content">
+    <div class="share-tasker">
+      <div class="share-options">
+        <ion-icon name="bookmark"></ion-icon>
+        <span>Favorito</span>
+      </div>
+      <div class="share-options">
+        <ion-icon name="arrow-redo"></ion-icon>
+        <span>Compartir</span>
+      </div>
+      <div class="share-options">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="map"></div>
+
+
+</ion-content>
+<ion-footer>
+  <div class="footer-publish">
+
+    <ion-card class="rde-add-button" (click)="onContact()">
+      <ion-label>Contactar</ion-label>
+    </ion-card>
+  </div>
+</ion-footer>

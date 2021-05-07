@@ -22,6 +22,11 @@ export class FirestoreService {
     return collection;
   }
 
+  subscribeDoc<tipo>(path: string, id: string){
+    const collection = this.db.collection<tipo>(path);
+    return collection.doc(id).valueChanges();
+  }
+
   getDocbyParameter<tipo>(path: string, parameter: any, valueParameter: any) {
     const datacollection: AngularFirestoreCollection<tipo> =
       this.db.collection<tipo>(path, (ref) => ref.where(parameter, '==', valueParameter));
@@ -31,6 +36,11 @@ export class FirestoreService {
   async getCollection<tipo>(path: string) {
     const collection = await this.db.collection<tipo>(path).valueChanges().pipe(first()).toPromise();
     return collection;
+  }
+
+  subscribeCollection<tipo>(path: string){
+    const collection = this.db.collection<tipo>(path);
+    return collection.valueChanges();
   }
 
   async getCollectionbyParameter<tipo>(path: string, parameter: any, valueParameter: any) {

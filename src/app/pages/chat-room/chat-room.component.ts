@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Message } from 'src/app/models/message';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -8,18 +10,27 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ChatRoomComponent implements OnInit {
 
-  message: string = "";
+  message: Message = {
+    content: "",
+    date: new Date(),
+    type: "Text"
+  }
+  idChat: string;
 
   constructor(
-    private db: FirestoreService
+    private db: FirestoreService,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.idChat = this.route.snapshot.params.id;
+  }
 
-  async sendMessage( ){
-    const message = document.getElementById("message").innerText
+  async sendMessage() {
+    const messageText = document.getElementById("message").innerText;
 
-
+    this.message.content = messageText;
+    this.db.sendCollectionToCollection(this.message, 'ChatRooms', this.idChat)
   }
 
 }

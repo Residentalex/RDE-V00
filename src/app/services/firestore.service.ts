@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, } from '@angular/fire/firestore';
 import { first } from 'rxjs/operators';
 
+import firebase from 'firebase/app';
+import firestore = firebase.firestore;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +25,7 @@ export class FirestoreService {
     return collection;
   }
 
-  subscribeDoc<tipo>(path: string, id: string){
+  subscribeDoc<tipo>(path: string, id: string) {
     const collection = this.db.collection<tipo>(path);
     return collection.doc(id).valueChanges();
   }
@@ -38,7 +41,7 @@ export class FirestoreService {
     return collection;
   }
 
-  subscribeCollection<tipo>(path: string){
+  subscribeCollection<tipo>(path: string) {
     const collection = this.db.collection<tipo>(path);
     return collection.valueChanges();
   }
@@ -72,11 +75,10 @@ export class FirestoreService {
     return collection.doc(id).update(data);
   }
 
-  
-  sendCollectionToCollection( data : any, path: string,  id : string){
+  sendCollectionToCollection(data: any, path: string, id: string) {
 
-    this.db.collection(path).doc(id).update({
-      data : firestore.FieldValue.arrayUnion(data),
-    })}
+    const collection = this.db.collection(path);
+    return collection.doc(id).update({ data: firestore.FieldValue.arrayUnion(data), })
+  }
 
 }

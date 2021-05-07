@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Add } from 'src/app/models/add';
 import { Person } from 'src/app/models/person';
-import { Service } from 'src/app/models/service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({

@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" text=""></ion-back-button>
@@ -40,7 +40,11 @@
 <ion-footer>
   <div class="footer-publish">
 
-    <ion-card class="rde-add-button" (click)="onContact()">
+    <ion-card class="rde-add-button" (click)="onContact()" *ngIf="uid === add.idPerson" disabled>
+      <ion-label>Contactar</ion-label>
+    </ion-card>
+
+    <ion-card class="rde-add-button" (click)="onContact()" *ngIf="uid != add.idPerson">
       <ion-label>Contactar</ion-label>
     </ion-card>
   </div>

@@ -49,10 +49,11 @@ export class FirestoreService {
     return dataCollection;
   }
 
-  getCollectionby2Parameter<tipo>(path: string, parameter: any, valueParameter: any, parameter2: any, value2: any) {
-    const dataCollection: AngularFirestoreCollection<tipo> = this.db.collection<tipo>(
-      path, (ref) => ref.where(parameter, '==', valueParameter).where(parameter2, '==', value2));
-    return dataCollection.valueChanges();
+  async getCollectionby2Parameter<tipo>(path: string, parameter: any, valueParameter: any, parameter2: any, value2: any) {
+    const dataCollection = await this.db.collection<tipo>(
+      path, (ref) => ref.where(parameter, '==', valueParameter).where(parameter2, '==', value2)).valueChanges()
+      .pipe(first()).toPromise();
+    return dataCollection;
   }
 
   async getCollectioninArray<tipo>(path: string, parameter: any, valueParameter: any) {

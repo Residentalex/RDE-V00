@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="RDE-subtitulo"></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="chat-session">
+    <div class="chat">
+      <ion-item lines="none">
+        <ion-label>Awesome Label</ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+</ion-content> 
+<ion-footer>
+  <div class="message-content">
+    <span contenteditable="true" class="message" (keyup.enter)="sendMessage()" id="message">
+    </span>
+  </div>
+  
+</ion-footer>

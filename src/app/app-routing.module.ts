@@ -4,6 +4,7 @@ import { ServicesListComponent } from './backend/services-list/services-list.com
 import { SetServicesComponent } from './backend/set-services/set-services.component';
 import { AddComponent } from './pages/add/add.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ChatRoomComponent } from './pages/chat-room/chat-room.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -22,16 +23,17 @@ const routes: Routes = [
   { path: 'services-list', component: ServicesListComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
-  { path: 'tasker-skill', component: TaskerSkillsComponent},
-  { path: 'tasker-tools', component: TaskerToolsComponent},
-  { path: 'tasker-skill', component: TaskerSkillsComponent},
-  { path: 'services-person-list', component: ServicesPersonListComponent},
-  { path: 'services-person-list/:id', component: ServicesPersonListComponent},
-  { path: 'profile/:id', component: TaskProfileComponent},
-  { path: 'change-password', component: ChangePasswordComponent},
-  { path: 'publish-add', component: PublishAddComponent},
-  { path: 'add/:id', component: AddComponent}
+  { path: 'register', component: RegisterComponent },
+  { path: 'tasker-skill', component: TaskerSkillsComponent },
+  { path: 'tasker-tools', component: TaskerToolsComponent },
+  { path: 'tasker-skill', component: TaskerSkillsComponent },
+  { path: 'services-person-list', component: ServicesPersonListComponent },
+  { path: 'services-person-list/:id', component: ServicesPersonListComponent },
+  { path: 'profile/:id', component: TaskProfileComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'publish-add', component: PublishAddComponent },
+  { path: 'add/:id', component: AddComponent },
+  { path: 'chat/:id', component: ChatRoomComponent }
 ];
 
 @NgModule({

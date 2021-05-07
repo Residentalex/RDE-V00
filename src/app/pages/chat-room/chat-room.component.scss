@@ -1,0 +1,16 @@
+.message-content{
+    padding: 15px;
+}
+
+.message{
+    border-radius: 10px;
+    height: auto;
+    background-color: #e4e4e4;
+    padding: 10px;
+    max-height: 500px;
+    display: block;
+}
+
+:focus-visible{
+    outline-style: none;
+}

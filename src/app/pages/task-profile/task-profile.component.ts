@@ -53,18 +53,12 @@ export class TaskProfileComponent implements OnInit {
     });
   }
 
-  contact() {
-    console.log(this.tasker.idPerson)
-    console.log(this.uid)
-    this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid).subscribe(datos => {
-      if (datos) {
-        console.log("de Person a Tasker: ", datos)
-      } else {
-        this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson).subscribe(datos => {
-          console.log("de Tasker a Person: ", datos)
-        })
-      }
-    })
+  async contact() {
+    const chatRoomsTasker = await this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid);
+    const chatRoomsPerson = await this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson);
+    
+    console.log(chatRoomsTasker);
+    console.log(chatRoomsPerson)
   }
 
 }

@@ -1,10 +1,18 @@
-.rde-add-button{
-    margin-left: 18px;
-    margin-right: 18px;
-    padding: 12px;
-    text-align: center;
-    background-color: rgb(48, 187, 157);
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
+.rde-add-button {
+  margin-left: 18px;
+  margin-right: 18px;
+  padding: 12px;
+  text-align: center;
+  background-color: rgb(48, 187, 157);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+ion-content {
+  --background: #f3fcfe;
+}
+
+ion-header {
+  --background: #f3fcfe;
 }

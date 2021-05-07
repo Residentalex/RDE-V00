@@ -53,7 +53,8 @@ export class AddComponent implements OnInit {
     // create map
     this.map = new google.maps.Map(mapEle, {
       center: myLatLng,
-      zoom: 15
+      zoom: 15,
+      gestureHandling: "none"
     });
 
     // google.maps.event.addListenerOnce(this.map, 'idle', () => {
@@ -79,4 +80,6 @@ export class AddComponent implements OnInit {
     const position = await this.geolocation.getCurrentPosition()
     return position;
   }
+
+  onContact(){}
 }

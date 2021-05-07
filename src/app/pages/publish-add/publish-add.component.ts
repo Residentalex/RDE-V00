@@ -107,7 +107,7 @@ export class PublishAddComponent implements OnInit {
   }
 
   async getGeolocation() {
-    const position = await this.geolocation.getCurrentPosition()
+    const position = await this.geolocation.getCurrentPosition();
     return position;
   }
 

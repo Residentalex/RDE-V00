@@ -72,4 +72,11 @@ export class FirestoreService {
     return collection.doc(id).update(data);
   }
 
+  
+  sendCollectionToCollection( data : any, path: string,  id : string){
+
+    this.db.collection(path).doc(id).update({
+      data : firestore.FieldValue.arrayUnion(data),
+    })}
+
 }

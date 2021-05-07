@@ -16,6 +16,7 @@ export class ChatRoomComponent implements OnInit {
     type: "Text"
   }
   idChat: string;
+  chat: any = {}
 
   constructor(
     private db: FirestoreService,
@@ -24,6 +25,11 @@ export class ChatRoomComponent implements OnInit {
 
   ngOnInit() {
     this.idChat = this.route.snapshot.params.id;
+
+    this.db.subscribeDoc("ChatRooms", this.idChat).subscribe(chat =>{
+      console.log(chat)
+      this.chat = chat
+    })
   }
 
   async sendMessage() {

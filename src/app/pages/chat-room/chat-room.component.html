@@ -10,9 +10,13 @@
 <ion-content>
   <div class="chat-session">
     <div class="chat">
-      <ion-item lines="none">
-        <ion-label>Awesome Label</ion-label>
-      </ion-item>
+      <ng-container *ngFor="let item of chat.data">
+
+        
+        <ion-item lines="none">
+          <ion-label>{{item.text}}</ion-label>
+        </ion-item>
+      </ng-container>
     </div>
   </div>
 

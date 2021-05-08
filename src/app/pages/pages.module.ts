@@ -15,6 +15,7 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
 import { PublishAddComponent } from "./publish-add/publish-add.component";
 import { AddComponent } from './add/add.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 
 
@@ -32,7 +33,8 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
     ChangePasswordComponent,
     PublishAddComponent,
     AddComponent,
-    ChatRoomComponent
+    ChatRoomComponent,
+    ActivitiesComponent
   ],
   imports: [
     CommonModule,

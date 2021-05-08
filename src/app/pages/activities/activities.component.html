@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="RDE-subtitulo">RDE</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label class="RDE-titulo">Chats</ion-label>
+  </ion-item>
+
+  <ion-list *ngFor="let item of chats | async">
+    <ion-item>
+      <ion-label>{{item.idPerson}}</ion-label>
+      <ion-badge color="success"></ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

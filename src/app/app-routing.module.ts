@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ServicesListComponent } from './backend/services-list/services-list.component';
 import { SetServicesComponent } from './backend/set-services/set-services.component';
+import { ActivitiesComponent } from './pages/activities/activities.component';
 import { AddComponent } from './pages/add/add.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ChatRoomComponent } from './pages/chat-room/chat-room.component';
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'publish-add', component: PublishAddComponent },
   { path: 'add/:id', component: AddComponent },
-  { path: 'chat/:id', component: ChatRoomComponent }
+  { path: 'chat/:id', component: ChatRoomComponent },
+  { path: 'activities', component: ActivitiesComponent}
 ];
 
 @NgModule({

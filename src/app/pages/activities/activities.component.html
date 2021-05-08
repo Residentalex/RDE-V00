@@ -17,14 +17,13 @@
     <ion-label class="RDE-titulo">Chats</ion-label>
   </ion-item>
 
-  <ng-container *ngFor="let chat of Chats">
-
     
     <ion-list *ngFor="let item of Persons">
-      <ion-item (click)="openChat(chat.idChat)">
+      <ion-item (click)="openChat(item.idChat)">
         <ion-label>{{item.name}} {{item.lastName}}</ion-label>
+        <span class="RDE-mini-normal b">{{item.idAdd}}</span>
         <ion-badge color="success"></ion-badge>
       </ion-item>
     </ion-list>
-  </ng-container>
+
 </ion-content>

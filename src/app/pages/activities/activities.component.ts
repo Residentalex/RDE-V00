@@ -16,8 +16,10 @@ export class ActivitiesComponent implements OnInit {
 
   uid: string = '';
 
-  Chats:Chat[] = [];
-  Persons: Person[] = [];
+  MyChats: Chat[] = [];
+  ChatWithMe: Chat[] = [];
+  Persons = [];
+
 
   constructor(
     private menuCtrl: MenuController,
@@ -30,7 +32,8 @@ export class ActivitiesComponent implements OnInit {
     this.fAuth.stateAuth().subscribe(async r => {
       this.uid = r.uid
 
-      this.Chats = await this.getChats(r.uid);
+      this.MyChats = await this.getMyChats(r.uid);
+      this.ChatWithMe = await this.getChatWithMe(r.uid);
       this.Persons = await this.getPersons();
     });
   }
@@ -39,27 +42,35 @@ export class ActivitiesComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  async getChats(id: string) {
-    const chats = await this.db.getCollectionbyParameter<Chat>('ChatRooms', 'idPerson', id);
+  async getMyChats(id: string) {
+    const chats: Chat[] = await this.db.getCollectionbyParameter<Chat>('ChatRooms', 'idPerson', id);
     return chats
   }
 
-  async getPersons(){
+  async getChatWithMe(id: string) {
+    const Chat: Chat[] = await this.db.getCollectionbyParameter<Chat>('ChatRooms', 'idTasker', id);
+    return Chat;
+  }
+
+  async getPersons() {
     const Persons = [];
-    this.Chats.forEach( async chat => {
-      if (chat.idPerson == this.uid){
-        const dataPerson = await this.db.getDoc<Person>('Personas', chat.idTasker);
-        if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
-      }else {
-        const dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
-        if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
-      }
-      
+
+    this.MyChats.forEach(async chat => {
+      let dataPerson = await this.db.getDoc<Person>('Personas', chat.idTasker);
+      dataPerson = Object.assign({}, dataPerson, chat)
+      if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
     });
+
+    this.ChatWithMe.forEach(async chat => {
+      let dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
+      dataPerson = Object.assign({}, dataPerson, chat)
+      if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+    })
+
     return Persons;
   }
 
-  openChat(id: string){
+  openChat(id: string) {
     this.router.navigate(['/chat', id])
   }
 

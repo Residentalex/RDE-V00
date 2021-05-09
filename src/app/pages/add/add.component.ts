@@ -89,12 +89,16 @@ export class AddComponent implements OnInit {
     return position;
   }
 
-  onContact() {
+  async onContact() {
 
-    this.db.getCollectionbyParameter<Chat>("ChatRooms", "idAdd", this.add.idAdd).then(chatRoom => {
-      if (chatRoom.length){
-        this.router.navigate(['/chat', chatRoom[0].idChat])
-      }else{
+    const ChatRooms = await this.db.getCollectionbyParameter<Chat>("ChatRooms", "idAdd", this.add.idAdd);
+    const MyChat = await this.db.getCollectionby2Parameter<Chat>('ChatRooms', 'idPerson', this.uid, 'idTasker', this.add.idPerson)
+    const otherChat = await this.db.getCollectionby2Parameter<Chat>('ChatRooms', 'idTasker', this.uid, 'idPerson', this.add.idPerson)
+
+
+      if ((ChatRooms.length && ChatRooms[0].idPerson == this.uid) || (ChatRooms.length && ChatRooms[0].idTasker == this.uid) ){
+        this.router.navigate(['/chat', ChatRooms[0].idChat])
+      }else {
         this.chatRoom.idPerson = this.uid;
         this.chatRoom.idTasker = this.add.idPerson;
         this.chatRoom.idChat = this.db.getNewID();
@@ -102,11 +106,5 @@ export class AddComponent implements OnInit {
         this.db.createDoc(this.chatRoom, "ChatRooms", this.chatRoom.idChat);
         this.router.navigate(['/chat', this.chatRoom.idChat])
       }
-    });
-
-
-
-
-
   }
 }

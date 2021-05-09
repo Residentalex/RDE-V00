@@ -4,7 +4,7 @@ export interface Add {
     idService?: string,
     idTasker?: string,
     price?: Number,
-    tittle?: string,
+    title?: string,
     location?: {
         latitude: number,
         longitude: number

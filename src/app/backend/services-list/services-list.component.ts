@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonItemSliding, MenuController, ToastController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { Service } from 'src/app/models/service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -12,8 +13,9 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class ServicesListComponent implements OnInit {
 
 
-  path: string = 'Servicios';
-  services: Service[] = [];
+  pathServices: string = 'Servicios';
+  service$: Observable<Service[]>;
+  ServiceList: Service[] = [];
 
   constructor(
     private menuCtrl: MenuController,
@@ -24,15 +26,15 @@ export class ServicesListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.services = await this.getServices();
+    this.ServiceList = await  this.getServices();
   }
 
   toogleMenu(){
     this.menuCtrl.toggle();
   }
 
-  async getServices(){ 
-    const services = await this.db.getCollection<Service>(this.path);
+  getServices(){ 
+    const services =  this.db.getCollection<Service>(this.pathServices);
     return services;
   }
 
@@ -52,7 +54,7 @@ export class ServicesListComponent implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            this.db.deleteDoc(this.path, service.idService).catch(err =>{
+            this.db.deleteDoc(this.pathServices, service.idService).catch(err =>{
               this.presentToast(err.message);
             });
           }
@@ -86,18 +88,25 @@ export class ServicesListComponent implements OnInit {
   }
 
   async filterItems(evt: any){
-    this.services = await this.getServices();
+    this.ServiceList = await  this.getServices();
     const searchTerm: string = evt.target.value;
     
     if(!searchTerm){
       return;
     }
 
-    this.services = this.services.filter(currentService =>{
+    this.ServiceList = this.ServiceList.filter(currentService =>{
       if(currentService.serviceName && searchTerm){
         return (currentService.serviceName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 
         || currentService.description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
+    })
+  }
+
+  doRefresh(event: any){
+    this.getServices().then( data =>{
+      this.ServiceList = data;
+      event.target.complete();
     })
   }
 

@@ -17,8 +17,13 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Desliza hacia abajo para actualizar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar placeholder="Buscar un servicio" (ionInput)="filterItems($event)"></ion-searchbar>
-  <ion-list *ngFor="let service of services">
+  <ion-list *ngFor="let service of ServiceList">
     <ion-list>
 
       <ion-item-sliding #item_sliding>
@@ -26,7 +31,7 @@
 
           <ion-label class="RDE-normal" (click)="goToServicesPersons(service.idService)">
             <h2>{{ service.serviceName }}</h2>
-            <p>{{ service.description }}</p>            
+            <p>{{ service.description }}</p>
           </ion-label>
 
           <ion-buttons slot="end">
@@ -37,7 +42,8 @@
         </ion-item>
 
         <ion-item-options side="end">
-          <ion-item-option (click)="onUpdateService(service.idService, item_sliding)" color="medium">Editar</ion-item-option>
+          <ion-item-option (click)="onUpdateService(service.idService, item_sliding)" color="medium">Editar
+          </ion-item-option>
         </ion-item-options>
 
       </ion-item-sliding>

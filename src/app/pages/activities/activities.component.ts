@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Add } from 'src/app/models/add';
 import { Chat } from 'src/app/models/chat';
 import { Person } from 'src/app/models/person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -57,13 +58,21 @@ export class ActivitiesComponent implements OnInit {
 
     this.MyChats.forEach(async chat => {
       let dataPerson = await this.db.getDoc<Person>('Personas', chat.idTasker);
-      dataPerson = Object.assign({}, dataPerson, chat)
+      let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
+
+      dataPerson = Object.assign({}, dataPerson, chat, dataAdd)
       if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+
+
     });
 
     this.ChatWithMe.forEach(async chat => {
       let dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
-      dataPerson = Object.assign({}, dataPerson, chat)
+      let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
+
+      dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+
+      console.log(dataPerson)
       if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
     })
 

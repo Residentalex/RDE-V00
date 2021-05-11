@@ -1,0 +1,10 @@
+{
+  "name": "RDE-V00",
+  "integrations": {
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
+  },
+  "type": "angular"
+}

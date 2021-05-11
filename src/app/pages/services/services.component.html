@@ -1,0 +1,20 @@
+<ion-card class="RDE-services-content">
+  <ion-item lines="full" (click)="goPageAdd()">
+
+    <div class="contact" >
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </div>
+
+    <ion-label>
+      <span class="add-title">{{adds.tittle}}</span>
+      <span class="add-person">Publicado por {{person.name}} {{person.lastName}}</span>
+    </ion-label>
+
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label class="RDE-mini-normal">
+      <span class="rde-wrap">{{adds.details}}</span>
+    </ion-label>
+  </ion-item>
+
+</ion-card>

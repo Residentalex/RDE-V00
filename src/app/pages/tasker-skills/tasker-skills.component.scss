@@ -1,0 +1,25 @@
+.rde-titulo {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-family: "Dosis", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.rde-button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.RDe-item{
+  padding: 5px;
+}
+
+.RDE-noContent{
+  height: 50%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}

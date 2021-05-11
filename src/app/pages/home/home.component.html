@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="RDE-subtitulo">RDE</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goPageProfile()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngFor="let add of adds">
+    <app-services [adds] = "add"></app-services>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-card class="rde-add-button" (click)="publishAdd()">
+    <ion-label>Publicar un anuncio</ion-label>
+  </ion-card>
+</ion-footer>

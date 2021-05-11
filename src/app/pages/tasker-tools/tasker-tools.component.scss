@@ -1,0 +1,48 @@
+.RDe-tools-container{
+    margin-top: 15px;
+}
+
+
+.RDe-carrousel{
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .RDe-carrousel-list{
+    border-color: rgba(0,0,0,0);
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -ms-scroll-snap-type: mandatory;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: mandatory;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    transition: border-color .5s,transform .45s ease-in-out;
+  }
+
+  .RDe-carrousel-list>li{
+    display: inline-block;
+    flex-shrink: 0;
+    list-style: none;
+    padding-top: 20px;
+  }
+
+  .RDe-carrousel-list ion-img{
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
+  ion-icon{
+    color: rgb(92, 92, 92);
+    font-size: 22px;
+  }
+
+  .rde-upload-photo ion-icon{
+    color: cornflowerblue ;
+  }

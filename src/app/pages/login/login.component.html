@@ -1,0 +1,61 @@
+<ion-header mode="ios" translucent>
+  <ion-toolbar>
+    <ion-title class="RDE-subtitulo">Iniciar Session</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="toogleMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="RDE-logo">
+    <img [src]="appLogo" alt="">
+    <ion-label class="RDE-login-label">RDE</ion-label>
+  </div>
+
+  <div class="rde-login-content">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating" class="RDE-label">Correo Electronico</ion-label>
+        <ion-input type="text" inputmode="text" class="RDE-normal" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating" class="RDE-label">Contraseña</ion-label>
+        <ion-input type="password" inputmode="password" class="RDE-normal" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label class="ion-text-right RDE-normal-sub">Olvidaste la contraseña?</ion-label>
+      </ion-item>
+
+      <ion-button (click)="onLogin()" expand="block" fill="clear" class="RDE-login-button">
+        Acceder
+      </ion-button>
+      <div class="ion-text-center">
+        <h2 class="RDE-line RDE-mini-normal"><span>o</span></h2>
+      </div>
+
+      <div class="rde-socials-content">
+        <ion-img [src]="facebookIcon" class="rde-socials"></ion-img>
+        <ion-img [src]="googleIcon" class="rde-socials"></ion-img>
+      </div>
+
+
+    </ion-list>
+
+  </div>
+
+</ion-content>
+<ion-footer>
+
+
+ <p class="rde-footer">
+   <span>Aun no tiene una cuenta? </span>
+   <span (click)="goPageRegister()" class="rde-register-label">Registrese ahora</span>
+ </p>
+</ion-footer>

@@ -1,0 +1,35 @@
+.RDe-titulo {
+  margin: 15px;
+}
+
+.RDe-item {
+  padding: 5px;
+}
+
+.RDE-noContent {
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.RDE-icon-photo {
+  width: 36px;
+  height: 36px;
+  background-color: rgb(219, 219, 219);
+  border-radius: 150px;
+  text-align: center;
+}
+
+.RDE-icon-photo label {
+  font-weight: bold;
+  line-height: 36px;
+  margin: auto;
+}
+
+.rde-colaborador-img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}

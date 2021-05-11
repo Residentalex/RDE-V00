@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tasker-skill" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="RDE-subtitulo">Herramientas</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="RDe-tools-container">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label class="RDE-subtitulo" position="floating">Habilidades y Experiencia:</ion-label>
+        <ion-textarea rows="3" [(ngModel)]="servicioPersona.skills"></ion-textarea>
+      </ion-item>
+
+
+      <ion-item lines="none">
+        <ion-label class="RDE-subtitulo" position="floating">Herramientas</ion-label>
+        <ion-textarea placeholder="Herramientas que poseo" [(ngModel)]="tool" rows="2" (keyup.enter)="saveTool()">
+        </ion-textarea>
+      </ion-item>
+
+      <p>
+        <ng-container *ngFor="let item of tools">
+          <ion-chip color="medium" mode="ios" outline="true" *ngIf="tools.length > 0">
+            <ion-label class="ion-text-wrap RDE-normal">{{item}}</ion-label>
+            <ion-icon name="close-circle-outline" (click)="deleteTool(item)"></ion-icon>
+          </ion-chip>
+        </ng-container>
+      </p>
+
+      <ion-item>
+        <ion-label class="RDE-subtitulo">Subir fotos</ion-label>
+        <label for="photo" class="ion-text-right rde-upload-photo">
+          <input type="file" accept="image/*" id="photo" style="display: none;" (change)="uploadImage($event)">
+          <ion-icon slot="end" name="Camera"></ion-icon>
+        </label>
+
+      </ion-item>
+      <div class="RDe-carrousel">
+        <ul class="RDe-carrousel-list">
+          <li *ngFor="let item of photos">
+            <label>
+              <ion-img [src]="item"></ion-img>
+              <ion-icon name="remove-circle-outline" (click)="deleteImage(item)"></ion-icon>
+            </label>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+    </ion-list>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button (click)="onFinish()" expand="full">
+    Finalizar
+  </ion-button>
+</ion-footer>

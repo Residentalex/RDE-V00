@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="RDE-subtitulo">Registro</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="RDE-logo">
+    <img [src]="appLogo" alt="">
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating" class="RDE-label">Nombres</ion-label>
+      <ion-input
+        name="names"
+        type="text"
+        class="RDE-normal"
+        inputmode="text"
+        [(ngModel)]="NewPerson.name"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="RDE-label">Apellidos</ion-label>
+      <ion-input
+        name="lastName"
+        type="text"
+        class="RDE-normal"
+        inputmode="text"
+        [(ngModel)]="NewPerson.lastName"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="RDE-label"
+        >Correo Electronico</ion-label
+      >
+      <ion-input
+        name="email"
+        type="email"
+        class="RDE-normal"
+        inputmode="email"
+        [(ngModel)]="newUser.email"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="RDE-label">Contraseña</ion-label>
+      <ion-input
+        name="password"
+        type="password"
+        class="RDE-normal"
+        inputmode="password"
+        [(ngModel)]="newUser.password"
+      ></ion-input>
+    </ion-item>
+
+      <ion-item>
+        <ion-label position="floating" class="RDE-label">Confirmar Contraseña</ion-label>
+        <ion-input
+          name="password"
+          type="password"
+          class="RDE-normal"
+          inputmode="password"
+          [(ngModel)]="cpassword"
+        ></ion-input>
+      
+    </ion-item>
+
+    <ion-button (click)="onRegister()" expand="block" fill="clear" class="RDE-register"> Guardar </ion-button>
+  </ion-list>
+</ion-content>

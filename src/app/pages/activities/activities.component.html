@@ -13,6 +13,12 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Desliza hacia abajo para actualizar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <ion-item>
     <ion-label class="RDE-titulo">Chats</ion-label>
   </ion-item>
@@ -20,11 +26,17 @@
 
   <ion-list *ngFor="let item of Persons">
     <ion-item (click)="openChat(item.idChat)">
+        <ion-avatar slot="start" *ngIf="item.photo">
+          <img [src]="item.photo" />
+        </ion-avatar>
+        <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start">
+          <label class="RDE-normal">{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
+        </div>
       <ion-label>
         <span class="RDE-normal b">{{item.name}} {{item.lastName}} </span>
         <span class="RDE-mini-normal b">{{item.title}}</span>
       </ion-label>
-      <ion-badge color="success"></ion-badge>
+      <ion-badge color="success" *ngIf="item.MessageUnRead > 0">{{item.MessageUnRead}}</ion-badge>
     </ion-item>
   </ion-list>
 

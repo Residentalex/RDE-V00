@@ -39,9 +39,8 @@ export class PublishAddComponent implements OnInit {
   async ngOnInit() {
     this.services = await this.getServices();
 
-    this.fAuth.stateAuth().subscribe(r =>{
-      this.uid = r.uid
-    });
+    const user = await this.fAuth.stateAuth();
+    this.uid = user.uid;
 
     this.position = await this.getGeolocation();
   }

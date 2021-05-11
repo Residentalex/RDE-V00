@@ -25,13 +25,13 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private fAuth: FirebaseAuthService,
     private db: FirestoreService
-  ) {
-    this.fAuth.stateAuth().subscribe(res => {
-      res ? this.userUid = res.uid : this.userUid = "";
-    });
-  }
+  ) { }
 
   async ngOnInit() {
+    const user = await this.fAuth.stateAuth();
+
+    user ?  this.userUid = user.uid : this.userUid = '';
+
     this.loadServices();
     this.loadAdds();
   }
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadAdds() {
-    this.db.subscribeCollection('Anuncios').subscribe((r)=>{
+    this.db.subscribeCollection('Anuncios').subscribe((r) => {
       this.adds = r
     });
   }

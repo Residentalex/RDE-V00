@@ -28,14 +28,10 @@ export class TaskProfileComponent implements OnInit {
   uid: string = '';
 
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.fAuth.stateAuth().subscribe(r => {
-      if (r) {
-        this.uid = r.uid;
-      }
-
-    })
+    const user = await this.fAuth.stateAuth();
+    this.uid = user.uid
 
     const idPerson = this.route.snapshot.params.id;
     this.getPerson(idPerson);
@@ -61,4 +57,5 @@ export class TaskProfileComponent implements OnInit {
     console.log(chatRoomsPerson)
   }
 
+  
 }

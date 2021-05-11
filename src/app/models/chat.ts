@@ -3,5 +3,6 @@ export interface Chat {
     chatName?: string,
     idPerson?: string,
     idTasker?: string ,
-    idAdd?: string
+    idAdd?: string,
+    
 }

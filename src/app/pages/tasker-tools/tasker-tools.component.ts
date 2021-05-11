@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { isUndefined } from 'lodash';
-import { switchMap } from 'rxjs/operators';
 import { ServicesPerson } from 'src/app/models/services-person';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -14,16 +13,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class TaskerToolsComponent implements OnInit {
 
-  tools:any[] = [];
+  tools: any[] = [];
   tool: string = '';
 
   newFile: any;
 
   loading: any;
-  servicioPersona: ServicesPerson = {
-    skills: ''
-  };
-  photos:any[] = [];
+  servicioPersona: ServicesPerson = {};
+  photos: any[] = [];
 
   uid: string;
   servicesPersonPath: string = "ServicioPersona"
@@ -37,33 +34,28 @@ export class TaskerToolsComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.fAuth.stateAuth().subscribe(r => {
-      if (r) {
-
-        this.uid = r.uid;
-        this.getServicePerson(r.uid);
-      }
-    });
+  async ngOnInit() {
+    const user = await this.fAuth.stateAuth();
+    this.uid = user.uid;
+    this.getServicePerson(user.uid);
 
   }
-
 
   async getServicePerson(id: string) {
     const servicesPerson = await this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id);
-    
-      if (servicesPerson) {
-        this.servicioPersona.idPersonService = servicesPerson[0].idPersonService
-        this.servicioPersona.skills = servicesPerson[0].skills
-        this.tools = servicesPerson[0].tools;
-        this.photos = servicesPerson[0].photosWork;
-      }
+
+    if (servicesPerson) {
+      this.servicioPersona.idPersonService = servicesPerson[0].idPersonService
+      this.servicioPersona.skills = servicesPerson[0].skills
+      this.tools = servicesPerson[0].tools;
+      this.photos = servicesPerson[0].photosWork;
+    }
   }
 
   saveTool() {
-    if(isUndefined(this.tools)){
+    if (isUndefined(this.tools)) {
       this.tools = [this.tool]
-    }else{
+    } else {
       this.tools.push(this.tool);
     }
     this.tool = '';
@@ -87,19 +79,19 @@ export class TaskerToolsComponent implements OnInit {
     await this.loading.present();
   }
 
-  uploadImage(event: any){
+  uploadImage(event: any) {
     if (event.target.files && event.target.files[0]) {
       this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (image) => {
-        
-        if(isUndefined(this.photos)){
+
+        if (isUndefined(this.photos)) {
           this.photos = [image.target.result as string]
-        }else{
+        } else {
           this.photos.push(image.target.result as string)
         }
-        
-        
+
+
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -120,11 +112,12 @@ export class TaskerToolsComponent implements OnInit {
     })
   }
 
-  deleteImage(photo: string){
-    this.photos = this.photos.filter(function(item){
+  deleteImage(photo: string) {
+    this.photos = this.photos.filter(function (item) {
       return item != photo
     })
   }
+
 
 }
 

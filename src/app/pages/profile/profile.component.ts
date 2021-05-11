@@ -25,14 +25,13 @@ export class ProfileComponent implements OnInit {
 
   servicesPerson: ServicesPerson[] = [];
 
-  user: User = {
-    email: ""
-  };
+  user: User = {};
 
   newPerson: Person = {
     idPerson: this.db.getNewID(),
     name: '',
     lastName: '',
+    photo: 'assets/images/profile.png',
     dateBirth: new Date(),
     createdAt: new Date(),
     status: true,
@@ -45,7 +44,7 @@ export class ProfileComponent implements OnInit {
     status: true,
   }
 
-  newFile: string = 'assets/images/profile.png';
+  newFile: string = '';
   loading: any;
 
   constructor(
@@ -59,26 +58,27 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.fAuth.stateAuth().subscribe(async res => {
-      if (res) {
-        this.user.email = res.email;
+  async ngOnInit() {
+    const user = await this.fAuth.stateAuth();
+    
+      if (user) {
+        this.user.email = user.email;
 
-        this.newPerson.idPerson = res.uid;
-        this.getPersonInfo(res.uid);
-        this.servicesPerson = await this.getPersonService(res.uid)
+        this.newPerson.idPerson = user.uid;
+        this.newPerson = await this.getPerson(user.uid);
+        this.newPhone = await this.getPhonePerson(user.uid);
+        this.servicesPerson = await this.getPersonService(user.uid);
       }
-    });
   }
 
-  getPersonInfo(idPerson: string) {
-    this.db.getDoc<Person>(this.personPath, idPerson).then(res => {
+  async getPerson(idPerson: string) {
+    const person = await this.db.getDoc<Person>(this.personPath, idPerson);
+    return person
+  }
 
-      this.newPerson = res;
-    });
-    this.db.getDoc<Phone>(this.phonePath, idPerson).then(res => {
-      this.newPhone = res;
-    })
+  async getPhonePerson(idPerson: string) {
+    const phone = await this.db.getDoc<Phone>(this.phonePath, idPerson);
+    return phone
   }
 
   async getPersonService(idPerson: string) {
@@ -92,7 +92,6 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage(event: any) {
-
 
     if (event.target.files && event.target.files[0]) {
       this.newFile = event.target.files[0];
@@ -110,11 +109,9 @@ export class ProfileComponent implements OnInit {
   async onSave() {
     this.presentLoading();
 
-    if (this.newFile !== undefined) {
-      await this.fireST.uploadImage(this.newFile, this.personPath, this.newPerson.idPerson).then((res) => {
-        this.newPerson.photo = res;
-      })
-    };
+    if (this.newFile != undefined && this.newFile != '') {
+      this.newPerson.photo = await this.fireST.uploadImage(this.newFile, this.personPath, this.newPerson.idPerson);
+    }
 
     this.db.createDoc(this.newPerson, this.personPath, this.newPerson.idPerson).then(() => {
       this.db.updateDoc(this.newPhone, this.phonePath, this.newPhone.idPhone);

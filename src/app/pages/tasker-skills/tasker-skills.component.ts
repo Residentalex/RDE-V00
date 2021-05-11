@@ -22,7 +22,7 @@ export class TaskerSkillsComponent implements OnInit {
   servicePath: string = 'Servicios';
   personPath: string = 'Personas';
 
-  service$: Service[] = [];
+  servicesList: Service[] = [];
   editMode: boolean = false;
   mySkill: any[] = [];
   uid: string = '';
@@ -37,16 +37,12 @@ export class TaskerSkillsComponent implements OnInit {
     private fAuth: FirebaseAuthService
   ) { }
 
-  ngOnInit() {
-    this.getServices();
-    this.fAuth.stateAuth().subscribe(r => {
+  async ngOnInit() {
+    this.servicesList = await this.getServices();
+    const user = await this.fAuth.stateAuth();
 
-      if (r) {
-
-        this.uid = r.uid;
-        this.getServicesPerson(r.uid);
-      }
-    })
+    this.uid = user.uid;
+    this.getServicesPerson(user.uid);
   }
 
 
@@ -83,10 +79,8 @@ export class TaskerSkillsComponent implements OnInit {
     const checkName = event.target.name;
 
     if (event.detail.checked) {
-      console.log('checked: ', checkName)
       this.mySkill.push(checkName);
     } else {
-      console.log("eliminado: ", checkName)
       this.mySkill = this.mySkill.filter(function (skill) {
         return skill !== checkName;
       });
@@ -97,10 +91,9 @@ export class TaskerSkillsComponent implements OnInit {
     return this.mySkill.includes(value);
   }
 
-  getServices() {
-    this.db.getCollection<Service>(this.servicePath).then(r => {
-      this.service$ = r;
-    });
+  async getServices() {
+    const services = await this.db.getCollection<Service>(this.servicePath);
+    return services;
   }
 
   saveSkills() {
@@ -124,5 +117,20 @@ export class TaskerSkillsComponent implements OnInit {
     this.router.navigate(['/tasker-tools']);
   }
 
+  async filterItems(evt: any) {
+    this.servicesList = await this.getServices();
+    const searchTerm: string = evt.target.value;
+
+    if (!searchTerm) {
+      return;
+    }
+
+    this.servicesList = this.servicesList.filter(currentService => {
+      if (currentService.serviceName && searchTerm) {
+        return (currentService.serviceName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+          || currentService.description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    })
+  }
 
 }

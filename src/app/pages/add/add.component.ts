@@ -35,9 +35,8 @@ export class AddComponent implements OnInit {
 
   async ngOnInit() {
     const id = await this.route.snapshot.params.id;
-    this.fAuth.stateAuth().subscribe(r => {
-      this.uid = r.uid
-    })
+    const user = await this.fAuth.stateAuth();
+    this.uid = user.uid;
     this.add = await this.getAdd(id);
     this.person = await this.getPerson(this.add.idPerson);
     this.loadMap(this.add.location.latitude, this.add.location.longitude);
@@ -92,9 +91,6 @@ export class AddComponent implements OnInit {
   async onContact() {
 
     const ChatRooms = await this.db.getCollectionbyParameter<Chat>("ChatRooms", "idAdd", this.add.idAdd);
-    const MyChat = await this.db.getCollectionby2Parameter<Chat>('ChatRooms', 'idPerson', this.uid, 'idTasker', this.add.idPerson)
-    const otherChat = await this.db.getCollectionby2Parameter<Chat>('ChatRooms', 'idTasker', this.uid, 'idPerson', this.add.idPerson)
-
 
       if ((ChatRooms.length && ChatRooms[0].idPerson == this.uid) || (ChatRooms.length && ChatRooms[0].idTasker == this.uid) ){
         this.router.navigate(['/chat', ChatRooms[0].idChat])
@@ -107,4 +103,6 @@ export class AddComponent implements OnInit {
         this.router.navigate(['/chat', this.chatRoom.idChat])
       }
   }
+
+  
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
+import { first, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,9 @@ export class FirebaseAuthService {
     }
   }
 
-  stateAuth(){
-    return this.auth.authState;
+  async stateAuth(){
+    const user = await this.auth.authState.pipe(first()).toPromise();
+    return user;
   }
 
 

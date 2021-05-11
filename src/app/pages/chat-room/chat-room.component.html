@@ -11,7 +11,7 @@
 <ion-content>
   <div class="chat-session">
     <div class="chat">
-      <ng-container *ngFor="let item of chat.data">
+      <ng-container *ngFor="let item of message$">
           <ion-label *ngIf="item.idPerson == uid" class="ion-text-end rde-my-message">{{item.content}}</ion-label>
           <ion-label *ngIf="item.idPerson != uid" class="ion-text-start rde-other-message">{{item.content}}</ion-label>
       </ng-container>

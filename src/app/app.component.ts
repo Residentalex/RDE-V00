@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { FirebaseAuthService } from './services/firebase-auth.service';
@@ -13,14 +13,16 @@ export class AppComponent {
   uid: string = '';
 
   constructor(
-    private auth: FirebaseAuthService,
+    private fAuth: FirebaseAuthService,
     private menuCtrl: MenuController,
     private router: Router
   ) {
-    this.auth.stateAuth().subscribe(r =>{
-       r ? this.uid = r.uid : this.uid = ''
-    })
+    this.fAuth.stateAuth().then(r =>{
+      r? this.uid = r.uid : this.uid = '';
+    });
+
   }
+
 
   toogleMenu() {
     this.menuCtrl.toggle();

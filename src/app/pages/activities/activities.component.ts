@@ -17,8 +17,8 @@ export class ActivitiesComponent implements OnInit {
 
   uid: string = '';
 
-  MyChats: Chat[] = [];
-  ChatWithMe: Chat[] = [];
+  MyChats = [];
+  ChatWithMe = [];
   Persons = [];
 
 
@@ -29,14 +29,14 @@ export class ActivitiesComponent implements OnInit {
     private fAuth: FirebaseAuthService
   ) { }
 
-  ngOnInit() {
-    this.fAuth.stateAuth().subscribe(async r => {
-      this.uid = r.uid
+  async ngOnInit() {
+    const user = await this.fAuth.stateAuth()
+    this.uid = user.uid;
 
-      this.MyChats = await this.getMyChats(r.uid);
-      this.ChatWithMe = await this.getChatWithMe(r.uid);
-      this.Persons = await this.getPersons();
-    });
+    this.MyChats = await this.getMyChats(this.uid);
+    this.ChatWithMe = await this.getChatWithMe(this.uid);
+    this.Persons = await this.getPersons();
+
   }
 
   toogleMenu() {
@@ -56,25 +56,41 @@ export class ActivitiesComponent implements OnInit {
   async getPersons() {
     const Persons = [];
 
-    this.MyChats.forEach(async chat => {
-      let dataPerson = await this.db.getDoc<Person>('Personas', chat.idTasker);
-      let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
 
-      dataPerson = Object.assign({}, dataPerson, chat, dataAdd)
-      if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+    let dataPerson = await this.db.getCollection<Person>('Personas');
+    let dataAdd = await this.db.getCollection<Add>('Anuncios');
 
+    this.MyChats.forEach(chat => {
 
-    });
-
-    this.ChatWithMe.forEach(async chat => {
-      let dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
-      let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
-
-      dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
-
-      console.log(dataPerson)
-      if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
     })
+
+    // dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+
+    // let messageUnRead = 0;
+
+    // chat.data.forEach(element => {
+    //   if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
+    // });
+
+    // Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead })
+    // if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+
+
+    // this.ChatWithMe.forEach(async chat => {
+    //   let dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
+    //   let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
+
+    //   dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+
+    //   let messageUnRead = 0;
+
+    //   chat.data.forEach(element => {
+    //     if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
+    //   });
+
+    //   Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead })
+    //   if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+    // });
 
     return Persons;
   }
@@ -82,5 +98,15 @@ export class ActivitiesComponent implements OnInit {
   openChat(id: string) {
     this.router.navigate(['/chat', id])
   }
+
+  async doRefresh(event: any) {
+    this.MyChats = await this.getMyChats(this.uid);
+    this.ChatWithMe = await this.getChatWithMe(this.uid);
+    this.getPersons().then(personData => {
+      this.Persons = personData;
+      event.target.complete();
+    });
+  }
+
 
 }

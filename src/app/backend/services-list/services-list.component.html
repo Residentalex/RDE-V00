@@ -22,33 +22,34 @@
       refreshingSpinner="circles" refreshingText="Actualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-searchbar placeholder="Buscar un servicio" (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar un servicio" (ionInput)="filterItems($event)" class="RDE-subtitulo">
+  </ion-searchbar>
   <ion-list *ngFor="let service of ServiceList">
 
-      <ion-item-sliding #item_sliding>
-        <ion-item>
+    <ion-item-sliding #item_sliding>
+      <ion-item>
 
-          <ion-label class="RDE-normal" (click)="goToServicesPersons(service.idService)">
-            <h2>{{ service.serviceName }}</h2>
-            <p>{{ service.description }}</p>
-          </ion-label>
+        <ion-label class="RDE-normal" (click)="goToServicesPersons(service.idService)">
+          <h4>{{ service.serviceName }}</h4>
+          <p class="RDE-mini-normal">{{ service.description }}</p>
+        </ion-label>
 
-          <ion-buttons slot="end">
-            <ion-button (click)="onDeleteService(service)">
-              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-item>
+        <ion-buttons slot="end">
+          <ion-button (click)="onDeleteService(service)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
 
-        <ion-item-options side="end">
-          <ion-item-option (click)="onUpdateService(service.idService, item_sliding)" color="medium">Editar
-          </ion-item-option>
-        </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option (click)="onUpdateService(service.idService, item_sliding)" color="medium">Editar
+        </ion-item-option>
+      </ion-item-options>
 
-      </ion-item-sliding>
-    </ion-list>
+    </ion-item-sliding>
+  </ion-list>
 
-    
+
   <div class="RDE-noContent" *ngIf="ServiceList.length == 0">
     <ion-label class="RDE-normal">No se encontraron coincidencias</ion-label>
   </div>

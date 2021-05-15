@@ -49,12 +49,14 @@ export class TaskProfileComponent implements OnInit {
     });
   }
 
+  goProfile(){
+    this.router.navigate(['/profile']);
+  }
+
   async contact() {
     const chatRoomsTasker = await this.db.getCollectionby2Parameter("ChatRooms", "idtasker", this.tasker.idPerson, "idperson", this.uid);
     const chatRoomsPerson = await this.db.getCollectionby2Parameter("ChatRooms", "idTasker", this.uid, "idPerson", this.tasker.idPerson);
     
-    console.log(chatRoomsTasker);
-    console.log(chatRoomsPerson)
   }
 
   

@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: 'profile/:id', component: TaskProfileComponent },
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'publish-add', component: PublishAddComponent },
+  { path: 'publish-add/:id', component: PublishAddComponent },
   { path: 'add/:id', component: AddComponent },
   { path: 'chat/:id', component: ChatRoomComponent },
   { path: 'activities', component: ActivitiesComponent}

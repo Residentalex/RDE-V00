@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Add } from 'src/app/models/add';
 import { Chat } from 'src/app/models/chat';
@@ -17,13 +17,16 @@ export class ActivitiesComponent implements OnInit {
 
   uid: string = '';
 
-  MyChats = [];
-  ChatWithMe = [];
-  Persons = [];
+  myChat$ = [];
+  chatWithMe = [];
+  Persons: Person[] = [];
+  Adds: Add[] = [];
+  loading: any;
 
 
   constructor(
     private menuCtrl: MenuController,
+    private loadingCtlr: LoadingController,
     private router: Router,
     private db: FirestoreService,
     private fAuth: FirebaseAuthService
@@ -33,9 +36,11 @@ export class ActivitiesComponent implements OnInit {
     const user = await this.fAuth.stateAuth()
     this.uid = user.uid;
 
-    this.MyChats = await this.getMyChats(this.uid);
-    this.ChatWithMe = await this.getChatWithMe(this.uid);
     this.Persons = await this.getPersons();
+    this.Adds = await this.getAdds();
+
+    this.getMyChats();
+
 
   }
 
@@ -43,56 +48,76 @@ export class ActivitiesComponent implements OnInit {
     this.menuCtrl.toggle();
   }
 
-  async getMyChats(id: string) {
-    const chats: Chat[] = await this.db.getCollectionbyParameter<Chat>('ChatRooms', 'idPerson', id);
-    return chats
-  }
-
-  async getChatWithMe(id: string) {
-    const Chat: Chat[] = await this.db.getCollectionbyParameter<Chat>('ChatRooms', 'idTasker', id);
-    return Chat;
-  }
-
   async getPersons() {
-    const Persons = [];
+    const Persons = await this.db.getCollection<Person>('Personas');
+    return Persons
+  }
+
+  async getAdds() {
+    const Adds = await this.db.getCollection<Add>('Anuncios');
+    return Adds
+  }
+
+  getMyChats() {
+
+    this.db.subscribeCollectionbyParameter<Chat>('ChatRooms', 'idPerson', this.uid).subscribe(chats => {
+      console.log('Ejecutando myChats')
+      const PersonIContact = [];
+      this.myChat$ = [];
+      chats.forEach(chat => {
+        let dataPerson: Person = this.Persons.filter(data => data.idPerson === chat.idTasker)[0];
+        let dataAdd: Add = this.Adds.filter(data => data.idAdd === chat.idAdd)[0]
+
+        dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+        let messageUnRead = 0;
+
+        if (chat.data) {
+          chat.data.forEach(element => {
+            if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
+          });
+
+          Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead });
+        }
+
+        if (PersonIContact.includes(dataPerson) === false) {
+          PersonIContact.push(dataPerson);
+        }
+      })
 
 
-    let dataPerson = await this.db.getCollection<Person>('Personas');
-    let dataAdd = await this.db.getCollection<Add>('Anuncios');
-
-    this.MyChats.forEach(chat => {
-
+      this.myChat$ = PersonIContact
     })
 
-    // dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+    this.db.subscribeCollectionbyParameter<Chat>('ChatRooms', 'idTasker', this.uid).subscribe(chats => {
+      console.log('Ejecutando ChatWithMe')
+      const PersoncontactMe = []
+      this.chatWithMe = [];
+      chats.forEach(chat => {
+        let dataPerson: Person = this.Persons.filter(data => data.idPerson === chat.idPerson)[0];
+        let dataAdd: Add = this.Adds.filter(data => data.idAdd === chat.idAdd)[0]
 
-    // let messageUnRead = 0;
+        dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
+        let messageUnRead = 0;
 
-    // chat.data.forEach(element => {
-    //   if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
-    // });
+        if (chat.data) {
+          chat.data.forEach(element => {
+            if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
+          });
 
-    // Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead })
-    // if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
+          Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead });
+
+          if (PersoncontactMe.includes(dataPerson) === false) {
+            PersoncontactMe.push(dataPerson);
+          }
+        }
 
 
-    // this.ChatWithMe.forEach(async chat => {
-    //   let dataPerson = await this.db.getDoc<Person>('Personas', chat.idPerson);
-    //   let dataAdd = await this.db.getDoc<Add>('Anuncios', chat.idAdd);
+      })
 
-    //   dataPerson = Object.assign({}, dataPerson, chat, dataAdd);
 
-    //   let messageUnRead = 0;
+      this.chatWithMe = PersoncontactMe
+    })
 
-    //   chat.data.forEach(element => {
-    //     if (element.isRead == false && element.idPerson != this.uid) { messageUnRead += 1 };
-    //   });
-
-    //   Object.defineProperty(dataPerson, 'MessageUnRead', { value: messageUnRead })
-    //   if (Persons.includes(dataPerson) === false) Persons.push(dataPerson);
-    // });
-
-    return Persons;
   }
 
   openChat(id: string) {
@@ -100,12 +125,24 @@ export class ActivitiesComponent implements OnInit {
   }
 
   async doRefresh(event: any) {
-    this.MyChats = await this.getMyChats(this.uid);
-    this.ChatWithMe = await this.getChatWithMe(this.uid);
-    this.getPersons().then(personData => {
-      this.Persons = personData;
-      event.target.complete();
+
+    event.target.complete();
+  }
+
+  onDeleteChat(id: string) {
+    this.presentLoading();
+    this.db.deleteDoc('ChatRooms', id);
+    this.loading.dismiss();
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingCtlr.create({
+      message: 'Cargando..',
+      cssClass: 'RDE-normal',
+      spinner: 'crescent',
+      showBackdrop: true,
     });
+    await this.loading.present();
   }
 
 

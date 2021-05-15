@@ -44,5 +44,9 @@ export class FirebaseAuthService {
     return user;
   }
 
+  subscribeUser(){
+    return  this.auth.authState
+  }
+
 
 }

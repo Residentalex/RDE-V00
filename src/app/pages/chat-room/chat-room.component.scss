@@ -33,6 +33,8 @@
     align-items: flex-end;
     margin-left: auto;
     font-family: "Dosis", sans-serif !important;
+    max-width: 60%;
+    font-size: 12px;
 }
 
 .rde-other-message{
@@ -44,6 +46,8 @@
     align-items: flex-start;
     margin-right: auto;
     font-family: "Dosis", sans-serif !important;
+    max-width: 60%;
+    font-size: 12px;
 }
 
 ion-content{

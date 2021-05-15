@@ -9,7 +9,7 @@
 </ion-header>
 <ion-content>
   <div class="data-add">
-    <h2 class="RDE-subtitulo">{{add.tittle}}</h2>
+    <h2 class="RDE-subtitulo">{{add.title}}</h2>
     <h3 class="RDE-normal">{{add.details}}</h3>
     <span class="RDE-mini-normal">publicado por {{person.name}} {{person.lastName}}</span>
   </div>
@@ -40,12 +40,16 @@
 <ion-footer>
   <div class="footer-publish">
 
-    <ion-card class="rde-add-button" (click)="onContact()" *ngIf="uid === add.idPerson" disabled>
+    <ion-card class="rde-add-button" (click)="onEdit()" *ngIf="uid === add.idPerson">
+      <ion-label>Editar</ion-label>
+    </ion-card>
+
+    <ion-card class="rde-add-button" (click)="onContact()" *ngIf="uid != add.idPerson && uid != ''">
       <ion-label>Contactar</ion-label>
     </ion-card>
 
-    <ion-card class="rde-add-button" (click)="onContact()" *ngIf="uid != add.idPerson">
-      <ion-label>Contactar</ion-label>
+    <ion-card class="rde-add-button" (click)="goPageLogin()"  *ngIf="uid === ''">
+      <ion-label>Acceder</ion-label>
     </ion-card>
   </div>
 </ion-footer>

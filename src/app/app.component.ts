@@ -17,7 +17,7 @@ export class AppComponent {
     private menuCtrl: MenuController,
     private router: Router
   ) {
-    this.fAuth.stateAuth().then(r =>{
+    this.fAuth.subscribeUser().subscribe(r =>{
       r? this.uid = r.uid : this.uid = '';
     });
 

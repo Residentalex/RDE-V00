@@ -19,7 +19,7 @@ export class TaskerToolsComponent implements OnInit {
   newFile: any;
 
   loading: any;
-  servicioPersona: ServicesPerson = {};
+  servicioPersona: ServicesPerson = { };
   photos: any[] = [];
 
   uid: string;
@@ -38,17 +38,17 @@ export class TaskerToolsComponent implements OnInit {
     const user = await this.fAuth.stateAuth();
     this.uid = user.uid;
     this.getServicePerson(user.uid);
-
   }
 
   async getServicePerson(id: string) {
     const servicesPerson = await this.db.getCollectionbyParameter<ServicesPerson>(this.servicesPersonPath, 'idPerson', id);
-
-    if (servicesPerson) {
+    if (servicesPerson.length) {
+    
+      
       this.servicioPersona.idPersonService = servicesPerson[0].idPersonService
-      this.servicioPersona.skills = servicesPerson[0].skills
-      this.tools = servicesPerson[0].tools;
-      this.photos = servicesPerson[0].photosWork;
+      servicesPerson[0].skills ? this.servicioPersona.skills = servicesPerson[0].skills : "";
+      servicesPerson[0].tools ? this.tools = servicesPerson[0].tools : [];
+      servicesPerson[0].photosWork ? this.photos = servicesPerson[0].photosWork : [];
     }
   }
 
@@ -117,7 +117,6 @@ export class TaskerToolsComponent implements OnInit {
       return item != photo
     })
   }
-
 
 }
 

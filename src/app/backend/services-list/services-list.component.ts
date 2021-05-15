@@ -14,7 +14,6 @@ export class ServicesListComponent implements OnInit {
 
 
   pathServices: string = 'Servicios';
-  service$: Observable<Service[]>;
   ServiceList: Service[] = [];
 
   constructor(
@@ -26,7 +25,9 @@ export class ServicesListComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.ServiceList = await  this.getServices();
+    this.getServices().subscribe(services =>{
+      this.ServiceList = services
+    });
   }
 
   toogleMenu(){
@@ -34,7 +35,7 @@ export class ServicesListComponent implements OnInit {
   }
 
   getServices(){ 
-    const services =  this.db.getCollection<Service>(this.pathServices);
+    const services =  this.db.subscribeCollection<Service>(this.pathServices);
     return services;
   }
 
@@ -88,7 +89,9 @@ export class ServicesListComponent implements OnInit {
   }
 
   async filterItems(evt: any){
-    this.ServiceList = await  this.getServices();
+    this.getServices().subscribe(data =>{
+      this.ServiceList = data;
+    });
     const searchTerm: string = evt.target.value;
     
     if(!searchTerm){
@@ -104,7 +107,7 @@ export class ServicesListComponent implements OnInit {
   }
 
   doRefresh(event: any){
-    this.getServices().then( data =>{
+    this.getServices().subscribe( data =>{
       this.ServiceList = data;
       event.target.complete();
     })

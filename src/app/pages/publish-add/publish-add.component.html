@@ -18,14 +18,14 @@
     <ion-input type="text" placeholder="" class="RDE-normal" [(ngModel)]="add.title"></ion-input>
   </ion-item>
 
-  <ion-item lines="none" class="RDe-input">
-    <ion-label position="floating" class="RDE-label">Descripción</ion-label>
-    <ion-input type="text" placeholder="" class="RDE-normal" [(ngModel)]="add.details"></ion-input>
-  </ion-item>
+  <div class="description-content">
+    <div contenteditable="true" class="description" id="description" placeholder="Descripción">
+    </div>
+  </div>
 
   <ion-item lines="none" class="RDe-input">
     <ion-label position="floating">Servicio</ion-label>
-    <ion-select class="RDE-normal" >
+    <ion-select class="RDE-normal" [(ngModel)]="add.idService">
       <ion-select-option *ngFor="let item of services" value="{{item.idService}}">{{item.serviceName}}</ion-select-option>
     </ion-select>
   </ion-item>
@@ -65,8 +65,18 @@
 <ion-footer>
   <div class="footer-publish">
 
-    <ion-card class="rde-add-button" (click)="onPublish()">
+    <ion-card class="rde-add-button" (click)="onPublish()" *ngIf="!add.idAdd">
       <ion-label>Publicar</ion-label>
     </ion-card>
+
+    <ion-card class="rde-add-button" (click)="onEdit(add.idAdd)" *ngIf="add.idAdd">
+      <ion-label>Actualizar</ion-label>
+    </ion-card>
+
+    <ion-card class="rde-delete-button" (click)="onDelete(add.idAdd)" color="danger" *ngIf="add.idAdd">
+      <ion-label>Eliminar</ion-label>
+    </ion-card>
+
+
   </div>
 </ion-footer>

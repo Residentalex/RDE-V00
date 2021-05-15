@@ -36,7 +36,7 @@ export class AddComponent implements OnInit {
   async ngOnInit() {
     const id = await this.route.snapshot.params.id;
     const user = await this.fAuth.stateAuth();
-    this.uid = user.uid;
+    user ? this.uid = user.uid : '';
     this.add = await this.getAdd(id);
     this.person = await this.getPerson(this.add.idPerson);
     this.loadMap(this.add.location.latitude, this.add.location.longitude);
@@ -102,6 +102,14 @@ export class AddComponent implements OnInit {
         this.db.createDoc(this.chatRoom, "ChatRooms", this.chatRoom.idChat);
         this.router.navigate(['/chat', this.chatRoom.idChat])
       }
+  }
+
+  onEdit(){
+    this.router.navigate(['/publish-add', this.add.idAdd])
+  }
+
+  goPageLogin(){
+    this.router.navigate(['/login']);
   }
 
   

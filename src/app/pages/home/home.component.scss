@@ -1,10 +1,10 @@
 .rde-add-button {
-  margin-left: 18px;
-  margin-right: 18px;
+  margin-left: 16px;
+  margin-right: 16px;
   padding: 12px;
   text-align: center;
   background-color: rgb(48, 187, 157);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: white;
 }
@@ -15,4 +15,14 @@ ion-content {
 
 ion-header {
   --background: #f3fcfe;
+}
+
+ion-title{
+  font-size: 14px;
+  text-align: center;
+}
+
+ion-footer{
+  background: #f3fcfe;
+  margin-bottom: 15px;
 }

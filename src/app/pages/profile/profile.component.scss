@@ -20,8 +20,8 @@
   margin: 15px;
   margin-top: 40px;
   margin-bottom: 0px;
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   border-radius: 100%;
   padding: 5px;
 }
@@ -34,8 +34,9 @@
 }
 
 .RDE-profile-name{
-  color: #6b81ff;
+  color: #00020c;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .RDE-profile-photo .RDe-Icon-photo {
@@ -76,6 +77,7 @@ ion-content{
 }
 
 .rde-logout{
+  margin-bottom: 10px;
   color: rgb(204, 0, 0);
   font-weight: bold;
 }

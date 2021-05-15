@@ -37,6 +37,9 @@ export class ProfileComponent implements OnInit {
     status: true,
   };
 
+  firstName: string = "";
+  firstLastName: string = "";
+
   newPhone: Phone = {
     idPhone: '',
     phoneNumber: "",
@@ -69,6 +72,9 @@ export class ProfileComponent implements OnInit {
         this.newPhone = await this.getPhonePerson(user.uid);
         this.servicesPerson = await this.getPersonService(user.uid);
       }
+
+      this.firstName = this.newPerson.name.charAt(0).toUpperCase() + this.newPerson.name.slice(1);
+      this.firstLastName = this.newPerson.lastName.charAt(0).toUpperCase() + this.newPerson.lastName.slice(1);
   }
 
   async getPerson(idPerson: string) {
@@ -83,7 +89,7 @@ export class ProfileComponent implements OnInit {
 
   async getPersonService(idPerson: string) {
     const servicesPerson = await this.db.getCollectionbyParameter(this.servicePersonPath, 'idPerson', idPerson);
-    servicesPerson ? this.istasker = true : this.istasker = false;
+    servicesPerson.length ? this.istasker = true : this.istasker = false;
     return servicesPerson;
   }
 

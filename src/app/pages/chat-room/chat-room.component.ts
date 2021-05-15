@@ -37,27 +37,31 @@ export class ChatRoomComponent implements OnInit {
     const user = await this.fAuth.stateAuth();
     this.uid = user.uid;
 
-      
+
     this.chat.idChat = this.route.snapshot.params.id;
 
     this.db.subscribeDoc<Chat>('ChatRooms', this.chat.idChat).subscribe(async r => {
-      if(r){
+      if (r) {
 
         this.chat = r
         this.message$ = this.chat.data;
         this.person = await this.getPerson(r.idPerson);
         this.tasker = await this.getPerson(r.idTasker);
-        
-        this.readMessages(this.message$)
+
       }
     });
+  }
 
+  ionViewDidEnter() {
+    if (this.chat) {
+      this.readMessages(this.chat.data)
+    }
   }
 
   readMessages(message: Message[]) {
     let messageUpdate: Message[] = [];
 
-    if (message){
+    if (message) {
 
       message.forEach(element => {
         if (element.isRead == false && element.idPerson != this.uid) {
@@ -65,7 +69,7 @@ export class ChatRoomComponent implements OnInit {
         }
         if (messageUpdate.includes(element) === false) messageUpdate.push(element);
       });
-      
+
       this.message$ = messageUpdate;
       this.chat.data = this.message$;
       this.db.updateDoc(this.chat, 'ChatRooms', this.chat.idChat);
@@ -85,5 +89,6 @@ export class ChatRoomComponent implements OnInit {
     this.db.sendCollectionToCollection(this.message, "ChatRooms", this.chat.idChat)
     document.getElementById("message").innerHTML = '';
   }
+
 
 }

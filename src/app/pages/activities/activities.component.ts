@@ -33,14 +33,16 @@ export class ActivitiesComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+
+  }
+
+  async ionViewDidEnter(){
     const user = await this.fAuth.stateAuth()
     this.uid = user.uid;
-
     this.Persons = await this.getPersons();
     this.Adds = await this.getAdds();
 
     this.getMyChats();
-
 
   }
 
@@ -61,7 +63,7 @@ export class ActivitiesComponent implements OnInit {
   getMyChats() {
 
     this.db.subscribeCollectionbyParameter<Chat>('ChatRooms', 'idPerson', this.uid).subscribe(chats => {
-      console.log('Ejecutando myChats')
+      console.log('Ejecutando myChats: con el uid ', this.uid)
       const PersonIContact = [];
       this.myChat$ = [];
       chats.forEach(chat => {
@@ -89,7 +91,7 @@ export class ActivitiesComponent implements OnInit {
     })
 
     this.db.subscribeCollectionbyParameter<Chat>('ChatRooms', 'idTasker', this.uid).subscribe(chats => {
-      console.log('Ejecutando ChatWithMe')
+      console.log('Ejecutando ChatWithMe, con el idTasker', this.uid)
       const PersoncontactMe = []
       this.chatWithMe = [];
       chats.forEach(chat => {

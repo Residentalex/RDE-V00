@@ -38,8 +38,6 @@ export class PublishAddComponent implements OnInit {
   position: Geoposition
 
 
-
-
   async ngOnInit() {
     this.services = await this.getServices();
 

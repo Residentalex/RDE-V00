@@ -46,6 +46,7 @@ export class PublishAddComponent implements OnInit {
 
     const id = this.route.snapshot.params.id;
     if (id) { this.add = await this.getAdd(id) }
+    if (this.add) { document.getElementById("description").innerHTML = this.add.details}
 
     this.position = await this.getGeolocation();
   }

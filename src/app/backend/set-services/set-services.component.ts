@@ -34,15 +34,11 @@ export class SetServicesComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.getDoc(id);
-    }
+    if (id) { this.getServices(id); }
   }
 
-  getDoc(id: string) {
-    this.db.getDoc<Service>(this.path, id).then(service => {
-      this.newService = service
-    })
+  async getServices(id: string) {
+    this.newService = await this.db.getDoc<Service>(this.path, id);
   }
 
   toogleMenu() {
@@ -53,7 +49,7 @@ export class SetServicesComponent implements OnInit {
     this.newService.modifyAt = new Date();
     this.presentLoading();
 
-    this.db.createDoc(this.newService, this.path, this.newService.idService).then((res) => {
+    this.db.createDoc(this.newService, this.path, this.newService.idService).then(() => {
       this.loading.dismiss();
       this.router.navigate(['/services-list']);
 

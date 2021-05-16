@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, } from '@angular/fire/firestore';
 import { first } from 'rxjs/operators';
 
+import firebase from 'firebase/app';
+import firestore = firebase.firestore;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +25,7 @@ export class FirestoreService {
     return collection;
   }
 
-  subscribeDoc<tipo>(path: string, id: string){
+  subscribeDoc<tipo>(path: string, id: string) {
     const collection = this.db.collection<tipo>(path);
     return collection.doc(id).valueChanges();
   }
@@ -38,7 +41,7 @@ export class FirestoreService {
     return collection;
   }
 
-  subscribeCollection<tipo>(path: string){
+  subscribeCollection<tipo>(path: string) {
     const collection = this.db.collection<tipo>(path);
     return collection.valueChanges();
   }
@@ -49,10 +52,17 @@ export class FirestoreService {
     return dataCollection;
   }
 
-  getCollectionby2Parameter<tipo>(path: string, parameter: any, valueParameter: any, parameter2: any, value2: any) {
+  subscribeCollectionbyParameter<tipo>(path: string, parameter: string, valueParameter: any){
     const dataCollection: AngularFirestoreCollection<tipo> = this.db.collection<tipo>(
-      path, (ref) => ref.where(parameter, '==', valueParameter).where(parameter2, '==', value2));
+      path, (ref) => ref.where(parameter, '==', valueParameter));
     return dataCollection.valueChanges();
+  }
+
+  async getCollectionby2Parameter<tipo>(path: string, parameter: any, valueParameter: any, parameter2: any, value2: any) {
+    const dataCollection = await this.db.collection<tipo>(
+      path, (ref) => ref.where(parameter, '==', valueParameter).where(parameter2, '==', value2)).valueChanges()
+      .pipe(first()).toPromise();
+    return dataCollection;
   }
 
   async getCollectioninArray<tipo>(path: string, parameter: any, valueParameter: any) {
@@ -70,5 +80,12 @@ export class FirestoreService {
     const collection = this.db.collection(path);
     return collection.doc(id).update(data);
   }
+
+  sendCollectionToCollection(data: any, path: string, id: string) {
+
+    const collection = this.db.collection(path);
+    return collection.doc(id).update({ data: firestore.FieldValue.arrayUnion(data)})
+  }
+  
 
 }

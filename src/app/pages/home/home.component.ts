@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { add } from 'lodash';
+import { Observable } from 'rxjs';
 import { Add } from 'src/app/models/add';
 import { Service } from 'src/app/models/service';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
@@ -18,20 +19,22 @@ export class HomeComponent implements OnInit {
   userUid: string = '';
   services: Service[] = [];
   servicesPath = "Servicios";
-  adds: Add[] = []
+  adds: Observable<Add[]>;
 
   constructor(
     private menuCtrl: MenuController,
     private router: Router,
     private fAuth: FirebaseAuthService,
     private db: FirestoreService
-  ) {
-    this.fAuth.stateAuth().subscribe(res => {
-      res ? this.userUid = res.uid : this.userUid = "";
-    });
-  }
+  ) { }
 
   async ngOnInit() {
+    this.fAuth.subscribeUser().subscribe(user =>{
+      user ? this.userUid = user.uid : this.userUid = '';
+    });
+
+    
+
     this.loadServices();
     this.loadAdds();
   }
@@ -54,9 +57,8 @@ export class HomeComponent implements OnInit {
   }
 
   loadAdds() {
-    this.db.subscribeCollection('Anuncios').subscribe((r)=>{
-      this.adds = r
-    });
+    this.adds = this.db.subscribeCollection('Anuncios');
+
   }
 
   publishAdd() {

@@ -28,8 +28,8 @@
 
   <ion-item lines="none" *ngIf="!editMode" class="ion-text-center">
     <ion-label class="RDE-profile-name">
-      {{ newPerson.name.charAt(0).toUpperCase() + newPerson.name.slice(1) }}
-      {{ newPerson.lastName.charAt(0).toUpperCase() + newPerson.lastName.slice(1) }}
+      {{ firstName }}
+      {{ firstLastName }}
     </ion-label>
   </ion-item>
 
@@ -40,27 +40,26 @@
   </div>
 
   <ion-list class="RDE-list">
-    <ion-item *ngIf="editMode">
+    <ion-item *ngIf="editMode" class="edit">
       <ion-label class="RDE-label-sub">Nombres:</ion-label>
       <ion-input type="text" placeholder="Nombre" [(ngModel)]="newPerson.name" class="ion-text-right RDE-normal">
       </ion-input>
     </ion-item>
 
-    <ion-item *ngIf="editMode">
+    <ion-item *ngIf="editMode" class="edit">
       <ion-label class="RDE-label-sub">Apellidos:</ion-label>
       <ion-input type="text" placeholder="Apellido" [(ngModel)]="newPerson.lastName" class="ion-text-right RDE-normal">
       </ion-input>
     </ion-item>
 
-    <ion-item *ngIf="editMode">
+    <ion-item *ngIf="editMode" class="edit">
       <ion-label class="RDE-label-sub">Telefono:</ion-label>
-      <ion-icon name="call-outline" slot="start"></ion-icon>
       <ion-input type="tel" placeholder="Número de telefono" [(ngModel)]="newPhone.phoneNumber"
         class="ion-text-right RDE-normal">
       </ion-input>
     </ion-item>
 
-    <ion-item *ngIf="editMode">
+    <ion-item *ngIf="editMode" class="edit">
       <ion-label class="RDE-label-sub">Fecha de Nacimiento:</ion-label>
       <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="newPerson.dateBirth">
       </ion-datetime>
@@ -92,9 +91,14 @@
       <ion-label class="RDE-normal">Soporte</ion-label>
     </ion-item>
 
-    <ion-item detail *ngIf="istasker" (click)="becomeTasker()">
+    <ion-item detail *ngIf="istasker && !editMode" (click)="becomeTasker()">
       <ion-icon name="hammer-outline" slot="start"></ion-icon>
       <ion-label class="RDE-normal">Editar Colaborador</ion-label>
+    </ion-item>
+
+    <ion-item detail *ngIf="!istasker" (click)="becomeTasker()">
+      <ion-icon name="hammer-outline" slot="start"></ion-icon>
+      <ion-label class="RDE-normal">Convertirse en Colaborador</ion-label>
     </ion-item>
 
   </ion-list>
@@ -104,18 +108,13 @@
     <ion-button (click)="onSave()" expand="block" *ngIf="editMode">
       GUARDAR
     </ion-button>
-    <div *ngIf="!istasker">
-      <ion-button (click)="becomeTasker()" fill="clear" expand="full" *ngIf="!editMode">
-        Convertirse en Colaborador
-      </ion-button>
-    </div>
 
   </div>
 </ion-content>
 
 
 <ion-footer>
-  <ion-item (click)="signOut()" class="rde-logout">
+  <ion-item (click)="signOut()" class="rde-logout" lines="none">
     <ion-icon name="log-out-outline" slot="start"></ion-icon>
     <ion-label>Cerrar Sesión</ion-label>
   </ion-item>

@@ -15,7 +15,7 @@
   display: block;
 }
 
-.RDe-add-photo span{
+.RDe-add-photo span {
   background-color: #e4e6eb;
   padding: 12px;
   border-radius: 6px;
@@ -41,24 +41,23 @@ ion-item {
   height: 160px;
 }
 
-.min-span{
+.min-span {
   font-family: "Dosis", sans-serif !important;
   font-size: 15px !important;
   color: rgb(158, 158, 158) !important;
   padding-left: 20px;
 }
 
-.RDE-photos{
+.RDE-photos {
   margin-top: 25px;
 }
-
 
 #map {
   width: 160px;
   height: 160px;
 }
 
-.photos-array{
+.photos-array {
   width: 106px;
   height: 100%;
 
@@ -68,15 +67,55 @@ ion-item {
   margin-right: 16px;
 }
 
-.photos-array ion-img{
+.photos-array ion-img {
   border-radius: 6px;
 }
 
-.rde-add-button{
+.rde-add-button {
+  margin-bottom: 5px;
   padding: 12px;
   text-align: center;
   background-color: rgb(65, 159, 236);
   font-size: 18px;
   font-weight: bold;
   color: white;
+}
+
+.rde-delete-button {
+  margin-top: 2px;
+  padding: 12px;
+  text-align: center;
+  background-color: rgb(236, 65, 65);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.description-content {
+  padding: 15px;
+}
+
+.description {
+  border-radius: 6px;
+  height: auto;
+  padding: 15px;
+  max-height: 500px;
+  display: block;
+  border-color: #e4e4e4;
+  border-style: solid;
+  border-width: 2px;
+  min-height: 70px;
+}
+
+:focus-visible{
+  outline-style: none;
+}
+
+[placeholder]:empty::before {
+  content: attr(placeholder);
+  color: #b8b8b8;
+}
+
+[placeholder]:empty:focus::before {
+  content: "";
 }

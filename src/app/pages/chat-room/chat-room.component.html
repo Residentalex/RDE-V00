@@ -1,0 +1,30 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="RDE-subtitulo" *ngIf="uid == person.idPerson">{{tasker.name}} {{tasker.lastName}}</ion-title>
+    <ion-title class="RDE-subtitulo" *ngIf="uid != person.idPerson">{{person.name}} {{person.lastName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="chat-session">
+    <div class="chat">
+      <ng-container *ngFor="let item of message$">
+        <ion-label *ngIf="item.idPerson == uid" class="ion-text-end rde-my-message">{{item.content}}</ion-label>
+        <ion-label *ngIf="item.idPerson != uid" class="ion-text-start rde-other-message">{{item.content}}</ion-label>
+      </ng-container>
+    </div>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <div class="message-content">
+    <span contenteditable="true" class="message" (keyup.enter)="sendMessage()" id="message">
+    </span>
+    <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+
+  </div>
+
+</ion-footer>

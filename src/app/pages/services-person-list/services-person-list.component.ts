@@ -58,9 +58,10 @@ export class ServicesPersonListComponent implements OnInit {
   }
 
   async filterItems(evt: any) {
-    this.person = await this.getPerson();
-    console.log(this.person);
+
     const searchTerm: string = evt.target.value;
+
+    if (searchTerm == '') { this.person = await this.getPerson() }
 
     if (!searchTerm) {
       return;

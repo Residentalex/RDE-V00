@@ -1,0 +1,63 @@
+.message-content{
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.message{
+    border-radius: 10px;
+    background-color: #e4e4e4;
+    padding: 15px;
+    max-height: 500px;
+    display: block;
+    width: 100%;
+}
+
+:focus-visible{
+    outline-style: none;
+}
+
+.chat-session{
+    padding: 20px;
+}
+
+.chat{
+    display: flex;
+    flex-direction: column;
+}
+
+.rde-my-message {
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #eee;
+    align-items: flex-end;
+    margin-left: auto;
+    font-family: "Dosis", sans-serif !important;
+    max-width: 60%;
+    font-size: 12px;
+}
+
+.rde-other-message{
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: rgb(255, 193, 193);
+    align-items: flex-start;
+    margin-right: auto;
+    font-family: "Dosis", sans-serif !important;
+    max-width: 60%;
+    font-size: 12px;
+}
+
+ion-content{
+    --background: #fffcee;
+}
+
+.message-content ion-icon{
+    padding: 5px;
+    margin-left: 10px;
+}

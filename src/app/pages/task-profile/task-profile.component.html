@@ -64,10 +64,16 @@
 
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="tasker.idPerson != uid">
     <ion-label class="rde-contact">Enviar mensaje al vendedor</ion-label>
     <ion-button expand="block"  (click)="contact()">
       Contactar
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="tasker.idPerson == uid">
+    <ion-button expand="block"  (click)="goProfile()">
+      Editar Perfil
     </ion-button>
   </ion-toolbar>
 </ion-footer>

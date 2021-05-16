@@ -32,8 +32,9 @@ export class ChangePasswordComponent implements OnInit {
     await this.loading.present();
   }
 
-  changePassword() {
-    this.fAuth.stateAuth().subscribe(user => {
+  async changePassword() {
+    const user = await this.fAuth.stateAuth();
+    
       if (user) {
         this.presentLoading();
         this.fAuth.loginWithEmailandPassword(user.email, this.currentPassword).then(r => {
@@ -45,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
           this.loading.dismiss();
         })
       }
-    })
+
   }
 
 }

@@ -31,7 +31,7 @@
 .RDE-titulo {
   font-family: "Dosis", sans-serif !important;
   font-weight: bold;
-  font-size: 20px !important;
+  font-size: medium !important;
   color: rgb(0, 12, 12);
 }
 
@@ -39,20 +39,19 @@
 .RDE-subtitulo {
   font-family: "Dosis", sans-serif !important;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .RDE-normal {
   font-family: "Dosis", sans-serif !important;
-  font-size: 18px !important;
+  font-size: small !important;
   color: black;
 }
 
 .RDE-mini-normal {
   font-family: "Dosis", sans-serif !important;
-  font-size: 14px !important;
+  font-size: smaller !important;
   color: rgb(158, 158, 158) !important;
-  font-weight: bold;
 }
 
 .RDE-label {
@@ -70,6 +69,14 @@
   border-radius: 30px;
   margin: 20px;
   background-color: #dbdcdd;
+}
+
+.RDE-noContent{
+  height: 50%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center
 }
 
 

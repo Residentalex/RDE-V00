@@ -1,6 +1,8 @@
 export interface Chat {
-    idchat?: string
+    idChat?: string
     chatName?: string,
-    idperson?: string,
-    idtasker?: string 
+    idPerson?: string,
+    idTasker?: string,
+    idAdd?: string,
+    data?: any;
 }

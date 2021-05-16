@@ -14,6 +14,8 @@ import { TaskProfileComponent } from "./task-profile/task-profile.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { PublishAddComponent } from "./publish-add/publish-add.component";
 import { AddComponent } from './add/add.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 
 
@@ -30,7 +32,9 @@ import { AddComponent } from './add/add.component';
     TaskProfileComponent,
     ChangePasswordComponent,
     PublishAddComponent,
-    AddComponent
+    AddComponent,
+    ChatRoomComponent,
+    ActivitiesComponent
   ],
   imports: [
     CommonModule,

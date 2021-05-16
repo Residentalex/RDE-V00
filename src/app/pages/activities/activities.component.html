@@ -18,11 +18,16 @@
       refreshingSpinner="circles" refreshingText="Actualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  
+
   <ion-item>
     <ion-label class="RDE-titulo">Chats</ion-label>
   </ion-item>
 
+  <ion-item-divider color="secondary">
+    <ion-label>
+      Anuncios que me interesan
+    </ion-label>
+  </ion-item-divider>
 
   <ion-list *ngFor="let item of myChat$">
     <ion-item-sliding #item_sliding>
@@ -31,8 +36,10 @@
         <ion-avatar slot="start" *ngIf="item.photo">
           <img [src]="item.photo" />
         </ion-avatar>
-        <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start">
-          <label class="RDE-normal" *ngIf="item.name">{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
+        <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start" [style.background-color]="item.backColor">
+          <label class="RDE-normal" *ngIf="item.name" [style.color]="item.textColor">
+            {{item.name.charAt(0)}}{{item.lastName.charAt(0)}}
+          </label>
         </div>
         <ion-label>
           <span class="RDE-normal b">{{item.name}} {{item.lastName}} </span>
@@ -48,6 +55,12 @@
     </ion-item-sliding>
   </ion-list>
 
+  <ion-item-divider color="secondary">
+    <ion-label>
+      Mis Anuncios
+    </ion-label>
+  </ion-item-divider>
+
   <ion-list *ngFor="let item of chatWithMe">
     <ion-item-sliding #item_sliding>
 
@@ -55,8 +68,10 @@
         <ion-avatar slot="start" *ngIf="item.photo">
           <img [src]="item.photo" />
         </ion-avatar>
-        <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start">
-          <label class="RDE-normal" *ngIf="item.name">{{item.name.charAt(0)}}{{item.lastName.charAt(0)}}</label>
+        <div class="RDE-icon-photo" *ngIf="!item.photo" slot="start" [style.background-color]="item.backColor">
+          <label class="RDE-normal" *ngIf="item.name" [style.color]="item.textColor">
+            {{item.name.charAt(0)}}{{item.lastName.charAt(0)}}
+          </label>
         </div>
         <ion-label>
           <span class="RDE-normal b">{{item.name}} {{item.lastName}} </span>

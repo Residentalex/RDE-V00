@@ -26,7 +26,7 @@ export class PublishAddComponent implements OnInit {
     private geolocation: Geolocation
   ) { }
 
-  add: Add = { };
+  add: Add = {};
 
   addPath: string = "Anuncios";
   loading: any;
@@ -46,7 +46,10 @@ export class PublishAddComponent implements OnInit {
 
     const id = this.route.snapshot.params.id;
     if (id) { this.add = await this.getAdd(id) }
-    if (this.add) { document.getElementById("description").innerHTML = this.add.details}
+
+    let divCont = document.getElementById("description").innerHTML
+
+    this.add ? divCont = this.add.details : divCont = ''
 
     this.position = await this.getGeolocation();
   }
@@ -98,15 +101,15 @@ export class PublishAddComponent implements OnInit {
     });
   }
 
-  onEdit(id: string){
+  onEdit(id: string) {
     this.presentLoading();
     this.add.details = document.getElementById("description").innerText;
     this.add.addPhotos = this.photos;
     this.add.modifyAt = new Date();
-    this.db.updateDoc(this.add, this.addPath, id).then(()=>{
+    this.db.updateDoc(this.add, this.addPath, id).then(() => {
       this.loading.dismiss();
       this.router.navigate(['/home']);
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err.message);
       this.loading.dismiss();
     })
@@ -162,5 +165,6 @@ export class PublishAddComponent implements OnInit {
     const position = await this.geolocation.getCurrentPosition();
     return position;
   }
+
 
 }

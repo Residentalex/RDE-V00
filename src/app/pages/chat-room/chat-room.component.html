@@ -12,17 +12,25 @@
   <div class="chat-session">
     <div class="chat">
       <ng-container *ngFor="let item of message$">
-          <ion-label *ngIf="item.idPerson == uid" class="ion-text-end rde-my-message">{{item.content}}</ion-label>
-          <ion-label *ngIf="item.idPerson != uid" class="ion-text-start rde-other-message">{{item.content}}</ion-label>
+        <ion-label *ngIf="item.idPerson == uid" class="ion-text-end rde-my-message">{{item.content}}</ion-label>
+        <ion-label *ngIf="item.idPerson != uid" class="ion-text-start rde-other-message">{{item.content}}</ion-label>
       </ng-container>
     </div>
   </div>
 
-</ion-content> 
+</ion-content>
 <ion-footer>
   <div class="message-content">
     <span contenteditable="true" class="message" (keyup.enter)="sendMessage()" id="message">
     </span>
+    <div class="message-buttons">
+      <ion-button expand="block" class="RDE-normal">
+        TRATO
+      </ion-button>
+      <ion-button expand="block" class="RDE-normal">
+        CANCELAR
+      </ion-button>
+    </div>
   </div>
-  
+
 </ion-footer>

@@ -1,5 +1,8 @@
 .message-content{
     padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .message{
@@ -9,6 +12,13 @@
     padding: 15px;
     max-height: 500px;
     display: block;
+    width: 100%;
+}
+
+.message-buttons{
+    display: flex;
+    flex-direction: column;
+    width: 60px;
 }
 
 :focus-visible{
@@ -52,4 +62,8 @@
 
 ion-content{
     --background: #fffcee;
+}
+
+.message-buttons ion-button{
+    color: #e4e4e4 !important;
 }

@@ -90,5 +90,9 @@ export class ChatRoomComponent implements OnInit {
     document.getElementById("message").innerHTML = '';
   }
 
+  MakeADeal(){
+    console.log('Haciendo Trato')
+  }
+
 
 }

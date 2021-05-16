@@ -6,6 +6,12 @@
 
     <ion-title class="RDE-subtitulo" *ngIf="uid == person.idPerson">{{tasker.name}} {{tasker.lastName}}</ion-title>
     <ion-title class="RDE-subtitulo" *ngIf="uid != person.idPerson">{{person.name}} {{person.lastName}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="MakeADeal()">
+        Hacer Trato
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -23,14 +29,6 @@
   <div class="message-content">
     <span contenteditable="true" class="message" (keyup.enter)="sendMessage()" id="message">
     </span>
-    <div class="message-buttons">
-      <ion-button expand="block" class="RDE-normal">
-        TRATO
-      </ion-button>
-      <ion-button expand="block" class="RDE-normal">
-        CANCELAR
-      </ion-button>
-    </div>
   </div>
 
 </ion-footer>

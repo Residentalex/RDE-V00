@@ -35,7 +35,7 @@ export class ServicesListComponent implements OnInit {
   }
 
   getServices(){ 
-    const services =  this.db.subscribeCollection<Service>(this.pathServices);
+    const services =  this.db.subscribeCollection<Service>(this.pathServices, 'serviceName');
     return services;
   }
 
@@ -89,9 +89,8 @@ export class ServicesListComponent implements OnInit {
   }
 
   async filterItems(evt: any){
-    this.getServices().subscribe(data =>{
-      this.ServiceList = data;
-    });
+    const services = await this.db.getCollection('Servicios', 'serviceName');
+    this.ServiceList = services;
     const searchTerm: string = evt.target.value;
     
     if(!searchTerm){

@@ -22,6 +22,7 @@ export class ActivitiesComponent implements OnInit {
   Persons: Person[] = [];
   Adds: Add[] = [];
   loading: any;
+  showChats: boolean = true;
 
 
   constructor(
@@ -51,12 +52,12 @@ export class ActivitiesComponent implements OnInit {
   }
 
   async getPersons() {
-    const Persons = await this.db.getCollection<Person>('Personas');
+    const Persons = await this.db.getCollection<Person>('Personas', '');
     return Persons
   }
 
   async getAdds() {
-    const Adds = await this.db.getCollection<Add>('Anuncios');
+    const Adds = await this.db.getCollection<Add>('Anuncios', '');
     return Adds
   }
 
@@ -145,5 +146,10 @@ export class ActivitiesComponent implements OnInit {
     });
     await this.loading.present();
   }
+
+  segmentChanged(event: any){
+    event.detail.value == "Adds" ? this.showChats = false : this.showChats = true
+  }
+  
 
 }

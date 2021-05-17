@@ -11,7 +11,7 @@ export interface Add {
     },
     details?: string,
     addPhotos?: any,
-    createdAt?: Date,
+    createdAt?: any,
     status?: boolean,
-    modifyAt?: Date
+    modifyAt?: any
 }

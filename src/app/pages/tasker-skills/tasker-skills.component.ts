@@ -92,7 +92,7 @@ export class TaskerSkillsComponent implements OnInit {
   }
 
   async getServices() {
-    const services = await this.db.getCollection<Service>(this.servicePath);
+    const services = await this.db.getCollection<Service>(this.servicePath, '');
     return services;
   }
 

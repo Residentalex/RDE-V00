@@ -38,11 +38,14 @@ export class LoginComponent implements OnInit {
     this.fAuth.loginWithEmailandPassword(this.user.email, this.user.password).then(() => {
       this.user = {};
       this.router.navigate(['/home']);
+    }).catch((err)=>{
+      console.log(err.message);
     });
   }
 
   goPageRegister() {
     this.router.navigate(['/register']);
   }
+  
 
 }

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
       user ? this.userUid = user.uid : this.userUid = '';
     });
 
-    
+  
 
     this.loadServices();
     this.loadAdds();
@@ -53,11 +53,11 @@ export class HomeComponent implements OnInit {
   }
 
   async loadServices() {
-    this.services = await this.db.getCollection<Service>(this.servicesPath);
+    this.services = await this.db.getCollection<Service>(this.servicesPath, 'serviceName');
   }
 
   loadAdds() {
-    this.adds = this.db.subscribeCollection('Anuncios');
+    this.adds = this.db.subscribeCollection('Anuncios', 'createdAt');
 
   }
 

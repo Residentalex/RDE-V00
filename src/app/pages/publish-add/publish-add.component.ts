@@ -42,14 +42,14 @@ export class PublishAddComponent implements OnInit {
     this.services = await this.getServices();
 
     const user = await this.fAuth.stateAuth();
-    this.uid = user.uid;
+    user ? this.uid = user.uid : this.uid = "";
 
     const id = this.route.snapshot.params.id;
-    if (id) { this.add = await this.getAdd(id) }
+    if (id) {
+      this.add = await this.getAdd(id);
 
-    let divCont = document.getElementById("description").innerHTML
-
-    this.add ? divCont = this.add.details : divCont = ''
+      if(this.add) {document.getElementById('description').innerHTML = this.add.details;}
+    }
 
     this.position = await this.getGeolocation();
   }

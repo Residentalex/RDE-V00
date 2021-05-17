@@ -36,13 +36,19 @@ export class FirestoreService {
     return datacollection.valueChanges()[0];
   }
 
-  async getCollection<tipo>(path: string) {
-    const collection = await this.db.collection<tipo>(path).valueChanges().pipe(first()).toPromise();
+  async getCollection<tipo>(path: string, orderby?: string) {
+    let collection: any;
+    if (orderby){
+      collection = await this.db.collection<tipo>(path, ref => ref.orderBy(orderby)).valueChanges().pipe(first()).toPromise();
+    } else {
+      collection = await this.db.collection<tipo>(path).valueChanges().pipe(first()).toPromise();
+    }
+    
     return collection;
   }
 
-  subscribeCollection<tipo>(path: string) {
-    const collection = this.db.collection<tipo>(path);
+  subscribeCollection<tipo>(path: string, orderBy?: string, desc?: boolean) {
+    const collection = this.db.collection<tipo>(path, ref => ref.orderBy(orderBy) );
     return collection.valueChanges();
   }
 

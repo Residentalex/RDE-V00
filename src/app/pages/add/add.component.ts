@@ -19,6 +19,7 @@ declare var google;
 export class AddComponent implements OnInit {
 
   add: Add = {}
+
   person: Person = {}
   map = null;
   marker: Marker = {}
@@ -36,7 +37,9 @@ export class AddComponent implements OnInit {
   async ngOnInit() {
     const id = await this.route.snapshot.params.id;
     const user = await this.fAuth.stateAuth();
-    user ? this.uid = user.uid : '';
+
+    user ? this.uid = user.uid : this.uid = '';
+
     this.add = await this.getAdd(id);
     this.person = await this.getPerson(this.add.idPerson);
     this.loadMap(this.add.location.latitude, this.add.location.longitude);
@@ -92,25 +95,24 @@ export class AddComponent implements OnInit {
 
     const ChatRooms = await this.db.getCollectionbyParameter<Chat>("ChatRooms", "idAdd", this.add.idAdd);
 
-      if ((ChatRooms.length && ChatRooms[0].idPerson == this.uid) || (ChatRooms.length && ChatRooms[0].idTasker == this.uid) ){
-        this.router.navigate(['/chat', ChatRooms[0].idChat])
-      }else {
-        this.chatRoom.idPerson = this.uid;
-        this.chatRoom.idTasker = this.add.idPerson;
-        this.chatRoom.idChat = this.db.getNewID();
-        this.chatRoom.idAdd = this.add.idAdd;
-        this.db.createDoc(this.chatRoom, "ChatRooms", this.chatRoom.idChat);
-        this.router.navigate(['/chat', this.chatRoom.idChat])
-      }
+    if ((ChatRooms.length && ChatRooms[0].idPerson == this.uid) || (ChatRooms.length && ChatRooms[0].idTasker == this.uid)) {
+      this.router.navigate(['/chat', ChatRooms[0].idChat])
+    } else {
+      this.chatRoom.idPerson = this.uid;
+      this.chatRoom.idTasker = this.add.idPerson;
+      this.chatRoom.idChat = this.db.getNewID();
+      this.chatRoom.idAdd = this.add.idAdd;
+      this.db.createDoc(this.chatRoom, "ChatRooms", this.chatRoom.idChat);
+      this.router.navigate(['/chat', this.chatRoom.idChat])
+    }
   }
 
-  onEdit(){
+  onEdit() {
     this.router.navigate(['/publish-add', this.add.idAdd])
   }
 
-  goPageLogin(){
+  goPageLogin() {
     this.router.navigate(['/login']);
   }
 
-  
 }
